@@ -280,3 +280,10 @@ class reqireView(View):
         return render(request,'web/reqire.html')
     def post(self,request,pk,tk,*args,**kwargs):
         return HttpResponse('hello')
+
+class TestBranchView(View):
+    def get(self,request,pk,tk,*args,**kwargs):
+        return render(request,'web/reqire.html')
+    def post(self,request,pk,tk,*args,**kwargs):
+        return HttpResponse('hello')
+
