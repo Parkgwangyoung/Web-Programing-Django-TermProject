@@ -1,0 +1,94 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>게시판</title>
+        <!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href= "images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}'>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href='{% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}'>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href='{% static "fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %}'>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href='{% static "vendor/animate/animate.css" %}'>
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href='{% static "vendor/css-hamburgers/hamburgers.min.css" %}'>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href='{% static "vendor/animsition/css/animsition.min.css" %}'>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href='{% static "vendor/select2/select2.min.css" %}'>
+    <!--===============================================================================================-->	
+        <link rel="stylesheet" type="text/css" href='{% static "vendor/daterangepicker/daterangepicker.css" %}'>
+    <!--===============================================================================================-->
+        <link rel="stylesheet" type="text/css" href='{% static "css/util.css" %}'>
+        <link rel="stylesheet" type="text/css" href='{% static "css/main.css" %}'>
+    <!--===============================================================================================-->
+    
+        <link rel="stylesheet" href='{% static "vendor/bootstrap/css/bootstrap.css" %} '> 
+    </head>
+<body>
+    <div class = "container">
+       
+    <table class ="table table-striped">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            <!-- <a href = "/web/board/1/1/">1학년게시판</a><br>
+            <a href = "/web/board/1/2/">2학년게시판</a><br>
+            <a href = "/web/board/1/3/">3학년게시판</a><br>
+            <a href = "/web/board/1/4/">4학년게시판</a><br> -->
+         
+        <tbody>
+            {% if Ctable %}
+            {% for c in Ctable %}
+            <tr>
+                <td>{{c.id}}</td>
+                <td><a  href= "/web/board/3/{{c.id}}">{{c.title}}</a></td>
+                <td>{{c.writer}}</td>
+                <td>{{c.date}}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    <hr/>
+    {% if logined_student_id %}<a class ="btn btn-default pull-right" href="/web/board/{{id}}/{{grade}}/create/">글쓰기</a>{% endif %}
+    {% if logined_professor_id %}<a class ="btn btn-default pull-right" href="/web/board/{{id}}/{{grade}}/create/">글쓰기</a>{% endif %}
+    <div class = "text-center" >
+
+        <ul class = "pagination justify-content-center " >
+
+            <li class="page-item "><a class = "page-link " href="#">1</a></li>
+            <li class="page-item"><a class = "page-link" href="#">2</a></li>
+            <li class="page-item"><a class = "page-link" href="#">3</a></li>
+            
+            
+        </ul>
+    </div>
+
+    </div>
+</body>
+<!-- {% if request.session.logined_special %}
+<a href="{% url 'web:website' %}"><input type="button" value="학년별 게시판생성"></a>
+<a href="{% url 'web:website' %}"><input type="button" value="지도교수별 게시판생성"></a>
+<a href="{% url 'web:website' %}"><input type="button" value="강의별 게시판생성"></a><br>
+{% endif %}
+{% if request.session.logined %}
+<a href="{% url 'web:website' %}"><input type="button" value="학년별 게시판"></a>
+<a href="{% url 'web:website' %}"><input type="button" value="지도교수별 게시판"></a>
+<a href="{% url 'web:website' %}"><input type="button" value="강의별 게시판"></a><br>
+{% endif %} -->
+
+<script> src='{% static "vendor/jquery/jquery-3.2.1.min.js"  %}'</script>
+<script> src='{% static "vendor/bootstrap/js/bootstrap.js" %}'</script>
+</html>
