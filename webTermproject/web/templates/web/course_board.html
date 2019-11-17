@@ -49,16 +49,22 @@
             <a href = "/web/board/1/4/">4학년게시판</a><br> -->
          
         <tbody>
-            {% if Ctable %}
+            {% for i in course_all %}
+            {{i.name}}
+            {{i.course_table_set.professor}}
+            {% endfor %}
+            <br>
+            {% for i in Course.course_table_set.all %}
+            {{i.course_name}}
+            {% endfor %}
             {% for c in Ctable %}
             <tr>
                 <td>{{c.id}}</td>
-                <td><a  href= "/web/board/3/{{c.id}}">{{c.title}}</a></td>
+                <td><a  href= "/web/board/1/{{grade}}/{{g.id}}/">{{c.title}}</a></td>
                 <td>{{c.writer}}</td>
                 <td>{{c.date}}</td>
             </tr>
             {% endfor %}
-            {% endif %}
         </tbody>
     </table>
     <hr/>

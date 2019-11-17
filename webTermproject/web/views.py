@@ -4,7 +4,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from web.forms import StudentSigninForm,ProfessorSigninForm,StudentUpdateForm,ProfessorUpdateForm,Grade_TableForm,Professor_TableForm,Course_TableForm
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
-from web.models import Professor,Grade_Table,Professor_Table,Course_Table,Student
+from web.models import Professor,Grade_Table,Professor_Table,Course_Table,Student,Course
 
 # 회원가입을 처리하는 뷰
 class signinView(View):
@@ -176,8 +176,16 @@ class BoardView(View):
                     professor_post = Professor_Table.objects.all().filter(professor_name = professor.name)
                     return render(request,'web/professor_board.html',{'Ptable':professor_post,'id':pk,'name':professor.name})
             else:
-                course_post = Course_Table.objects.get(id=tk)
-                return render(request,'web/course_board.html',{'Ctable':course_post,'id':pk,'grade':tk})
+                sw = Course.objects.get(name = "소프트웨어공학")
+                mb = Course.objects.get(name = "모바일응용시스템")
+                sp = Course.objects.get(name = "시스템프로그래밍")
+                lc = Course.objects.get(name = "논리회로")
+                wp = Course.objects.get(name = "웹프로그래밍")
+                cad = Course.objects.get(name = "CAD")
+                mp = Course.objects.get(name = "마이크로프로세서")
+                jp = Course.objects.get(name = "자바프로그래밍")
+                ec = Course.objects.get(name = "전자회로응용")
+                return render(request,'web/course_board.html',{'Course':course,'course_all':course_all,'id':pk,'grade':tk})
         except:
             return HttpResponse('잘못된 경로입니다.')
         

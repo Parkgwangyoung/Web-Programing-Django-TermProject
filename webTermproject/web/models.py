@@ -54,8 +54,19 @@ class Professor_Table(models.Model):
     def __str__(self):
         return self.title
 
+
+
+
+class Course(models.Model):
+    name = models.CharField(max_length=10,verbose_name="강의명")
+    professor = models.CharField(max_length=10,verbose_name="교수명")
+
+    def __str__(self):
+        return self.name
+
+
 class Course_Table(models.Model):
-    course_name = models.CharField(max_length=10, verbose_name="강의명")
+    course_name = models.ForeignKey(Course, on_delete= models.CASCADE)
     title = models.CharField(max_length=10,verbose_name="제목")
     description = models.TextField(verbose_name="내용")
     writer = models.CharField(max_length=10,verbose_name="작성자")
@@ -63,4 +74,4 @@ class Course_Table(models.Model):
 
     
     def __str__(self):
-        return self.course_name
+        return self.title
