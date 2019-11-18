@@ -1,0 +1,48 @@
+{% if Gform %}
+    {% if request.session.logined_student_id %}
+    <form action="/web/board/{{id}}/{{grade}}/create/" method="POST">
+        {% csrf_token %}
+        {{Gform.as_p}}
+        <input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">  
+        <input type="submit" value="글 쓰기">
+    </form> 
+    {% endif %}
+    {% if request.session.logined_professor_id %}
+    <form action="/web/board/{{id}}/{{grade}}/create/" method="POST">
+        {% csrf_token %}
+        {{Gform.as_p}}
+        <input type="hidden" name ="professor_id" value="{{request.session.logined_professor_id}}">
+        <input type="submit" value="글 쓰기">
+    </form> 
+    {% endif %}
+{% endif %}
+{% if Pform %}
+    {% if request.session.logined_professor_id %}
+        <form action="/web/board/{{id}}/{{request.session.logined_professor_id}}/create/" method="POST">
+            {% csrf_token %}
+            {{Pform.as_p}}
+
+            <input type="hidden" name ="professor_id" value="{{request.session.logined_professor_id}}">
+            <input type="submit" value="글 쓰기">
+        </form> 
+    {% endif %}
+    {% if request.session.logined_student_id %}
+        <form action="/web/board/{{id}}/{{request.session.logined_student_grade}}/create/" method="POST">
+            {% csrf_token %}
+            {{Pform.as_p}}
+            <input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">
+
+            <input type="submit" value="글 쓰기">
+        </form> 
+    {% endif %}  
+{% endif %}
+{% if Cform %}
+{%endif %}
+
+
+    
+    
+    <!-- {% for field in form %}
+    <p>{{field.label}}</p>
+    <p>{{ field.description }}</p> -->
+    <!-- {% endfor %}	 ???? -->

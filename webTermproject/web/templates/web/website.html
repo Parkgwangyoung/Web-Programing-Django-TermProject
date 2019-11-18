@@ -57,7 +57,7 @@
                   {% if request.session.logined_professor_id %}<a class="dropdown-item" href="/web/board/1/1/">학년별게시판</a>{% endif %}
                   {% if request.session.logined_student_id %}<a class="dropdown-item" href="/web/board/2/{{request.session.logined_student_grade}}/">지도교수별게시판</a>{% endif %}
                   {% if request.session.logined_professor_id %}<a class="dropdown-item" href="/web/board/2/{{request.session.logined_professor_id}}/">지도교수별게시판</a>{% endif %}
-                  <a class="dropdown-item" href="/web/board/3/{{request.session.logined_student_grade}}/">강의별게시판</a>
+                  <a class="dropdown-item" href="/web/board/3/1/">강의별게시판</a>
                   <a class="dropdown-item" href="#">JavaScript</a>
                   <a class="dropdown-item" href="#">Python</a>
                   

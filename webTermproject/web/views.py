@@ -161,22 +161,22 @@ class assignView(View):
 #게시판 창 띄워주는 뷰
 class BoardView(View):
     def get(self,request,pk,tk,*args,**kwargs):
-        try:
+        # try:
             if pk == 1:
                 grade_post = Grade_Table.objects.all().filter(grade = tk)
-                return render(request,'web/grade_board.html',{'Gtable':grade_post,'id':pk,'grade':tk})
+                return render(request,'web/board.html',{'Gtable':grade_post,'id':pk,'grade':tk})
             elif pk == 2:
                 if request.session.get('logined_student_id'):
                     student = Student.objects.get(id = request.session['logined_student_id'])
                     tutor = student.tutor
                     professor_post = Professor_Table.objects.all().filter(professor_name = tutor)
-                    return render(request,'web/professor_board.html',{'Ptable':professor_post,'id':pk,'tutor':tutor,'grade':tk})
+                    return render(request,'web/board.html',{'Ptable':professor_post,'id':pk,'tutor':tutor,'grade':tk})
                 else:
                     professor = Professor.objects.get(id = request.session['logined_professor_id'])
                     professor_post = Professor_Table.objects.all().filter(professor_name = professor.name)
-                    return render(request,'web/professor_board.html',{'Ptable':professor_post,'id':pk,'name':professor.name})
+                    return render(request,'web/board.html',{'Ptable':professor_post,'id':pk,'name':professor.name})
             else:
-                sw = Course.objects.get(name = "소프트웨어공학")
+               
                 mb = Course.objects.get(name = "모바일응용시스템")
                 sp = Course.objects.get(name = "시스템프로그래밍")
                 lc = Course.objects.get(name = "논리회로")
@@ -185,9 +185,10 @@ class BoardView(View):
                 mp = Course.objects.get(name = "마이크로프로세서")
                 jp = Course.objects.get(name = "자바프로그래밍")
                 ec = Course.objects.get(name = "전자회로응용")
-                return render(request,'web/course_board.html',{'Course':course,'course_all':course_all,'id':pk,'grade':tk})
-        except:
-            return HttpResponse('잘못된 경로입니다.')
+                sw = Course.objects.get(name = "소프트웨어공학")
+                return render(request,'web/course_board.html',{'sw':sw,'mb':mb,'sp':sp,'lc':lc,'wp':wp,'cad':cad,'mp':mp,'jp':jp,'ec':ec,'id':pk,'grade':tk})
+        # except:
+        #     return HttpResponse('잘못된 경로입니다.')
         
 
 # 게시판 창에서 글쓰기 버튼을 눌렀을때 처리되는 뷰 ( 글 쓰기 폼 )
@@ -195,13 +196,13 @@ class Create_PostView(View):
     def get(self,request,pk,tk,*args,**kwargs):
         if pk == 1:
             form = Grade_TableForm()
-            return render(request,'web/grade_createpost.html',{'form':form,'id':pk,'grade':tk})
+            return render(request,'web/createpost.html',{'Gform':form,'id':pk,'grade':tk})
         elif pk == 2:
             form = Professor_TableForm()
-            return render(request,'web/professor_createpost.html',{'form':form,'id':pk})
+            return render(request,'web/createpost.html',{'Pform':form,'id':pk})
         else:
             form = Course_TableForm()
-            return render(request,'web/course_createpost.html',{'form':form,'id':pk})
+            return render(request,'web/course_createpost.html',{'Cform':form,'id':pk})
 # 세션을 이용해서 작성자를 출력하도록해야함
     def post(self,request,pk,tk,*args,**kwargs):     
         try:
@@ -271,13 +272,13 @@ class BoardAccessView(View):
         try:
             if pk == 1:
                 grade_post = Grade_Table.objects.get(id=ak)
-                return render(request,'web/grade_post.html',{'post':grade_post})
+                return render(request,'web/post.html',{'post':grade_post})
             elif pk == 2:
                 professor_post = Professor_Table.objects.get(id=ak)
-                return render(request,'web/professor_post.html',{'post':professor_post})
+                return render(request,'web/post.html',{'post':professor_post})
             else:
                 course_post = Course_Table.objects.get(id=ak)
-                return render(request,'web/course_post.html',{'post':course_post})
+                return render(request,'web/post.html',{'post':course_post})
         except:
             return HttpResponse('잘못된 경로입니다.')
 

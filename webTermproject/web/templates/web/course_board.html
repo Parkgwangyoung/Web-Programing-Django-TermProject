@@ -49,22 +49,33 @@
             <a href = "/web/board/1/4/">4학년게시판</a><br> -->
          
         <tbody>
-            {% for i in course_all %}
-            {{i.name}}
-            {{i.course_table_set.professor}}
-            {% endfor %}
-            <br>
-            {% for i in Course.course_table_set.all %}
-            {{i.course_name}}
-            {% endfor %}
-            {% for c in Ctable %}
+        <a href="/web/board/3/1/">{{sw}}</a>
+        <a href="/web/board/3/2/">{{mb}}</a>
+        <a href="/web/board/3/3/">{{sp}}</a>
+        <a href="/web/board/3/4/">{{lc}}</a>
+        <a href="/web/board/3/5/">{{wp}}</a>
+        <a href="/web/board/3/6/">{{cad}}</a>
+        <a href="/web/board/3/7/">{{mp}}</a>
+        <a href="/web/board/3/8/">{{jp}}</a>
+        <a href="/web/board/3/9/">{{ec}}</a>
+            <!-- {{mb}}
+            <p>{% for i in sw.course_table_set.all %}<a href="/web/board/3/1/">{{i.course_name}}</a>{% endfor %}</p>
+            <p>{% for a in mb.course_table_set.all %}<a href="/web/board/3/2/">{{a.course_name}}</a>{% endfor %}</p>
+            {% for i in sp.course_table_set.all %}<a href="/web/board/3/3/">{{i.course_name}}</a>{% endfor %}
+            {% for i in lc.course_table_set.all %}<a href="/web/board/3/4/">{{i.course_name}}</a>{% endfor %}
+            {% for i in wp.course_table_set.all %}<a href="/web/board/3/5/">{{i.course_name}}</a>{% endfor %}
+            {% for i in cad.course_table_set.all %}<a href="/web/board/3/6/">{{i.course_name}}</a>{% endfor %}
+            {% for i in mp.course_table_set.all %}<a href="/web/board/3/7/">{{i.course_name}}</a>{% endfor %}
+            {% for i in jp.course_table_set.all %}<a href="/web/board/3/8/">{{i.course_name}}</a>{% endfor %}
+            {% for i in ec.course_table_set.all %}<a href="/web/board/3/9/">{{i.course_name}}</a>{% endfor %} -->
+            
             <tr>
                 <td>{{c.id}}</td>
                 <td><a  href= "/web/board/1/{{grade}}/{{g.id}}/">{{c.title}}</a></td>
                 <td>{{c.writer}}</td>
                 <td>{{c.date}}</td>
             </tr>
-            {% endfor %}
+            
         </tbody>
     </table>
     <hr/>
