@@ -1,0 +1,9 @@
+{% if form %}
+<form action="{% url 'web:createpost' pk %}" method="POST">
+{% csrf_token %}
+{{form.as_p}}
+<input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">
+<input type="hidden" name ="professor_id" value="{{request.session.logined_professor_id}}"> 
+<input type="submit" value="글 쓰기">
+</form>
+{% endif %}

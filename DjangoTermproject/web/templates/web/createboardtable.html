@@ -1,0 +1,15 @@
+{% if sform %}
+<form action="{% url 'web:Btcreate' %}" method="POST">
+    {% csrf_token %}
+    {{sform.as_p}}
+    <input type="submit" value="board table 필드 생성하기">
+</form>
+{% endif %}
+
+{% if gform %}
+<form action="{% url 'web:Bcreate' %}" method="POST">
+        {% csrf_token %}
+        {{gform.as_p}}
+        <input type="submit" value="게시판 생성하기">
+    </form>
+{% endif %}
