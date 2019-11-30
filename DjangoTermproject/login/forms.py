@@ -6,7 +6,7 @@ class StudentSigninForm(forms.ModelForm):
 
     class Meta:
         model = Student
-        labels = {"name":"성  함","email":"아 이 디","student_number":"학  번","password":"비밀번호"}
+        labels = {"name":"성  함","email":"아 이 디","grade":"학  년","student_number":"학  번","password":"비밀번호"}
         fields = ["name","email","password","grade","student_number","tutor"]
         exclude = ['tutor',]
         widgets = { 'password': forms.PasswordInput(attrs={'size':'30','style':'height:30;'},),
