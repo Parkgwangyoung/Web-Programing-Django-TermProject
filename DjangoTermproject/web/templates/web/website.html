@@ -4,7 +4,7 @@
   <head>
     <title>컴퓨터 공학과 홈페이지 입니다</title>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
   
@@ -56,7 +56,6 @@
     <header>
         <!-- header-area start -->
         <div id="sticker" class="header-area" style="height: 65px">
-            
           <div class="container">
             <div class="row">
               <div class="col-md-12 col-sm-12">
@@ -113,7 +112,8 @@
                         <a class="page-scroll" href="{% url 'web:assign' %}">지도교수 배정</a>
                       </li>
                       {% endif %}
-                      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">게시판 목록<span class="caret"></span></a>
+                      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: rgba(0, 0, 0, 0.349);">
+                        게시판 목록<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             {% if boardtable %}
                             {% for board  in boardtable %}
@@ -372,7 +372,7 @@
                         </p>
                       </div>
                       <div class="credits">
-                        <p><span>Email: </span><a href="mailto:likelionknut@gmail.com">example@gmail.com</a> /
+                        <p><span>Email: </span><a href="mailto:example@gmail.com">example@gmail.com</a> /
                           <span>Official Website: </span><a href="https://example.net">example.net</a>
                           <!--
                           All the links in the footer should remain intact.

@@ -168,25 +168,32 @@
 						<span class="focus-input100-1"></span>
 						<span class="focus-input100-2"></span>
 						<p><button class="btn btn-lg btn-warning btn-block text-uppercase" >
-							<i class="fab fontawesome-free mr-2" ></i><b>회원가입</b></button></p>					
+							<i class="fab fontawesome-free mr-2" ></i><b>가입하기</b></button></p>					
 				</form>
+				<a href = "/login/access"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
+						<i class="fab fontawesome-free mr-2"></i><b>돌아가기</b></button></a>
 				{% endif %}
 				{% if professorform %}
 				<form class="login100-form validate-form" action="/login/signin/2/" method="POST">
 					{% csrf_token %}
 					<span class="login100-form-title p-b-33">
-							<b></b>회원가입
+							<div style="color: orange;">
+								2. <b>회원 정보 입력</b><br>
+							</div>
 						</span>
 						<span class="focus-input100-1"></span>				
 							{% for field in professorform %}
-								<div class="wrap-input100 validate-input">
-								{{field.label}}{{ field }}
+								<div class="wrap-input100 validate-input" align="left" style="font-size: 15px;">
+									<b>{{field.label}}</b><br>{{ field }}
 								</div>
 								{% endfor %}								
 							<span class="focus-input100-1"></span>
 							<span class="focus-input100-2"></span>
-							<p><button class="btn btn-lg btn-primary btn-block text-uppercase" ><i class="fab fontawesome-free mr-2" ></i>회원가입</button></p>					
+							<p><button class="btn btn-lg btn-warning btn-block text-uppercase" >
+								<i class="fab fontawesome-free mr-2" ></i><b>가입하기</b></button></p>				
 				</form>
+				<a href = "/login/access"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
+						<i class="fab fontawesome-free mr-2"></i><b>돌아가기</b></button></a>
 				{% endif %}
 			</div>
 		</div>
@@ -204,7 +211,7 @@
 									  </p>
 								</div>
 									<div class="credits">
-										<p><span>Email: </span><a href="mailto:likelionknut@gmail.com">example@gmail.com</a> /
+										<p><span>Email: </span><a href="mailto:example@gmail.com">example@gmail.com</a> /
 										<span>Official Website: </span><a href="https://example.net">example.net</a>
 										<br>
 											Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></p>
