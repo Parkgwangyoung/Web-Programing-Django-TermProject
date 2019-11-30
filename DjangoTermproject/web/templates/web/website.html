@@ -45,19 +45,21 @@
                   <a class="dropdown-item" href="courses.html">JavaScript</a>
                   <a class="dropdown-item" href="courses.html">Python</a>
                 </div>
-
+                  
               </li>
               
               <li class="nav-item dropdown">
                  
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown05" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">게시판목록</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown05">
-                  
-                  {% if boards %}
-                    {% for board in boards %}
-                      <a class ="dropdown-item" href = "{% url 'web:board' forloop.counter %}">{{board}}</a>
-                    {%endfor %}
-                  {% endif %}  
+                  {% if boardtable %}
+                                 
+                  {% for board  in boardtable %}
+          
+                  <a class ="dropdown-item" href = "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a>
+                    
+                {% endfor %}
+                {% endif %}   
                   
                 </div>
 
@@ -88,7 +90,6 @@
                 <a href="{% url 'login:logout'  %}">로그아웃</a>    
                 {% if request.session.logined_special %}
                 <a href="{% url 'web:assign' %}">지도교수 배정</a>
-                <a href ="{% url 'web:Btcreate' %}">게시판 생성</a>
                 {% endif %}
                 {% endif %}  
               </li>
@@ -466,7 +467,7 @@
     <div class="container site-section element-animate">
       <div class="row justify-content-center mb-5">
           <div class="col-md-7 text-center section-heading">
-            <h2 class="text-primary heading">양아치</h2>
+            <h2 class="text-primary heading">Teachers</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit qui neque sint eveniet tempore sapiente.</p>
           </div>
         </div>
@@ -476,7 +477,7 @@
             <div class="flipper">
               <div class="front" style="background-image: url(../images/person_3.jpg);">
                 <div class="box">
-                  <h2>박춘명</h2>
+                  <h2>Job Smith</h2>
                   <p>Laravel Expert</p>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 {% if form %}
-<form action="{% url 'web:createpost' pk %}" method="POST">
+<form action="/web/{{pk}}/{{ak}}/create/" method="POST">
 {% csrf_token %}
 {{form.as_p}}
 <input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">

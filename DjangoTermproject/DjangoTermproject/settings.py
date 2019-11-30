@@ -53,9 +53,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'DjangoTermproject.urls'
 
-SESSION_COOKIE_AGE = 300
-SESSION_SAVE_EVERY_REQUEST = True
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
