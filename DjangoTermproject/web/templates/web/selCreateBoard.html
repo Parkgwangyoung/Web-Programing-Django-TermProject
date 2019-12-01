@@ -135,27 +135,14 @@
                             <div class="wrap-login100">			
                                 <span class="login100-form-title p-b-48 ">
                                     <div style="color: orange;">
-                                        <b>상위 게시판 생성</b><br><br>
+                                        1. <b>게시판 유형 선택</b><br><br>
                                     </div>
-                                    {% if Btform %}
-                                    <div align="left" style="font-size: 20px;">
-                                            <form action="{% url 'web:Btcreate' %}" method="POST">  
-                                                    {% csrf_token %}
-                                                    <div style="border: 2px solid gold; padding : 10px">
-                                                        {{Btform}} 
-                                                    </div>
-                                                    <div style="font-size: 15px; color: crimson;" align="left">
-                                                        <br>※주의사항<br>　1학년 게시판 X <br>　학년별 게시판 O<br><br>
-                                                    </div>
-                                                    <input type="hidden" value="상위 게시판 생성"><a href="/web/">
-                                                        <button class="btn btn-lg btn-dark btn-block text-uppercase" >
-                                                            <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a>
-                                                </form>
-                                            {% endif %}
-                                    </div>
-                                    <p></p>
-                                    <a href = "/web/selboard/"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
-                                        <i class="fab fontawesome-free mr-2"></i><b>돌아가기</b></button></a>
+                                    <p><a href = "/web/btcreate/"><button class="btn btn-lg btn-dark btn-block text-uppercase" >
+                                        <i class="fab fontawesome-free mr-2" ></i><b>상위 게시판</b></button></a></p>
+                                    <p><a href = "/web/secondboard/"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
+                                        <i class="fab fontawesome-free mr-2"></i><b>하위 게시판</b></button></a></p>
+                                    <a href = "/web/"><button class="btn btn-lg btn-light btn-block text-uppercase">
+                                         <i class="fab fontawesome-free mr-2"></i><b>취 소</b></button></a>
                                 </span>					
                             </div>
                         </div>		
@@ -163,12 +150,6 @@
                                 
                     
                     <div id="dropDownSelect1"></div>
-
-
-
-
-
-
 
 
 <!-- Start Footer bottom Area -->

@@ -135,26 +135,26 @@
                             <div class="wrap-login100">			
                                 <span class="login100-form-title p-b-48 ">
                                     <div style="color: orange;">
-                                        <b>상위 게시판 생성</b><br><br>
+                                        <b>하위 게시판 생성</b><br><br>
                                     </div>
-                                    {% if Btform %}
+                                    {% if Bform %}
                                     <div align="left" style="font-size: 20px;">
-                                            <form action="{% url 'web:Btcreate' %}" method="POST">  
+                                            <form action="{% url 'web:Bcreate' %}" method="POST">  
                                                     {% csrf_token %}
                                                     <div style="border: 2px solid gold; padding : 10px">
-                                                        {{Btform}} 
+                                                        {{Bform.as_p}} 
                                                     </div>
                                                     <div style="font-size: 15px; color: crimson;" align="left">
-                                                        <br>※주의사항<br>　1학년 게시판 X <br>　학년별 게시판 O<br><br>
+                                                        <br>※주의사항<br>　학년별 게시판 X<br>　1학년 게시판 O <br><br>
                                                     </div>
-                                                    <input type="hidden" value="상위 게시판 생성"><a href="/web/">
+                                                    <input type="hidden" value="하위 게시판 생성"><a href="/web/">
                                                         <button class="btn btn-lg btn-dark btn-block text-uppercase" >
                                                             <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a>
                                                 </form>
                                             {% endif %}
                                     </div>
                                     <p></p>
-                                    <a href = "/web/selboard/"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
+                                    <a href = "/web/selboard"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
                                         <i class="fab fontawesome-free mr-2"></i><b>돌아가기</b></button></a>
                                 </span>					
                             </div>
@@ -164,12 +164,26 @@
                     
                     <div id="dropDownSelect1"></div>
 
+<!-- 
+{% if Bform %}
+<form action="{% url 'web:Bcreate' %}" method="POST">
+    {% csrf_token %}
+    {{Bform.as_p}}
+    <input type="submit" value="하위 게시판 생성"><br>
+    주의사항 ex) 게시판은 1학년,2학년 형태로 작성하기<br>
+    <a href = "{% url 'web:Bpcreate' %}">게시글 작성하러가기</a>
+</form>
+{% endif %}
 
-
-
-
-
-
+{% if Pform %}
+<form action="{% url 'web:Bpcreate' %}" method="POST">
+    {% csrf_token %}
+    {{Pform.as_p}}
+    <input type="submit" value="게시글 생성"><br>
+    <a href ="{% url 'web:Btcreate' %}">상위 게시판 생성하러 가기</a><br>
+    <a href ="{% url 'web:website' %}">메인페이지로 가기</a>
+</form>
+{% endif %} -->
 
 <!-- Start Footer bottom Area -->
 <br><br><br><br><br>

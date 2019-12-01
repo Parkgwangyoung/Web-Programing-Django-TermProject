@@ -21,8 +21,8 @@ class BtCreateform(forms.ModelForm):
     class Meta:
         model = BoardTable
         fields = ["board_type",]
-        widgets = {'board_type':forms.TextInput(attrs={'size':'30','style':'height:30;'})}
-        labels = {"board_type":"만들고 싶은 상위 게시판 명 "}
+        widgets = {'board_type':forms.TextInput(attrs={'size':'11','style':'height:30;','placeholder':'여기에 입력'})}
+        labels = {"board_type":"상위 게시판 이름"}
 
     def __init__(self,*args,**kwargs):
         super(BtCreateform,self).__init__(*args,**kwargs)
@@ -32,8 +32,8 @@ class Bcreateform(forms.ModelForm):
     class Meta:
         model = Board
         fields = ["board_type","board_name"]
-        widgets = {'board_name':forms.TextInput(attrs={'size':'30','style':'height:30;'})}
-        labels = {"board_name":"만들고 싶은 게시판 명 "}
+        widgets = {'board_name':forms.TextInput(attrs={'size':'20','style':'height:30;','placeholder':'여기에 입력'})}
+        labels = {"board_name":"하위 게시판 이름"}
 
     def __init__(self,*args,**kwargs):
         super(Bcreateform,self).__init__(*args,**kwargs)

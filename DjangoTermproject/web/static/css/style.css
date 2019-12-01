@@ -202,6 +202,19 @@ div#preloader {
   background: #fff url('../img/preloader.gif') no-repeat center center;
 }
 
+div.left{
+  width: 50%;
+  float: left;
+  box-sizing: border-box;
+}
+
+div.right{
+  width: 50%;
+  float: right;
+  box-sizing: border-box;
+}
+
+
 ::-moz-selection {
   background: #F39926;
   text-shadow: none;

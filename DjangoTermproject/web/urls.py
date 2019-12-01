@@ -13,5 +13,6 @@ urlpatterns = [
    path('btcreate/',views.BtcreateView.as_view(),name='Btcreate'),
    path('bcreate/',views.BcreateView.as_view(),name='Bcreate'),
    path('bpcreate/',views.BpCreateView.as_view(),name='Bpcreate'),
-
+   path('selboard/', views.SelCreateBoard, name='Selcreate'),
+   path('secondboard/', views.SecondBoardCreateView.as_view(), name='secBoard'),
 ]

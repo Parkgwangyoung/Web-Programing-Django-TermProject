@@ -149,3 +149,13 @@ class BpCreateView(View):
             form = PostCreateform()
             return render(request,'web/createboardtable.html',{'Pform':form})
 
+def SelCreateBoard(request):
+    return render(request, 'web/selCreateBoard.html')
+
+class SecondBoardCreateView(View):
+    def get(self,request,*args,**kwargs):
+        if request.session.get('logined_special'):
+            form = Bcreateform()
+            return render(request,'web/secondBoard.html',{'Bform':form})
+        else:
+            raise PermissionDenied
