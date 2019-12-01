@@ -139,6 +139,7 @@ class UpdatePostView(View):
                 return HttpResponseRedirect(reverse('web:post',args=(post,)))
             except:
                 return HttpResponse('올바르지 않습니다.')
+
 #게시글 삭제
 class DeletePostView(View):
     def get(self,request,post,*args,**kwargs):
