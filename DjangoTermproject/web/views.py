@@ -46,8 +46,9 @@ class assignView(View):
 class BoardAccessView(View):
     def get(self,request,boardtable,*args,**kwargs):
         boardtables = get_object_or_404(BoardTable,pk=boardtable)       
-        boards = boardtables.board_set.all()      
-        return render(request,'web/board.html',{'board':boards,'pk':boardtable})
+        boards = boardtables.board_set.all()
+        Bt = BoardTable.objects.all()
+        return render(request,'web/board.html',{'board':boards,'pk':boardtable,'boardtable':Bt})
 
 class BoardView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
@@ -55,7 +56,8 @@ class BoardView(View):
         boards = boardtables.board_set.all()
         get_board = get_object_or_404(Board,pk=board)
         post = get_board.post_set.all()
-        return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board})
+        Bt = BoardTable.objects.all()
+        return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt})
 
 class CreatepostView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
