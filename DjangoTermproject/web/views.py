@@ -122,7 +122,7 @@ class PostView(View):
                 posts = get_object_or_404(Post,pk=post)
                 return render(request,'web/post.html',{'post':posts,'pk':post})
         
-
+#게시글 수정
 class UpdatePostView(View):
     def get(self,request,post,*args,**kwargs):
         form = PostUpdateform()       
@@ -139,8 +139,12 @@ class UpdatePostView(View):
                 return HttpResponseRedirect(reverse('web:post',args=(post,)))
             except:
                 return HttpResponse('올바르지 않습니다.')
-
-   
+#게시글 삭제
+class DeletePostView(View):
+    def get(self,request,post,*args,**kwargs):
+        posts = get_object_or_404(Post,pk=post)
+        posts.delete()
+        return HttpResponseRedirect(reverse('web:website'))
 
 class BtcreateView(View):
     def get(self,request,*args,**kwargs):

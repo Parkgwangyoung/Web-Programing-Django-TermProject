@@ -11,6 +11,7 @@ urlpatterns = [
    path('<int:boardtable>/<int:board>/create/',views.CreatepostView.as_view(),name='createpost'),
    path('board/<int:post>/post/',views.PostView.as_view(),name='post'),
    path('board/<int:post>/updatepost/',views.UpdatePostView.as_view(),name='updatepost'),
+   path('board/<int:post>/deletepost/',views.DeletePostView.as_view(),name='deletepost'),
    path('btcreate/',views.BtcreateView.as_view(),name='Btcreate'),
    path('bcreate/',views.BcreateView.as_view(),name='Bcreate'),
    path('bpcreate/',views.BpCreateView.as_view(),name='Bpcreate'),
