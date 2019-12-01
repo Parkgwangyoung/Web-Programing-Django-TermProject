@@ -6,7 +6,7 @@ class StudentSigninForm(forms.ModelForm):
 
     class Meta:
         model = Student
-        labels = {"name":"성  함","email":"아 이 디","password":"비밀번호","grade":"학  년","student_number":"학  번"}
+        labels = {"name":"성  함","email":"아 이 디","student_number":"학  번","password":"비밀번호"}
         fields = ["name","email","password","grade","student_number","tutor"]
         exclude = ['tutor',]
         widgets = { 'password': forms.PasswordInput(attrs={'size':'30','style':'height:30;'},),
@@ -26,8 +26,8 @@ class ProfessorSigninForm(forms.ModelForm):
 
     class Meta:
         model = Professor
-        labels = {"name":"성  함","email":"아 이 디","password":"비밀번호","professor_number":"직원번호"}
-        fields = ["name","email","password","professor_number"]
+        labels = {"name":"성  함","email":"아 이 디","professor_number":"직원번호","password":"비밀번호"}
+        fields = ["name","email","professor_number","password"]
         widgets = { 'password': forms.PasswordInput(attrs={'size':'30','style':'height:30;'}),
                     'name' : forms.TextInput(attrs={'size':'30','style':'height:30;'}),
                     'email' : forms.TextInput(attrs={'size':'30','style':'height:30;'}),
@@ -52,13 +52,13 @@ class StudentUpdateForm(forms.ModelForm):
             'name' : forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             'student_number' : forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             }
-        labels={"name" : "성  함","student_number":"학  번","password":"새 비밀번호",
+        labels={"name" : "성　　　함　","student_number":"학　　　번　","password":"변경후 비밀번호",
          }
          
     def __init__(self,*args,**kwargs):
         super(StudentUpdateForm,self).__init__(*args,**kwargs)
         self.label_suffix=''
-        self.fields['root_password'].label='현재 비밀번호'
+        self.fields['root_password'].label='변경전 비밀번호'
 
 class ProfessorUpdateForm(forms.ModelForm):
     root_password = forms.CharField(max_length=20,widget=forms.PasswordInput(attrs={'size':'30','style':'height:30;'}))
@@ -72,10 +72,10 @@ class ProfessorUpdateForm(forms.ModelForm):
             'name' : forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             'professor_number' : forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             }
-        labels={"name" : "성  함","student_number":"직 원 번 호　","password":"새 비밀번호",
+        labels={"name" : "성　　　함　","student_number":"직 원 번 호　","password":"변경후 비밀번호",
          }
          
     def __init__(self,*args,**kwargs):
         super(ProfessorUpdateForm,self).__init__(*args,**kwargs)
         self.label_suffix=''
-        self.fields['root_password'].label='현재 비밀번호'
+        self.fields['root_password'].label='변경전 비밀번호'
