@@ -91,7 +91,7 @@
 										  <span class="icon-bar"></span>
 										</button>
 										<!-- Brand -->
-										<a class="navbar-brand page-scroll sticky-logo" href="../../web">
+										<a class="navbar-brand page-scroll sticky-logo" href="http://localhost:8000/web/">
 											<h1 style="font-size: 30px !important;">교통대 <span>X</span> 컴퓨터공학과</h1>
 											<!-- Uncomment below if you prefer to use an image logo -->
 											<!--<img src='{% static "img/mark.jpg" %}' alt="" title="" style="width: 30px; height: 30px;">-->
@@ -134,38 +134,55 @@
 <body>
         
         
-    <div class = "container">
-    <table class ="table table-striped">
-        <thead>
+        <div class = "container">
                 {% if board %}
-                {% for i in board %}  
-                 <a href = "/web/board/{{pk}}/{{i.id}}/"> <h2>{{i.board_name}}</h2></a>
-                {% endfor %}
-                {% endif %}
-            {% if post %}
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% for i in post %}
-            <tr>        
-                <td>{{forloop.counter}}</td>
-                <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
-                <td>{{i.writer}}</td>
-                <td>{{i.date}}</td>
-            </tr>
-            {% endfor %}
-          
-            
-        </tbody>
+                <select name="board" onchange="if(this.value) location.href=(this.value);">
+                    <option value="">게시판 선택</option>
+                    {% for i in board %}
+                        <option value="/web/board/{{pk}}/{{i.id}}/">{{i.board_name}}</option>    
+                    {% endfor %}
+                </select>
+                
+            {% endif %}
+            <br><br>
+            <div style="border: 2px solid gray; background-color:white">
+                    <table class ="table table-striped">
+                            <thead>
+                                
+                                {% if post %}
+                    
+                                <tr>
+                                    <th>번호</th>
+                                    <th>제목</th>
+                                    <th>작성자</th>
+                                    <th>작성일</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    {% for i in post %}
+                                        <tr>        
+                                            <td>{{forloop.counter}}</td>
+                                            <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
+                                            <td>{{i.writer}}</td>
+                                            <td>{{i.date}}</td>
+                                        </tr>
+                                    {% endfor %}               
+                                </tbody>
+                            
+                            
+                        </table>
+            </div>
         
-    </table>
-    <hr/>
-    <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>
+        <hr/>
+        <!-- <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>-->
+        <div align="right">
+            <div  style="width: 80px;">
+                    <a href="/web/{{pk}}/{{ak}}/create">
+                        <button class="btn btn-warning btn-block text-uppercase">
+                                <b>글쓰기</b></button></a>
+            </div>
+                
+        </div>
     
     <div class = "text-center" >
 

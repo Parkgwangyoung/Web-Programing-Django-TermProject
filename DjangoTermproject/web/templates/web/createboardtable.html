@@ -175,48 +175,46 @@
                                             <form action="{% url 'web:Bcreate' %}" method="POST">  
                                                     {% csrf_token %}
                                                     <div style="border: 2px solid gold; padding : 10px">
-                                                        {{Bform}} 
-                                                    </div>
-                                                    <div style="font-size: 15px; color: crimson;" align="left">
-                                                        <br>※주의사항<br>　1학년 게시판 O <br>　학년별 게시판 X<br><br>
-                                                    </div>
-                                                    <input type="hidden" value="상위 게시판 생성"><a href="/web/b">
-                                                        <button class="btn btn-lg btn-dark btn-block text-uppercase" >
-                                                            <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a>
-                                                </form>
-                                            
-                                    </div>
-									<p></p>
-									<a href = "{% url 'web:Bpcreate' %}"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
-                                        <i class="fab fontawesome-free mr-2"></i><b>하위게시판 글작성하러가기</b></button></a>
-                                    <a href = "/web/selboard/"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
+                                                            {{Bform.as_p}} 
+                                                        </div>
+                                                        <div style="font-size: 15px; color: crimson;" align="left">
+                                                            <br>※주의사항<br>　1학년 게시판 O <br>　학년별 게시판 X<br><br>
+                                                        </div><p>
+                                                        <input type="hidden" value="상위 게시판 생성"><a href="/web/b">
+                                                            <button class="btn btn-lg btn-dark btn-block text-uppercase" >
+                                                                <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a></p>
+                                                    </form>
+                                                
+                                        </div>
+                                        <p>
+                                        <a href = "{% url 'web:Bpcreate' %}"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
+                                            <i class="fab fontawesome-free mr-2"></i><b>하위게시판 글작성 하러가기</b></button></a></p>
+                                        <a href = "/web/selboard/"><button class="btn btn-lg btn-light btn-block text-uppercase">
                                         <i class="fab fontawesome-free mr-2"></i><b>돌아가기</b></button></a>
                                 </span>					
                             </div>
                         </div>		
                     </div>
-					{% endif %}          
+					{% endif %}                 
                     {% if Pform %}
 					<div class="limiter">
                         <div align="center">
                             <div class="wrap-login100">			
                                 <span class="login100-form-title p-b-48 ">
                                     <div style="color: orange;">
-                                        <b>게시판 글 생성</b><br><br>
+                                        <b>게시글 생성</b><br><br>
                                     </div>
                                     
                                     <div align="left" style="font-size: 20px;">
                                             <form action="{% url 'web:Bpcreate' %}" method="POST">  
                                                     {% csrf_token %}
+                                                    <p>
                                                     <div style="border: 2px solid gold; padding : 10px">
-                                                        {{Pform}} 
-                                                    </div>
-                                                    <div style="font-size: 15px; color: crimson;" align="left">
-                                                        <br>※주의사항<br>　1학년 게시판 O <br>　학년별 게시판 X<br><br>
-                                                    </div>
-                                                    <input type="hidden" value="상위 게시판 생성"><a href="/web/">
+                                                        {{Pform.as_p}} 
+                                                    </div></p>
+                                                    <p><input type="hidden" value="상위 게시판 생성"><a href="/web/">
                                                         <button class="btn btn-lg btn-dark btn-block text-uppercase" >
-                                                            <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a>
+                                                            <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a></p>
                                                 </form>
                                             
                                     </div>
