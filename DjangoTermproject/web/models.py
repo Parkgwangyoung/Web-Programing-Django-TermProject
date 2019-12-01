@@ -21,7 +21,11 @@ class Post(models.Model):
     title = models.CharField(max_length=20,verbose_name="제목")
     description = models.TextField(verbose_name="글 내용")
     writer = models.CharField(max_length=10,verbose_name="작성자")
+    writer_email = models.EmailField(max_length=30,verbose_name="작성자 아이디")
     date = models.DateField(auto_now=True,verbose_name="작성일")
+
+    class Meta:
+        ordering = ['date']
 
     def __str__(self):
         return self.title

@@ -1,12 +1,13 @@
 from django import forms
 from django.forms import ModelForm
 from web.models import BoardTable,Board,Post
+from.import views
 
 class CreatePostform(forms.ModelForm):
     class Meta:
         model = Post
-        fileds = ["board_name","title","description","date","writer"]
-        exclude = ['board_name','date','writer',]
+        fileds = ["board_name","title","description","date","writer","writer_email"]
+        exclude = ['board_name','date','writer','writer_email']
         widgets = {
             'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             'description' : forms.Textarea(attrs={'size':'100','style':'height:100;'}),
@@ -54,3 +55,22 @@ class PostCreateform(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(PostCreateform,self).__init__(*args,**kwargs)
         self.label_suffix=''   
+
+
+
+class PostUpdateform(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ["board_name","title","description","writer","date","writer_email"]
+        exclude = ['date','writer','board_name','writer_email']
+        widgets = {
+            'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
+            'description':forms.Textarea(attrs={'size':'100','style':'height:100;'}),
+            
+           
+        }
+        labels = {"title":"제 목","description":"글 내용"}
+
+    def __init__(self,*args,**kwargs):
+        super(PostUpdateform,self).__init__(*args,**kwargs)
+        self.label_suffix=''

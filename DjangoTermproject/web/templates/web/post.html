@@ -1,2 +1,8 @@
+
 {{post.title}}<br>
 {{post.description}}
+{% if email == post.writer_email %}
+<span class="control hidden.">
+    <a href="{% url 'web:updatepost' pk %}">수정</a>   
+  </span>
+{% endif %}

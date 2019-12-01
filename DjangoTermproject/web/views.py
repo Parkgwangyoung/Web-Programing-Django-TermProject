@@ -4,7 +4,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 from login.models import Student,Professor
 from web.models import Board,BoardTable,Post
 from django.urls import reverse
-from web.forms import CreatePostform,BtCreateform,Bcreateform,PostCreateform
+from web.forms import CreatePostform,BtCreateform,Bcreateform,PostCreateform,PostUpdateform
 from django.core.exceptions import PermissionDenied
 # Create your views here.
 
@@ -13,8 +13,7 @@ class indexView(View):
     def get(self,request,*args,**kwargs):
         try:
             boardtable = BoardTable.objects.all()
-            boards = Board.objects.all()
-            return render(request,'web/website.html',{'boardtable':boardtable,'boards':boards})
+            return render(request,'web/website.html',{'boardtable':boardtable})
         except:
             return HttpResponse('올바르지 않습니다.')
 
@@ -65,11 +64,12 @@ class CreatepostView(View):
     
 
     def post(self,request,boardtable,board,*args,**kwargs):
-        try:
+        try:     
             if request.session.get('logined_student_id'):
                 hidden = request.POST['student_id']
                 student = Student.objects.get(id = hidden)
                 writer = student.name
+                writer_email = student.email
                 boards = get_object_or_404(Board,pk=board)
                 for i  in boards.post_set.all():
                     board_name = i.board_name
@@ -78,6 +78,7 @@ class CreatepostView(View):
                 if form.is_valid():
                     post = form.save(commit=False)
                     post.writer =writer
+                    post.writer_email = writer_email
                     post.board_name = board_name
                     post.save()
                     return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
@@ -85,6 +86,7 @@ class CreatepostView(View):
                 hidden = request.POST['professor_id']
                 professor = Professor.objects.get(id = hidden)
                 writer = professor.name
+                writer_email = professor.email
                 boards = get_object_or_404(Board,pk=board)
                 for i  in boards.post_set.all():
                     board_name = i.board_name
@@ -93,6 +95,7 @@ class CreatepostView(View):
                 if form.is_valid():
                     post = form.save(commit=False)
                     post.writer =writer
+                    post.writer_email = writer_email
                     post.board_name = board_name
                     post.save()
                     return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
@@ -102,10 +105,42 @@ class CreatepostView(View):
 # 만약 포스트에 목록으로 들어가는창 혹은 뒤로가기 창이있으면 url이 바뀌어야함
 class PostView(View):
     def get(self,request,post,*args,**kwargs):
-        post = get_object_or_404(Post,pk=post)
-        return render(request,'web/post.html',{'post':post})
+        try: #학생의경우
+            student_id = request.session['logined_student_id']
+            student = Student.objects.get(id = student_id)
+            email = student.email
+            posts = get_object_or_404(Post,pk=post)
+            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post})
+        except:  #교수의경우
+            try:
+                professor_id = request.session['logined_professor_id']
+                professor = Professor.objects.get(id = professor_id)
+                email = professor.email
+                posts = get_object_or_404(Post,pk=post)
+                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post})
+            except: #관리자의경우
+                posts = get_object_or_404(Post,pk=post)
+                return render(request,'web/post.html',{'post':posts,'pk':post})
+        
 
+class UpdatePostView(View):
+    def get(self,request,post,*args,**kwargs):
+        form = PostUpdateform()       
+        return render(request,'web/updatepost.html',{'form':form,'pk':post})
 
+    def post(self,request,post,*args,**kwargs):
+        form = PostUpdateform(request.POST)
+        if form.is_valid():
+            try:                                     
+                post_get = Post.objects.get(id=post)
+                post_get = PostUpdateform(request.POST, instance=post_get)
+                post_get.save(commit=False)
+                post_get.save()
+                return HttpResponseRedirect(reverse('web:post',args=(post,)))
+            except:
+                return HttpResponse('올바르지 않습니다.')
+
+   
 
 class BtcreateView(View):
     def get(self,request,*args,**kwargs):
