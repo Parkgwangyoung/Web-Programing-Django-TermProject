@@ -175,6 +175,7 @@
         
         <hr/>
         <!-- <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>-->
+        {% if request.session.logined %}
         <div align="right">
             <div  style="width: 80px;">
                     <a href="/web/{{pk}}/{{ak}}/create">
@@ -183,7 +184,7 @@
             </div>
                 
         </div>
-    
+    {% endif %}
     <div class = "text-center" >
 
         <ul class = "pagination justify-content-center " >
