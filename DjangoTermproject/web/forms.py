@@ -22,8 +22,8 @@ class BtCreateform(forms.ModelForm):
     class Meta:
         model = BoardTable
         fields = ["board_type",]
-        widgets = {'board_type':forms.TextInput(attrs={'size':'30','style':'height:30;'})}
-        labels = {"board_type":"만들고 싶은 상위 게시판 명 "}
+        widgets = {'board_type':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 입력'})}
+        labels = {"board_type":"만들고 싶은 게시판 명 "}
 
     def __init__(self,*args,**kwargs):
         super(BtCreateform,self).__init__(*args,**kwargs)
@@ -33,7 +33,7 @@ class Bcreateform(forms.ModelForm):
     class Meta:
         model = Board
         fields = ["board_type","board_name"]
-        widgets = {'board_name':forms.TextInput(attrs={'size':'30','style':'height:30;'})}
+        widgets = {'board_name':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 입력'})}
         labels = {"board_name":"만들고 싶은 게시판 명 "}
 
     def __init__(self,*args,**kwargs):
@@ -46,11 +46,11 @@ class PostCreateform(forms.ModelForm):
         fields = ["board_name","title","description","writer","date"]
         exclude = ['date',]
         widgets = {
-            'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
-            'description':forms.Textarea(attrs={'size':'100','style':'height:100;'}),
-            'writer':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
+            'title':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 제목'}),
+            'description':forms.Textarea(attrs={'size':'20','style':'height:100; width:100%','placeholder':'여기에 글 내용'}),
+            'writer':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 작성자'}),
         }
-        labels = {"board_name":"만들 게시판 명","title":"제 목","description":"글 내용","writer":"작 성 자"}
+        labels = {"board_name":"게시판 명","title":"제 목","description":"글 내용","writer":"작 성 자"}
 
     def __init__(self,*args,**kwargs):
         super(PostCreateform,self).__init__(*args,**kwargs)
