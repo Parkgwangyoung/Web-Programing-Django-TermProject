@@ -130,6 +130,16 @@
 				</div>
     </head>
 <body>
+  {% if error %}
+  <script>
+  alert('어드민은 추천할수 없어용^^');
+  </script>
+  {% endif %}
+  {% if success %}
+  <script>
+  alert('추천을 누르셨습니다!!');
+  </script>
+  {% endif %}
   <div class = "container">
     <div style="border: 2px solid gray; background-color:white">
         <table class ="table table-striped">
@@ -138,6 +148,13 @@
                 </thead>
                     <tbody>
                       내용 : {{post.description}}
+                      <a href="{% url 'web:like' post.id %}">
+                        {% if post in student.like_post %}
+                            취소
+                        {% else %}
+                            좋아요
+                        {% endif %}
+                    </a>
                       {% if email == post.writer_email %}
                         <span class="control hidden">
                             <a href="{% url 'web:updatepost' pk %}">수정</a>  

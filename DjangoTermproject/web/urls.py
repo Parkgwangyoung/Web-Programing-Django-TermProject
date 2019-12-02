@@ -16,5 +16,6 @@ urlpatterns = [
    path('btcreate/',views.BtcreateView.as_view(),name='Btcreate'),
    path('bcreate/',views.BcreateView.as_view(),name='Bcreate'),
    path('bpcreate/',views.BpCreateView.as_view(),name='Bpcreate'),
+   path('board/<int:post>/like/',views.likeView.as_view(),name='like'),
 
 ]

@@ -6,8 +6,8 @@ from.import views
 class CreatePostform(forms.ModelForm):
     class Meta:
         model = Post
-        fileds = ["board_name","title","description","date","writer","writer_email"]
-        exclude = ['board_name','date','writer','writer_email']
+        fileds = ["board_name","title","description","date","writer","writer_email","student","professor","like_number"]
+        exclude = ['board_name','date','writer','writer_email','student','professor','like_number']
         widgets = {
             'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             'description' : forms.Textarea(attrs={'size':'100','style':'height:100;'}),
@@ -43,8 +43,8 @@ class Bcreateform(forms.ModelForm):
 class PostCreateform(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["board_name","title","description","writer","date"]
-        exclude = ['date',]
+        fields = ["board_name","title","description","writer","date","like_number","student","professor","writer_email"]
+        exclude = ['date','student','professor','writer_email','like_number']
         widgets = {
             'title':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 제목'}),
             'description':forms.Textarea(attrs={'size':'20','style':'height:100; width:100%','placeholder':'여기에 글 내용'}),
@@ -61,8 +61,8 @@ class PostCreateform(forms.ModelForm):
 class PostUpdateform(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["board_name","title","description","writer","date","writer_email"]
-        exclude = ['date','writer','board_name','writer_email']
+        fields = ["board_name","title","description","writer","date","writer_email","student","professor","like_number"]
+        exclude = ['date','writer','board_name','writer_email','student','professor','like_number']
         widgets = {
             'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             'description':forms.Textarea(attrs={'size':'100','style':'height:100;'}),

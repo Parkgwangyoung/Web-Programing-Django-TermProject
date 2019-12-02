@@ -154,6 +154,7 @@
                                     <th>제목</th>
                                     <th>작성자</th>
                                     <th>작성일</th>
+                                    <th>추천수</th>
                                 </tr>
                             </thead>
                                 <tbody>
@@ -163,6 +164,7 @@
                                             <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
                                             <td>{{i.writer}}</td>
                                             <td>{{i.date}}</td>
+                                            <td>{{i.like_number}}</td>
                                         </tr>
                                     {% endfor %}               
                                 </tbody>
