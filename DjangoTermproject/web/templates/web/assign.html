@@ -130,9 +130,15 @@
 
         <body>
         {% if error %}
-            {{error}}
+            <script>
+            alert('반드시 학생과 교수가 모두 선택되어있어야합니다.');
+            </script>
         {% endif %}
-        
+        {% if success %}
+        <script>
+        alert('지도교수 배정이 완료되었습니다.');
+        </script>
+        {% endif %}
             <div class="limiter">
                 <div align="center">
                     <div class="wrap-login100">

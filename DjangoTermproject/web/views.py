@@ -38,9 +38,15 @@ class assignView(View):
                 student_get.save()
                 student = Student.objects.all().exclude(name='관리자').order_by('student_number')
                 professor = Professor.objects.all().order_by('name')
-                return render(request,'web/assign.html',{'students':student,'professors':professor})
+                return render(request,'web/assign.html',{'students':student,'professors':professor,'success':"지도교수배정성공"})
         except:
-            return HttpResponse('잘못된 방식입니다. 학생과 교수 둘다 선택되어있는지 확인해주세요.')
+            try:
+                if request.session.get('logined_special'):
+                    student = Student.objects.all().exclude(name='관리자').order_by('student_number')
+                    professor = Professor.objects.all().order_by('name')
+                    return render(request,'web/assign.html',{'students':student,'professors':professor,'error':"지도교수배정실패"})
+            except:
+                return HttpResponse('잘못된 방향입니다.')
         
 
 class BoardAccessView(View):
@@ -169,7 +175,7 @@ class BtcreateView(View):
                 form.save(commit=False)
                 form.save()
                 form =Bcreateform()
-                return render(request,'web/createboardtable.html',{'Bform':form})             
+                return render(request,'web/createboardtable.html',{'Bform':form,'Btsuccess':"상위게시판생성완료"})             
 
 class BcreateView(View):
     def get(self,request,*args,**kwargs):
@@ -183,7 +189,7 @@ class BcreateView(View):
             form.save(commit=False)
             form.save()
             form =Bcreateform()
-            return render(request,'web/createboardtable.html',{'Bform':form})
+            return render(request,'web/createboardtable.html',{'Bform':form,'Bsuccess':"하위게시판생성완료"})
 
    
 
@@ -202,7 +208,7 @@ class BpCreateView(View):
             form.professor = 1
             form.save()
             form = PostCreateform()
-            return render(request,'web/createboardtable.html',{'Pform':form})
+            return render(request,'web/createboardtable.html',{'Pform':form,'Psuccess':"게시글 작성완료"})
 
 
 

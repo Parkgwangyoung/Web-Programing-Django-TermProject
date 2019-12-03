@@ -71,6 +71,21 @@
 			======================================================= -->
 			
 			</head>
+			{% if Btsuccess %}
+			<script>
+			alert('상위 게시판 생성이 완료되었습니다.');
+			</script>
+			{% endif %}
+			{% if Bsuccess %}
+			<script>
+			alert('하위 게시판 생성이 완료되었습니다.');
+			</script>
+			{% endif %}
+			{% if Psuccess %}
+			<script>
+			alert('게시글 작성이 완료되었습니다.');
+			</script>
+			{% endif %}
 			<body data-spy="scroll" data-target="#navbar-example" style="background-color: rgb(241, 241, 241);">
 				<header>
 					<!-- header-area start -->
