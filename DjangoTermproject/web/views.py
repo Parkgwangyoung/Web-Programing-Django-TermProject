@@ -23,7 +23,7 @@ class assignView(View):
     def get(self,request,*args,**kwargs):
         try:
             if request.session.get('logined_special'):
-                student = Student.objects.all().exclude(name='admin').order_by('student_number')
+                student = Student.objects.all().exclude(name='관리자').order_by('student_number')
                 professor = Professor.objects.all().order_by('name')
                 return render(request,'web/assign.html',{'students':student,'professors':professor})
         except:
@@ -36,7 +36,7 @@ class assignView(View):
                 student_get = Student.objects.get(id=request.POST['student'])
                 student_get.tutor = professor_get.name 
                 student_get.save()
-                student = Student.objects.all().exclude(name='admin').order_by('student_number')
+                student = Student.objects.all().exclude(name='관리자').order_by('student_number')
                 professor = Professor.objects.all().order_by('name')
                 return render(request,'web/assign.html',{'students':student,'professors':professor})
         except:
@@ -45,17 +45,25 @@ class assignView(View):
 
 class BoardAccessView(View):
     def get(self,request,boardtable,*args,**kwargs):
-        boardtables = get_object_or_404(BoardTable,pk=boardtable)       
-        boards = boardtables.board_set.all()      
-        return render(request,'web/board.html',{'board':boards,'pk':boardtable})
+        try:
+            boardtables = get_object_or_404(BoardTable,pk=boardtable)       
+            boards = boardtables.board_set.all()
+            Bt = BoardTable.objects.all()
+            return render(request,'web/board.html',{'board':boards,'pk':boardtable,'boardtable':Bt})
+        except:
+            return HttpResponse('올바르지않습니다.')
 
 class BoardView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
-        boardtables =get_object_or_404(BoardTable,pk=boardtable)
-        boards = boardtables.board_set.all()
-        get_board = get_object_or_404(Board,pk=board)
-        post = get_board.post_set.all()
-        return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board})
+        try:
+            boardtables =get_object_or_404(BoardTable,pk=boardtable)
+            boards = boardtables.board_set.all()
+            get_board = get_object_or_404(Board,pk=board)
+            post = get_board.post_set.all()
+            Bt = BoardTable.objects.all()
+            return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt})
+        except:
+            return HttpResponse('올바르지않습니다.')
 
 class CreatepostView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
@@ -164,6 +172,11 @@ class BtcreateView(View):
                 return render(request,'web/createboardtable.html',{'Bform':form})             
 
 class BcreateView(View):
+    def get(self,request,*args,**kwargs):
+        form = Bcreateform()
+        return render(request,'web/createboardtable.html',{'Bform':form})
+
+
     def post(self,request,*args,**kwargs):
         form = Bcreateform(request.POST)
         if form.is_valid():
@@ -186,7 +199,46 @@ class BpCreateView(View):
         form = PostCreateform(request.POST)
         if form.is_valid():
             form.save(commit=False)
+            form.professor = 1
             form.save()
             form = PostCreateform()
             return render(request,'web/createboardtable.html',{'Pform':form})
 
+
+
+class likeView(View):
+    def get(self,request,post,*args,**kwargs):
+        try:
+            posts = get_object_or_404(Post,pk=post)
+            student = Student.objects.get(id = request.session['logined_student_id'])
+            check_like_post = student.like_post.filter(id = post)
+
+            if check_like_post.exists():
+                student.like_post.remove(posts)
+                posts.like_number -= 1
+                posts.save()
+            else:
+                student.like_post.add(posts)
+                posts.like_number += 1
+                posts.save()
+        
+            return render(request,'web/post.html',{'post':posts,'pk':post,'success':" "})
+        except:
+            try:
+                posts = get_object_or_404(Post,pk=post)
+                professor = Professor.objects.get(id = request.session['logined_professor_id'])
+                check_like_post = professor.like_post.filter(id = post)
+
+                if check_like_post.exists():
+                    professor.like_post.remove(posts)
+                    posts.like_number -=1
+                    posts.save()
+                else:
+                    professor.like_post.add(posts)
+                    posts.like_number += 1
+                    posts.save()
+            
+                return render(request,'web/post.html',{'post':posts,'pk':post,'success':" "})
+            except:
+                posts = get_object_or_404(Post,pk=post)
+                return render(request,'web/post.html',{'post':posts,'pk':post,'error':" "})
