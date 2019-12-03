@@ -153,19 +153,15 @@
                         {% if post in student.like_post %}
                             취소
                         {% else %}
-                            좋아요
+                            추천
                         {% endif %}
                     </a>
-                      {% if email == post.writer_email %}
-                        <span class="control hidden">
-                            <a href="{% url 'web:updatepost' pk %}">수정</a>  
-                            <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a>   
-                          </span>
-                        {% endif %}
-                        {% if request.session.logined_special %}
-                        <span class="control hidden">  
-                          <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">게시글 삭제</a>   
-                        </span>
+                      {% if email == post.writer_email %}                     
+                        <a href="{% url 'web:updatepost' pk %}">수정</a>  
+                        <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a>                        
+                      {% endif %}
+                      {% if request.session.logined_special %}                     
+                      <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">게시글 삭제</a>                         
                       {% endif %}
                     </tbody>
             </table>
