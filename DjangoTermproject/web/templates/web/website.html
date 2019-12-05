@@ -50,7 +50,11 @@
     ======================================================= -->
   </head>
   <body data-spy="scroll" data-target="#navbar-example" >
-
+    {% if assign_error %}
+    <script>
+    alert('지도교수가 현재 배정되어있지않습니다. 학과에 문의해주세요.');
+    </script>
+    {% endif %}
     <!-- <div id="preloader"></div> -->
     
     <header>

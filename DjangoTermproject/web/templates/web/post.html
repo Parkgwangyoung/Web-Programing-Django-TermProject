@@ -157,9 +157,11 @@
                         {% endif %}
                     </a>
                       {% if email == post.writer_email %}                     
-                        <a href="{% url 'web:updatepost' pk %}">수정</a>  
-                        <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a>                        
-                      {% endif %}
+                        <a href="{% url 'web:updatepost' pk %}">수정</a>
+                        <br><a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a>                        
+                        <br><a href="{% url 'web:updatepost' pk %}">파일 업로드 취소</a><br>
+                        &nbsp;test.ppt  
+                        {% endif %}
                       {% if request.session.logined_special %}                     
                       <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">게시글 삭제</a>                         
                       {% endif %}
