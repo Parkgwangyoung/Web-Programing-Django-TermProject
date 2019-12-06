@@ -9,7 +9,7 @@ class Student(models.Model):
     grade = models.CharField(max_length=10,verbose_name="학년")
     tutor = models.CharField(max_length=10,verbose_name="지도교수")
     file_post = models.ManyToManyField("web.Post",blank=True, related_name='학생파일업로드',verbose_name="파일명")
-    like_post = models.ManyToManyField("web.Post" ,blank=True,  related_name='학생추천수',verbose_name="
+    like_post = models.ManyToManyField("web.Post" ,blank=True,  related_name='학생추천수',verbose_name="추천수")
 
 
     def __str__(self):
