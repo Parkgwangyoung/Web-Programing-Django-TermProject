@@ -17,6 +17,6 @@ urlpatterns = [
    path('bcreate/',views.BcreateView.as_view(),name='Bcreate'),
    path('bpcreate/',views.BpCreateView.as_view(),name='Bpcreate'),
    path('board/<int:post>/like/',views.likeView.as_view(),name='like'),
-  #  path('test/<int:boardtable>/',views.TestView.as_view(),name='test'),
+  
 
 ]
