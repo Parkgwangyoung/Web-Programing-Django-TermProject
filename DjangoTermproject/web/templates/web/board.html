@@ -1,89 +1,379 @@
 {% load staticfiles %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>게시판</title>
-        
-        <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href= "images/icons/favicon.ico"/>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}'>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href='{% static "fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}'>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href='{% static "fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %}'>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href='{% static "vendor/animate/animate.css" %}'>
-    <!--===============================================================================================-->	
-        <link rel="stylesheet" type="text/css" href='{% static "vendor/css-hamburgers/hamburgers.min.css" %}'>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href='{% static "vendor/animsition/css/animsition.min.css" %}'>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href='{% static "vendor/select2/select2.min.css" %}'>
-    <!--===============================================================================================-->	
-        <link rel="stylesheet" type="text/css" href='{% static "vendor/daterangepicker/daterangepicker.css" %}'>
-    <!--===============================================================================================-->
-        <link rel="stylesheet" type="text/css" href='{% static "css/util.css" %}'>
-        <link rel="stylesheet" type="text/css" href='{% static "css/main.css" %}'>
-    <!--===============================================================================================-->
+  <head>
+    <title>게시판</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+  
+    <!-- Favicons -->
+    <link href='{% static "img/favicon.png" }' rel="icon">
+    <link href='{% static "img/apple-touch-icon.png" }' rel="apple-touch-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+            integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+            crossorigin="anonymous">
+  
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
+      rel="stylesheet">
+  
+    <!-- Bootstrap CSS File -->
+    <link href='{% static "lib/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+  
+    <!-- Libraries CSS Files -->
+    <link href='{% static "lib/nivo-slider/css/nivo-slider.css" %}' rel="stylesheet">
+    <link href='{% static "lib/owlcarousel/owl.carousel.css" %}' rel="stylesheet">
+    <link href='{% static "lib/owlcarousel/owl.transitions.css" %}' rel="stylesheet">
+    <link href='{% static "lib/font-awesome/css/font-awesome.min.css" %}' rel="stylesheet">
+    <link href='{% static "lib/animate/animate.min.css" %}' rel="stylesheet">
+    <link href='{% static "lib/venobox/venobox.css" %}' rel="stylesheet">
+  
+    <!-- Nivo Slider Theme -->
+    <link href='{% static "css/nivo-slider-theme.css" %}' rel="stylesheet">
+  
+    <!-- Main Stylesheet File -->
+    <link href='{% static "css/style.css" %}' rel="stylesheet">
+  
+    <!-- Responsive Stylesheet File -->
+    <link href='{% static "css/responsive.css" %}' rel="stylesheet">
+  
+    <!-- ColorTab -->
+    <meta name="theme-color" content="#FF9E1B">
+
+    <!-- =======================================================
+      Theme Name: eBusiness
+      Theme URL: https://bootstrapmade.com/ebusiness-bootstrap-corporate-template/
+      Author: BootstrapMade.com
+      License: https://bootstrapmade.com/license/
+    ======================================================= -->
+  </head>
+  <body data-spy="scroll" data-target="#navbar-example" style="background-color: rgb(241, 241, 241);" >
+
+    <!-- <div id="preloader"></div> -->
     
-        <link rel="stylesheet" href='{% static "vendor/bootstrap/css/bootstrap.css" %} '> 
+    <header>
+        <!-- header-area start -->
+        <div id="sticker" class="header-area" style="height: 65px">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <!-- Navigation -->
+                <nav class="navbar navbar-default">
+                  
+                  <!-- Brand and toggle get grouped for better mobile display -->
+                  <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-example-navbar-collapse-1"
+                      aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>
+                    <!-- Brand -->
+                    <a class="navbar-brand page-scroll sticky-logo" href="{% url 'web:website' %}">
+                      <h1 style="font-size: 30px !important;">교통대 <span>X</span> 컴퓨터공학과</h1>
+                      <!-- Uncomment below if you prefer to use an image logo -->
+                      <!--<img src='{% static "img/mark.jpg" %}' alt="" title="" style="width: 30px; height: 30px;">-->
+                    </a>
+                  </div>
+                  <!-- Collect the nav links, forms, and other content for toggling -->
+                  <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if request.session.logined %}
+                        <li>                          
+                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>                           
+                        </li>
+                        <li>                          
+                            <a class="page-scroll" href ="{% url 'login:logout' %}" > 로그아웃</a>                           
+                        </li>
+                        {% endif %}
+                        
+                      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: rgba(0, 0, 0, 0.349);">
+                        게시판 목록<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            {% if boardtable %}
+                            {% for board  in boardtable %}
+                                <li><a href= "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a></li>
+                            {% endfor %}
+                          {% endif %}
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- navbar-collapse -->
+                </nav>
+                <!-- END: Navigation -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- header-area end -->
+      </header>
+      <br><br><br>
+      <!-- header end -->
+
+
+
+				<div style="text-align: left;">
+						<div class="container">
+						  <div class="row">
+							  <div class="col-md-12 col-sm-12 col-xs-12">
+							    <div class=" services-head">
+								    <br><br>
+								      <div style="font-size: 40px;">
+                        {% if not grades %}{%if not supervisors %}{% if not request_name %}<b>{{name}}</b><br><br><br>{% endif %}{% endif %}{% endif %}
+                        {% if grades %}<b >{{grades}}학년게시판</b><br><br><br>{% endif %}
+                        {% if supervisors %}<b>{{supervisors}}교수님 게시판</b><br><br><br>{% endif %}
+                        {% if request_name %}<b>{{request_name}}</b><br><br><br>{% endif %}
+									    </div>
+								    <br><br>
+							    </div>
+							  </div>
+						  </div>    
+					  </div>
+				</div>
     </head>
 <body>
         
         
-    <div class = "container">
-    <table class ="table table-striped">
-        <thead>
-                {% if board %}
-                {% for i in board %}  
-                 <a href = "/web/board/{{pk}}/{{i.id}}/"> <h2>{{i.board_name}}</h2></a>
-                {% endfor %}
-                {% endif %}
-            {% if post %}
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-            </tr>
-        </thead>
-        <tbody>
-          {% for i in post %}
-            <tr>        
-                <td>{{forloop.counter}}</td>
-                <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
-                <td>{{i.writer}}</td>
-                <td>{{i.date}}</td>
-            </tr>
-            {% endfor %}
-          
-            
-        </tbody>
-        
-    </table>
+        <div class = "container">
+            {% if request_name %}
+            <div style="border: 2px solid gray; background-color:white">
+                <table class ="table table-striped">
+                        <thead>
+                            
+                            {% if post %}
+                
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성자</th>
+                                <th>작성일</th>
+                                <th>추천수</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                {% for i in post %}
+                                    <tr>        
+                                        <td>{{forloop.counter}}</td>
+                                        <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
+                                        <td>{{i.writer}}</td>
+                                        <td>{{i.date}}</td>
+                                        <td>{{i.like_number}}</td>
+                                    </tr>
+                                {% endfor %}               
+                            </tbody>
+                        
+                        
+                    </table>
+        </div>
+    
     <hr/>
-    <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>
-    
-    <div class = "text-center" >
+    {% endif %}
+    {% endif %}
+          {% if grades %}
+          <div style="border: 2px solid gray; background-color:white">
+              <table class ="table table-striped">
+                      <thead>
+                          
+                          {% if post %}
+              
+                          <tr>
+                              <th>번호</th>
+                              <th>제목</th>
+                              <th>작성자</th>
+                              <th>작성일</th>
+                              <th>추천수</th>
+                          </tr>
+                      </thead>
+                          <tbody>
+                              {% for i in post %}
+                                  <tr>        
+                                      <td>{{forloop.counter}}</td>
+                                      <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
+                                      <td>{{i.writer}}</td>
+                                      <td>{{i.date}}</td>
+                                      <td>{{i.like_number}}</td>
+                                  </tr>
+                              {% endfor %}               
+                          </tbody>
+                      
+                      
+                  </table>
+      </div>
+  
+  <hr/>
+  {% endif %}
+  {% endif %}
+  {% if supervisors %}
+          <div style="border: 2px solid gray; background-color:white">
+            <table class ="table table-striped">
+              <thead>         
+                {% if post %}
+                  <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>추천수</th>
+                  </tr>
+                </thead>
+                  <tbody>
+                    {% for i in post %}
+                      <tr>        
+                        <td>{{forloop.counter}}</td>
+                        <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
+                        <td>{{i.writer}}</td>
+                        <td>{{i.date}}</td>
+                        <td>{{i.like_number}}</td>
+                      </tr>
+                    {% endfor %}               
+                  </tbody>  
+            </table>
+          </div>
+  
+  <hr/>
+  {% endif %}
+  {% endif %}
+  <div class="container">
+    {% if not grades  %}{% if not supervisors %} {% if not request_name %}
+    {% if board %}
+    <select name="board" onchange="if(this.value) location.href=(this.value);">
+        <option value="">게시판 선택</option>
+        {% for i in board %}
+            <option value="/web/board/{{pk}}/{{i.id}}/">{{i.board_name}}</option>    
+        {% endfor %}
+    </select>
+          
 
-        <ul class = "pagination justify-content-center " >
+      <br><br>
+      <div style="border: 2px solid gray; background-color:white">
+              <table class ="table table-striped">
+                      <thead>
+                          
+                          {% if post %}
+              
+                          <tr>
+                              <th>번호</th>
+                              <th>제목</th>
+                              <th>작성자</th>
+                              <th>작성일</th>
+                              <th>추천수</th>
+                          </tr>
+                      </thead>
+                          <tbody>
+                              {% for i in post %}
+                                  <tr>        
+                                      <td>{{forloop.counter}}</td>
+                                      <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
+                                      <td>{{i.writer}}</td>
+                                      <td>{{i.date}}</td>
+                                      <td>{{i.like_number}}</td>
+                                  </tr>
+                              {% endfor %}               
+                          </tbody>
+                      
+                      
+                  </table>
+                  {% endif %}
+                  {% endif %}
+                  {% endif %}
+                  {% endif %}
+                  {% endif %}
+                  
+      </div>
 
-            <li class="page-item "><a class = "page-link " href="#">1</a></li>
-                <li class="page-item"><a class = "page-link" href="#">2</a></li>
-            <li class="page-item"><a class = "page-link" href="#">3</a></li>
-            
-            
-        </ul>
-        {% endif %}
+      <hr/>
+      <!-- <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>-->
+      {% if request.session.logined %}
+      <div align="right">
+        <div  style="width: 80px;">
+              <a href="/web/{{pk}}/{{ak}}/create">
+                  <button class="btn btn-warning btn-block ">
+                          <b>글쓰기</b></button></a>
+        </div>               
+      </div>
+      {% endif %}
+            <div class = "text-center" >
+
+                <ul class = "pagination justify-content-center " >
+
+                <li class="page-item "><a class = "page-link " href="#">1</a></li>
+                    <li class="page-item"><a class = "page-link" href="#">2</a></li>
+                <li class="page-item"><a class = "page-link" href="#">3</a></li>
+
+
+                </ul>
+
+            </div>
+        </div>        
+          
+
     </div>
-
-    </div>
     
+    <!-- Start Footer bottom Area -->
+    <br><br><br><br><br><br><br><br><br><br>
+<footer id="contact">
+        <div class="footer-area-bottom">
+            <div class="container">
+                <div class="row">
+                    <hr style="height:1px; color:black; background-color:gray; width: 800px;">
+                          <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="copyright text-center" >
+                                  <p>
+                                    Copyright &copy; 2019 <strong>컴퓨터공학과 at 박광영/김윤구</strong>, All rights reserved.
+                                  </p>
+                            </div>
+                                <div class="credits">
+                                    <p><span>Email: </span><a href="mailto:example@gmail.com">example@gmail.com</a> /
+                                    <span>Official Website: </span><a href="https://example.net">example.net</a>
+                                    <br>
+                                        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></p>
+                                </div>
+                          </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+<!--===============================================================================================-->
+<script src='{% static "vendor/jquery/jquery-3.2.1.min.js" %}'></script>
+<!--===============================================================================================-->
+<script src='{% static "vendor/animsition/js/animsition.min.js" %}'></script>
+<!--===============================================================================================-->
+<script src='{% static "vendor/bootstrap/js/popper.js" %}'></script>
+<script src='{% static "vendor/bootstrap/js/bootstrap.min.js" %}'></script>
+<!--===============================================================================================-->
+<script src='{% static "vendor/select2/select2.min.js" %}'></script>
+<!--===============================================================================================-->
+<script src='{% static "vendor/daterangepicker/moment.min.js" %}'></script>
+<script src='{% static "vendor/daterangepicker/daterangepicker.js" %}'></script>
+<!--===============================================================================================-->
+<script src='{% static "vendor/countdowntime/countdowntime.js" %}'></script>
+<!--===============================================================================================-->
+<script src='{% static "js/main.js" %}'></script>
+<script> src='{% static "vendor/bootstrap/js/bootstrap.js" %}'</script>
+
+ <!-- loader -->
+    <!-- JavaScript Libraries -->
+    <script src='{% static "lib/jquery/jquery.min.js" %}'></script>
+    <script src='{% static "lib/bootstrap/js/bootstrap.min.js" %}'></script>
+    <script src='{% static "lib/owlcarousel/owl.carousel.min.js" %}'></script>
+    <script src='{% static "lib/venobox/venobox.min.js" %}'></script>
+    <script src='{% static "lib/knob/jquery.knob.js" %}'></script>
+    <script src='{% static "lib/wow/wow.min.js" %}'></script>
+    <script src='{% static "lib/parallax/parallax.js" %}'></script>
+    <script src='{% static "lib/easing/easing.min.js" %}'></script>
+    <script src='{% static "lib/nivo-slider/js/jquery.nivo.slider.js" %}' type="text/javascript"></script>
+    <script src='{% static "lib/appear/jquery.appear.js" %}'></script>
+    <script src='{% static "lib/isotope/isotope.pkgd.min.js" %}'></script>
+    <!-- Contact Form JavaScript File -->
+    <script src='{% static "contactform/contactform.js" %}'></script>
+    <script src='{% static "js/main.js" %}'></script>
 </body>
 
-<script> src='{% static "vendor/jquery/jquery-3.2.1.min.js"  %}'</script>
-<script> src='{% static "vendor/bootstrap/js/bootstrap.js" %}'</script>
+
 </html>

@@ -4,7 +4,7 @@
   <head>
     <title>컴퓨터 공학과 홈페이지 입니다</title>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
   
@@ -41,7 +41,7 @@
   
     <!-- ColorTab -->
     <meta name="theme-color" content="#FF9E1B">
-
+  
     <!-- =======================================================
       Theme Name: eBusiness
       Theme URL: https://bootstrapmade.com/ebusiness-bootstrap-corporate-template/
@@ -49,17 +49,14 @@
       License: https://bootstrapmade.com/license/
     ======================================================= -->
   </head>
-  <body data-spy="scroll" data-target="#navbar-example" >
-    {% if assign_error %}
-    <script>
-    alert('지도교수가 현재 배정되어있지않습니다. 학과에 문의해주세요.');
-    </script>
-    {% endif %}
+  <body data-spy="scroll" data-target="#navbar-example">
+
     <!-- <div id="preloader"></div> -->
     
     <header>
         <!-- header-area start -->
         <div id="sticker" class="header-area" style="height: 65px">
+            
           <div class="container">
             <div class="row">
               <div class="col-md-12 col-sm-12">
@@ -87,7 +84,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.session.logined %}
                         <li>                          
-                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>                           
+                            <a class="page-scroll" > {{request.session.logined}}님 환영합니다 ^^</a>                           
                         </li>
                         {% if not request.session.logined_special %}
                         <li>                          
@@ -109,15 +106,14 @@
                       
                       {% if request.session.logined_special %}
                       <li>
-                        <a class="page-scroll" href="{% url 'web:Selcreate' %}">게시판 생성</a>
+                        <a class="page-scroll" href="{% url 'web:Btcreate' %}">게시판 생성</a>
                       </li>
                       
                       <li>
                         <a class="page-scroll" href="{% url 'web:assign' %}">지도교수 배정</a>
                       </li>
                       {% endif %}
-                      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: rgba(0, 0, 0, 0.349);">
-                        게시판 목록<span class="caret"></span></a>
+                      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">게시판 목록<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             {% if boardtable %}
                             {% for board  in boardtable %}
@@ -248,7 +244,7 @@
                 <div class="row">
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="section-headline services-head text-center">
-                      <h2>컴퓨터공학과에서 배우는 것들</h2>
+                      <h2>우리학교<br>컴퓨터공학과에서 배우는 것들</h2>
                     </div>
                   </div>
                 </div>
@@ -362,40 +358,7 @@
               </div>
             </div>
           <!-- End Service area -->
-
-          <!-- Start Footer bottom Area -->
-          <footer id="contact">
-              <div class="footer-area-bottom">
-                <div class="container">
-                  <div class="row">
-                    <hr style="height:1px; color:black; background-color:gray;">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <div class="copyright text-center">
-                        <p>
-                          Copyright &copy; 2019 <strong>컴퓨터공학과 at 박광영/김윤구</strong>, All rights reserved.
-                        </p>
-                      </div>
-                      <div class="credits">
-                        <p><span>Email: </span><a href="mailto:example@gmail.com">example@gmail.com</a> /
-                          <span>Official Website: </span><a href="https://example.net">example.net</a>
-                          <!--
-                          All the links in the footer should remain intact.
-                          You can delete the links only if you purchased the pro version.
-                          Licensing information: https://bootstrapmade.com/license/
-                          Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=eBusiness
-                        -->
-                          <br>
-                          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </footer>
-
-            <a style="display:scroll;position:fixed;bottom:10px;right:10px;font-size:40px;color: orange;" 
-              href="#"><i class="fas fa-caret-square-up"></i></a>
-
+    
     <!-- loader -->
     <!-- JavaScript Libraries -->
     <script src='{% static "lib/jquery/jquery.min.js" %}'></script>

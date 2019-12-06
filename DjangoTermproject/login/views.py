@@ -81,7 +81,8 @@ class loginView(View):
                         request.session['logined_special'] = student.id
                         return HttpResponseRedirect(reverse('web:website'))
                     else:
-                        
+                        request.session['logined_student_tutor'] = student.tutor
+                        request.session['logined_student_grade'] = student.grade
                         request.session['logined_student_id'] = student.id
                         return HttpResponseRedirect(reverse('web:website'))                    
                 else:
@@ -117,6 +118,9 @@ class LogoutView(View):
             return HttpResponseRedirect(reverse('web:website'))
         del request.session['logined']
         del request.session['logined_student_id']
+        del request.session['logined_student_grade']
+        if request.session.get('logined_student_tutor'):
+            del request.session['logined_student_tutor']
         return HttpResponseRedirect(reverse('web:website'))
 
 

@@ -38,20 +38,116 @@ class assignView(View):
                 student_get.save()
                 student = Student.objects.all().exclude(name='관리자').order_by('student_number')
                 professor = Professor.objects.all().order_by('name')
-                return render(request,'web/assign.html',{'students':student,'professors':professor})
+                return render(request,'web/assign.html',{'students':student,'professors':professor,'success':"지도교수배정성공"})
         except:
-            return HttpResponse('잘못된 방식입니다. 학생과 교수 둘다 선택되어있는지 확인해주세요.')
+            try:
+                if request.session.get('logined_special'):
+                    student = Student.objects.all().exclude(name='관리자').order_by('student_number')
+                    professor = Professor.objects.all().order_by('name')
+                    return render(request,'web/assign.html',{'students':student,'professors':professor,'error':"지도교수배정실패"})
+            except:
+                return HttpResponse('잘못된 방향입니다.')
         
 
 class BoardAccessView(View):
     def get(self,request,boardtable,*args,**kwargs):
-        try:
-            boardtables = get_object_or_404(BoardTable,pk=boardtable)       
-            boards = boardtables.board_set.all()
-            Bt = BoardTable.objects.all()
-            return render(request,'web/board.html',{'board':boards,'pk':boardtable,'boardtable':Bt})
-        except:
-            return HttpResponse('올바르지않습니다.')
+        if request.session.get('logined_student_id'): #학생이면
+            try: # 학생이 학년별게시판에 들어갈 때 검사하는곳
+                boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                boards_all = boardtables.board_set.all()       
+                boards_get = boardtables.board_set.get(grade = request.session['logined_student_grade'])
+                grade = boards_get.grade
+                ak = boards_get.id
+                post = boards_get.post_set.all()
+                Bt = BoardTable.objects.all()
+                return render(request,'web/board.html',{'boards_get':boards_get,'post':post,'board':boards_all,'pk':boardtable,'ak':ak,'boardtable':Bt,'grades':grade})
+            except: #학생인데 학년별게시판에 들어가지않는 경우
+                try: #학생인데 지도교수 게시판에 들어가는경우
+                    if request.session.get('logined_student_tutor'): #지도교수 배정이 되어있는경우,
+                        boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                        boards_all = boardtables.board_set.all()       
+                        boards_get = boardtables.board_set.get(supervisor = request.session['logined_student_tutor'])
+                        supervisor = boards_get.supervisor
+                        ak = boards_get.id
+                        post = boards_get.post_set.all()
+                        Bt = BoardTable.objects.all()
+                        return render(request,'web/board.html',{'boards_get':boards_get,'post':post,'board':boards_all,'pk':boardtable,'ak':ak,'boardtable':Bt,'supervisors':supervisor})
+                    else: #학생이지만 지도교수 배정이 이루어지지 않은경우
+                        try:
+                            boardtable = BoardTable.objects.all()
+                            return render(request,'web/website.html',{'boardtable':boardtable,'assign_error':"지도교수 없음"})
+                        except:
+                            return HttpResponse('올바르지 않습니다.')
+                except: #학생인데 지도교수 게시판,학년별게시판에 들어가지않는경우
+                    try:    # 상위게시판명과 하위게시판명이 동일한 게시판을 열었을 경우, 즉 하위 분류가 없을경우 !!
+                        boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                        board_name = boardtables.board_type       
+                        boards_all = boardtables.board_set.all()
+                        boards_get = boardtables.board_set.get(board_name = board_name)
+                        request_name = boards_get.board_name
+                        ak = boards_get.id
+                        post = boards_get.post_set.all()
+                        Bt = BoardTable.objects.all()
+                        return render(request,'web/board.html',{'boards_get':boards_get,'post':post,'board':boards_all,'pk':boardtable,'ak':ak,'boardtable':Bt,'request_name':request_name})
+                    except: # 전부다 아닌경우,
+                        try:    
+                            boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                            board_type = boardtables.board_type       
+                            boards = boardtables.board_set.all()
+                            Bt = BoardTable.objects.all()
+                            return render(request,'web/board.html',{'board':boards,'pk':boardtable,'boardtable':Bt,'name':board_type})
+                        except:
+                            return HttpResponse('올바르지않습니다.')
+        elif request.session.get('logined_professor_id'): #교수이면
+            try:    #교수인 경우에 지도교수 게시판에 자기이름과 동일한 지도교수게시판으로 열람할 때
+                boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                boards_all = boardtables.board_set.all()       
+                boards_get = boardtables.board_set.get(supervisor = request.session['logined'])
+                supervisor = boards_get.supervisor
+                ak = boards_get.id
+                post = boards_get.post_set.all()
+                Bt = BoardTable.objects.all()
+                return render(request,'web/board.html',{'boards_get':boards_get,'post':post,'board':boards_all,'pk':boardtable,'ak':ak,'boardtable':Bt,'supervisors':supervisor})
+            except: # 교수가 지도교수게시판을 열람하지 않은경우
+                try: # 교수가 상위게시판명과 하위게시판명이 동일한 게시판을 열었을 경우, 즉 하위 분류가 없을경우 !!
+                    boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                    board_name = boardtables.board_type         
+                    boards_all = boardtables.board_set.all()
+                    boards_get = boardtables.board_set.get(board_name = board_name)
+                    request_name = boards_get.board_name
+                    ak = boards_get.id
+                    post = boards_get.post_set.all()
+                    Bt = BoardTable.objects.all()
+                    return render(request,'web/board.html',{'boards_get':boards_get,'post':post,'board':boards_all,'pk':boardtable,'ak':ak,'boardtable':Bt,'request_name':request_name})    
+                except: # 교수가 지도교수게시판,요청게시판을 열람하지 않은경우
+                    try:
+                        boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                        board_type = boardtables.board_type       
+                        boards = boardtables.board_set.all()
+                        Bt = BoardTable.objects.all()
+                        return render(request,'web/board.html',{'board':boards,'pk':boardtable,'boardtable':Bt,'name':board_type})
+                    except:
+                        return HttpResponse('올바르지않습니다.')
+        else: # 관리자인경우
+            try:  #관리자가 상위게시판명과 하위게시판명이 동일한 게시판을 열었을 경우, 즉 하위 분류가 없을경우 !!
+                boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                board_name = boardtables.board_type   
+                boards_all = boardtables.board_set.all()
+                boards_get = boardtables.board_set.get(board_name = board_name)
+                request_name = boards_get.board_name
+                ak = boards_get.id
+                post = boards_get.post_set.all()
+                Bt = BoardTable.objects.all()
+                return render(request,'web/board.html',{'boards_get':boards_get,'post':post,'board':boards_all,'pk':boardtable,'ak':ak,'boardtable':Bt,'request_name':request_name})  
+            except:
+                try:
+                    boardtables = get_object_or_404(BoardTable,pk=boardtable)
+                    board_type = boardtables.board_type       
+                    boards = boardtables.board_set.all()
+                    Bt = BoardTable.objects.all()
+                    return render(request,'web/board.html',{'board':boards,'pk':boardtable,'boardtable':Bt,'name':board_type})
+                except:
+                    return HttpResponse('올바르지않습니다.')
 
 class BoardView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
@@ -59,12 +155,14 @@ class BoardView(View):
             boardtables =get_object_or_404(BoardTable,pk=boardtable)
             boards = boardtables.board_set.all()
             get_board = get_object_or_404(Board,pk=board)
+            name = get_board.board_name
             post = get_board.post_set.all()
             Bt = BoardTable.objects.all()
-            return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt})
+            return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt,'name':name})
         except:
             return HttpResponse('올바르지않습니다.')
 
+               
 class CreatepostView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
         form = CreatePostform()
@@ -169,7 +267,7 @@ class BtcreateView(View):
                 form.save(commit=False)
                 form.save()
                 form =Bcreateform()
-                return render(request,'web/createboardtable.html',{'Bform':form})             
+                return render(request,'web/createboardtable.html',{'Bform':form,'Btsuccess':"상위게시판생성완료"})             
 
 class BcreateView(View):
     def get(self,request,*args,**kwargs):
@@ -183,7 +281,7 @@ class BcreateView(View):
             form.save(commit=False)
             form.save()
             form =Bcreateform()
-            return render(request,'web/createboardtable.html',{'Bform':form})
+            return render(request,'web/createboardtable.html',{'Bform':form,'Bsuccess':"하위게시판생성완료"})
 
    
 
@@ -202,7 +300,7 @@ class BpCreateView(View):
             form.professor = 1
             form.save()
             form = PostCreateform()
-            return render(request,'web/createboardtable.html',{'Pform':form})
+            return render(request,'web/createboardtable.html',{'Pform':form,'Psuccess':"게시글 작성완료"})
 
 
 
