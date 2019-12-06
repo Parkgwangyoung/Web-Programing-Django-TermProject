@@ -32,9 +32,12 @@ class BtCreateform(forms.ModelForm):
 class Bcreateform(forms.ModelForm):
     class Meta:
         model = Board
-        fields = ["board_type","board_name"]
-        widgets = {'board_name':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 입력'})}
-        labels = {"board_name":"만들고 싶은 게시판 명 "}
+        fields = ["board_type","board_name","supervisor","grade"]
+        widgets = {'board_name':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 입력'})
+        ,'supervisor':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 입력'})
+        ,'grade':forms.TextInput(attrs={'size':'30','style':'height:30;','placeholder':'여기에 입력'})
+        }
+        labels = {"board_name":"만들고 싶은 게시판 명 ","supervisor":"지도교수명(없을시 관리자로 쓰기)","grade":"학년(없을시 관리자로 쓰기)"}
 
     def __init__(self,*args,**kwargs):
         super(Bcreateform,self).__init__(*args,**kwargs)
