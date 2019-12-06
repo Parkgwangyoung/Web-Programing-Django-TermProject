@@ -7,21 +7,21 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-  
+
     <!-- Favicons -->
     <link href='{% static "img/favicon.png" }' rel="icon">
     <link href='{% static "img/apple-touch-icon.png" }' rel="apple-touch-icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
             integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
             crossorigin="anonymous">
-  
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
       rel="stylesheet">
-  
+
     <!-- Bootstrap CSS File -->
     <link href='{% static "lib/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
-  
+
     <!-- Libraries CSS Files -->
     <link href='{% static "lib/nivo-slider/css/nivo-slider.css" %}' rel="stylesheet">
     <link href='{% static "lib/owlcarousel/owl.carousel.css" %}' rel="stylesheet">
@@ -29,16 +29,16 @@
     <link href='{% static "lib/font-awesome/css/font-awesome.min.css" %}' rel="stylesheet">
     <link href='{% static "lib/animate/animate.min.css" %}' rel="stylesheet">
     <link href='{% static "lib/venobox/venobox.css" %}' rel="stylesheet">
-  
+
     <!-- Nivo Slider Theme -->
     <link href='{% static "css/nivo-slider-theme.css" %}' rel="stylesheet">
-  
+
     <!-- Main Stylesheet File -->
     <link href='{% static "css/style.css" %}' rel="stylesheet">
-  
+
     <!-- Responsive Stylesheet File -->
     <link href='{% static "css/responsive.css" %}' rel="stylesheet">
-  
+
     <!-- ColorTab -->
     <meta name="theme-color" content="#FF9E1B">
 
@@ -52,7 +52,7 @@
   <body data-spy="scroll" data-target="#navbar-example" style="background-color: rgb(241, 241, 241);" >
 
     <!-- <div id="preloader"></div> -->
-    
+
     <header>
         <!-- header-area start -->
         <div id="sticker" class="header-area" style="height: 65px">
@@ -61,7 +61,7 @@
               <div class="col-md-12 col-sm-12">
                 <!-- Navigation -->
                 <nav class="navbar navbar-default">
-                  
+
                   <!-- Brand and toggle get grouped for better mobile display -->
                   <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-example-navbar-collapse-1"
@@ -82,14 +82,14 @@
                   <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.session.logined %}
-                        <li>                          
-                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>                           
+                        <li>
+                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>
                         </li>
-                        <li>                          
-                            <a class="page-scroll" href ="{% url 'login:logout' %}" > 로그아웃</a>                           
+                        <li>
+                            <a class="page-scroll" href ="{% url 'login:logout' %}" > 로그아웃</a>
                         </li>
                         {% endif %}
-                        
+
                       <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: rgba(0, 0, 0, 0.349);">
                         게시판 목록<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -125,7 +125,7 @@
 								<br><br>
 							  </div>
 							</div>
-						  </div>    
+						  </div>
 					  </div>
 				</div>
     </head>
@@ -148,7 +148,8 @@
                     <h3>제목 : {{post.title}}<br></h2>
                 </thead>
                     <tbody>
-                      내용 : {{post.description}}
+                      내용 : {{post.description}}<br>
+                      파일명 : {{post.file}}
                       <a href="{% url 'web:like' post.id %}">
                         {% if post in student.like_post %}
                             취소
@@ -156,14 +157,13 @@
                             추천
                         {% endif %}
                     </a>
-                      {% if email == post.writer_email %}                     
+                      {% if email == post.writer_email %}
                         <a href="{% url 'web:updatepost' pk %}">수정</a>
-                        <br><a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a>                        
-                        <br><a href="{% url 'web:updatepost' pk %}">파일 업로드 취소</a><br>
-                        &nbsp;test.ppt  
+                        <br><a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a>
+
                         {% endif %}
-                      {% if request.session.logined_special %}                     
-                      <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">게시글 삭제</a>                         
+                      {% if request.session.logined_special %}
+                      <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">게시글 삭제</a>
                       {% endif %}
                     </tbody>
             </table>
@@ -174,7 +174,7 @@
                   <button class="btn btn-warning btn-block text-uppercase" onclick="history.back();">
                           <b>목록으로</b></button></a>
       </div>
-          
+
   </div>
 </div>
 

@@ -13,7 +13,7 @@ class Board(models.Model):
     board_name = models.CharField(max_length=20,verbose_name="게시판 이름")
     supervisor = models.CharField(max_length=10, verbose_name="지도 교수")
     grade = models.CharField(max_length=10,verbose_name="학년")
-    
+
     def __str__(self):
         return self.board_name
 
@@ -27,7 +27,7 @@ class Post(models.Model):
     writer = models.CharField(max_length=10,verbose_name="작성자")
     writer_email = models.EmailField(max_length=30,verbose_name="작성자 아이디")
     date = models.DateField(auto_now=True,verbose_name="작성일")
-    
+    file = models.FileField(upload_to='',verbose_name="파일명",blank=True)
     like_number  = models.PositiveIntegerField(default=0,verbose_name="추천수")
 
     class Meta:
@@ -35,5 +35,3 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-
