@@ -149,9 +149,10 @@
                                 <b>학생 선택</b><br><br>
                             </div>
                             <!-- span style="text-align: left; font-size:20;"><b>학생명　　　　　지도교수명</b></span>-->
-                            <div style="text-align: left; font-size: medium;">
+                            <div style="text-align: left; font-size: medium; overflow:scroll; overflow-x: hidden; height: 100px; 
+                                        border: 2px solid orange; padding: 5px;">
                                     {% for student in students %}
-                                        <input type="radio" name="student" id="student{{forloop.counter}}" value="{{student.id}}"/>
+                                        <input type="checkbox" name="student" id="student{{forloop.counter}}" value="{{student.id}}"/>
                                         <label for="student{{forloop.counter}}"> {{student}} </label><br>
                                     {% endfor %}
 
@@ -162,9 +163,10 @@
                             <div style="color: orange;">
                                 <br><br><b>교수 선택</b><br><br>
                             </div>
-                            <div style="text-align: left; font-size: medium;">
+                            <div style="text-align: left; font-size: medium; overflow:scroll; overflow-x: hidden; height: 100px; 
+                                        border: 2px solid orange; padding: 5px;">
                                 {% for professor in professors %}
-                                    <input type="radio" name="professor" id="professor{{forloop.counter}}" value="{{professor.id}}"/>
+                                    <input type="checkbox" name="professor" id="professor{{forloop.counter}}" value="{{professor.id}}"/>
                                     <label for="professor{{forloop.counter}}">{{professor}}</label><br>
                                 {% endfor %}
                             </div>

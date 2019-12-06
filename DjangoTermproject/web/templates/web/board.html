@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>게시판 생성</title>
+    <title>게시판</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="" name="keywords">
@@ -113,21 +113,24 @@
       </header>
       <br><br><br>
       <!-- header end -->
+
+
+
 				<div style="text-align: left;">
 						<div class="container">
 						  <div class="row">
-							<div class="col-md-12 col-sm-12 col-xs-12">
-							  <div class=" services-head">
-								  <br><br>
-								    <div style="font-size: 40px;">
-                    {% if not grades %}{%if not supervisors %}{% if not request_name %}<b>{{name}}</b><br><br><br>{% endif %}{% endif %}{% endif %}
-                    {% if grades %}<b >{{grades}}학년게시판</b><br><br><br>{% endif %}
-                    {% if supervisors %}<b>{{supervisors}}교수님 게시판</b><br><br><br>{% endif %}
-                    {% if request_name %}<b>{{request_name}}</b><br><br><br>{% endif %}
-									</div>
-								<br><br>
+							  <div class="col-md-12 col-sm-12 col-xs-12">
+							    <div class=" services-head">
+								    <br><br>
+								      <div style="font-size: 40px;">
+                        {% if not grades %}{%if not supervisors %}{% if not request_name %}<b>{{name}}</b><br><br><br>{% endif %}{% endif %}{% endif %}
+                        {% if grades %}<b >{{grades}}학년게시판</b><br><br><br>{% endif %}
+                        {% if supervisors %}<b>{{supervisors}}교수님 게시판</b><br><br><br>{% endif %}
+                        {% if request_name %}<b>{{request_name}}</b><br><br><br>{% endif %}
+									    </div>
+								    <br><br>
+							    </div>
 							  </div>
-							</div>
 						  </div>    
 					  </div>
 				</div>
@@ -206,6 +209,47 @@
   {% endif %}
   {% if supervisors %}
           <div style="border: 2px solid gray; background-color:white">
+            <table class ="table table-striped">
+              <thead>         
+                {% if post %}
+                  <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>추천수</th>
+                  </tr>
+                </thead>
+                  <tbody>
+                    {% for i in post %}
+                      <tr>        
+                        <td>{{forloop.counter}}</td>
+                        <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
+                        <td>{{i.writer}}</td>
+                        <td>{{i.date}}</td>
+                        <td>{{i.like_number}}</td>
+                      </tr>
+                    {% endfor %}               
+                  </tbody>  
+            </table>
+          </div>
+  
+  <hr/>
+  {% endif %}
+  {% endif %}
+  <div class="container">
+    {% if not grades  %}{% if not supervisors %} {% if not request_name %}
+    {% if board %}
+    <select name="board" onchange="if(this.value) location.href=(this.value);">
+        <option value="">게시판 선택</option>
+        {% for i in board %}
+            <option value="/web/board/{{pk}}/{{i.id}}/">{{i.board_name}}</option>    
+        {% endfor %}
+    </select>
+          
+
+      <br><br>
+      <div style="border: 2px solid gray; background-color:white">
               <table class ="table table-striped">
                       <thead>
                           
@@ -233,81 +277,39 @@
                       
                       
                   </table>
+                  {% endif %}
+                  {% endif %}
+                  {% endif %}
+                  {% endif %}
+                  {% endif %}
+                  
       </div>
-  
-  <hr/>
-  {% endif %}
-  {% endif %}          
-              {% if not grades  %}{% if not supervisors %} {% if not request_name %}
-                {% if board %}
-                <select name="board" onchange="if(this.value) location.href=(this.value);">
-                    <option value="">게시판 선택</option>
-                    {% for i in board %}
-                        <option value="/web/board/{{pk}}/{{i.id}}/">{{i.board_name}}</option>    
-                    {% endfor %}
-                </select>
-                
-            
-            <br><br>
-            <div style="border: 2px solid gray; background-color:white">
-                    <table class ="table table-striped">
-                            <thead>
-                                
-                                {% if post %}
-                    
-                                <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>작성일</th>
-                                    <th>추천수</th>
-                                </tr>
-                            </thead>
-                                <tbody>
-                                    {% for i in post %}
-                                        <tr>        
-                                            <td>{{forloop.counter}}</td>
-                                            <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
-                                            <td>{{i.writer}}</td>
-                                            <td>{{i.date}}</td>
-                                            <td>{{i.like_number}}</td>
-                                        </tr>
-                                    {% endfor %}               
-                                </tbody>
-                            
-                            
-                        </table>
-                        {% endif %}
-                        {% endif %}
-                        {% endif %}
-                        {% endif %}
-                        {% endif %}
-                        
+
+      <hr/>
+      <!-- <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>-->
+      {% if request.session.logined %}
+      <div align="right">
+        <div  style="width: 80px;">
+              <a href="/web/{{pk}}/{{ak}}/create">
+                  <button class="btn btn-warning btn-block ">
+                          <b>글쓰기</b></button></a>
+        </div>               
+      </div>
+      {% endif %}
+            <div class = "text-center" >
+
+                <ul class = "pagination justify-content-center " >
+
+                <li class="page-item "><a class = "page-link " href="#">1</a></li>
+                    <li class="page-item"><a class = "page-link" href="#">2</a></li>
+                <li class="page-item"><a class = "page-link" href="#">3</a></li>
+
+
+                </ul>
+
             </div>
-           
-        <hr/>
-        <!-- <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>-->
-        {% if request.session.logined %}
-        <div align="right">
-            <div  style="width: 80px;">
-                    <a href="/web/{{pk}}/{{ak}}/create">
-                        <button class="btn btn-warning btn-block text-uppercase">
-                                <b>글쓰기</b></button></a>
-            </div>               
-        </div>
-    {% endif %}
-    <div class = "text-center" >
-
-        <ul class = "pagination justify-content-center " >
-
-            <li class="page-item "><a class = "page-link " href="#">1</a></li>
-                <li class="page-item"><a class = "page-link" href="#">2</a></li>
-            <li class="page-item"><a class = "page-link" href="#">3</a></li>
-            
-            
-        </ul>
-       
-    </div>
+        </div>        
+          
 
     </div>
     
