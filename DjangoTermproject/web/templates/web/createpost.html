@@ -139,7 +139,13 @@
         {% csrf_token %}
         {{form.as_p}}
             <input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">
-            <input type="hidden" name ="professor_id" value="{{request.session.logined_professor_id}}"> 
+            <input type="hidden" name ="professor_id" value="{{request.session.logined_professor_id}}">
+            
+            <!-- 파일 업로드 부분-->
+            <div>
+              <b>파일 첨부하기</b><br>
+                여기 첨부파일 <input type="button" name="fileUp" value="파일 선택">
+            </div>
     </div>
     <br>
     <div name="button">
