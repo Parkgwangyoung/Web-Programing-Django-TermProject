@@ -149,7 +149,9 @@
                 </thead>
                     <tbody>
                       내용 : {{post.description}}<br>
-                      파일명 : {{post.file}}
+                      파일명 : {% for file in files %}
+                        {{file.file}}
+                      {% endfor %}
                       <a href="{% url 'web:like' post.id %}">
                         {% if post in student.like_post %}
                             취소

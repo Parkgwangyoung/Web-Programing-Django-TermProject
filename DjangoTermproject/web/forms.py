@@ -6,15 +6,15 @@ from.import views
 class CreatePostform(forms.ModelForm):
     class Meta:
         model = Post
-        fileds = ["board_name","title","description","date","writer","writer_email","student","professor","like_number","file"]
+        fileds = ["board_name","title","description","date","writer","writer_email","student","professor","like_number"]
         exclude = ['board_name','date','writer','writer_email','student','professor','like_number',]
         widgets = {
             'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             'description' : forms.Textarea(attrs={'size':'100','style':'height:100;'}),
-            'file':forms.FileInput()
+            
             
         }
-        labels = {"title":"제 목","description":"내 용","file":"파일명"}
+        labels = {"title":"제 목","description":"내 용"}
 
     def __init__(self,*args,**kwargs):
         super(CreatePostform,self).__init__(*args,**kwargs)
@@ -66,29 +66,21 @@ class PostCreateform(forms.ModelForm):
 class PostUpdateform(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["board_name","title","description","writer","date","writer_email","student","professor","like_number","file"]
+        fields = ["board_name","title","description","writer","date","writer_email","student","professor","like_number"]
         exclude = ['date','writer','board_name','writer_email','student','professor','like_number']
         widgets = {
             'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             'description':forms.Textarea(attrs={'size':'100','style':'height:100;'}),
-            'file':forms.FileInput(),
+            
             
            
         }
-        labels = {"title":"제 목","description":"글 내용","file":"파일명"}
+        labels = {"title":"제 목","description":"글 내용"}
 
     def __init__(self,*args,**kwargs):
         super(PostUpdateform,self).__init__(*args,**kwargs)
         self.label_suffix=''
 
-class Fileuploadform(forms.ModelForm):
-    class Meta:
-        model = Post
-        field = ["file"]
-        exclude = []
-        widgets = {
-            'file':forms.FileField(),
-        }
-        labels = {'file':"파일 업로드하기",}
+
 
         

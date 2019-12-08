@@ -26,8 +26,7 @@ class Post(models.Model):
     description = models.TextField(verbose_name="글 내용")
     writer = models.CharField(max_length=10,verbose_name="작성자")
     writer_email = models.EmailField(max_length=30,verbose_name="작성자 아이디")
-    date = models.DateField(auto_now=True,verbose_name="작성일")
-    file = models.FileField(upload_to='',verbose_name="파일명",blank=True)
+    date = models.DateField(auto_now=True,verbose_name="작성일") 
     like_number  = models.PositiveIntegerField(default=0,verbose_name="추천수")
 
     class Meta:
@@ -35,5 +34,22 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+class Uploaded_File(models.Model):
+    post = models.ForeignKey(Post,on_delete=models.CASCADE, verbose_name="글 제목")
+    file = models.FileField(upload_to='',verbose_name="파일명",blank=True)
+    writer = models.CharField(max_length=10, verbose_name="작성자")
+
+    # def __str__(self):
+    #     return self.writer
+
+class Reply(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name = "글 제목")
+    reply = models.TextField(verbose_name="댓글 내용")
+    writer = models.CharField(max_length=10, verbose_name="작성자")
+
+    def __str__(self):
+        return self.writer
+
 
 

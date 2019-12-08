@@ -2,11 +2,15 @@ from django.shortcuts import render,get_object_or_404
 from django.views import View
 from django.http import HttpResponse,HttpResponseRedirect
 from login.models import Student,Professor
-from web.models import Board,BoardTable,Post
+from web.models import Board,BoardTable,Post,Uploaded_File,Reply
 from django.urls import reverse
 from web.forms import CreatePostform,BtCreateform,Bcreateform,PostCreateform,PostUpdateform
 from django.core.exceptions import PermissionDenied
+import itertools
 # Create your views here.
+
+
+
 
 #메인홈페이지
 class indexView(View):
@@ -184,7 +188,7 @@ class CreatepostView(View):
                 for i  in boards.post_set.all():
                     board_name = i.board_name
                     break
-                form = CreatePostform(request.POST,request.FILES)
+                form = CreatePostform(request.POST)
                 if form.is_valid():
                     post = form.save(commit=False)
                     post.writer =writer
@@ -192,10 +196,11 @@ class CreatepostView(View):
                     post.board_name = board_name                  
                     post.save()
                     if request.FILES['file']:
-                        check_file_post = student.file_post.filter(id = post.id)
-                        if not check_file_post.exists():
-                            student.file_post.add(post)
-                            post.save()
+                        for file in request.FILES.getlist('file'):
+                            try:
+                                Uploaded_File.objects.create(post=post,file=file,writer=writer)
+                            except:
+                                return HttpResponse('올바르지 않습니다.')                    
                     return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
                 else:
                     form = CreatePostform()
@@ -217,10 +222,11 @@ class CreatepostView(View):
                     post.board_name = board_name
                     post.save()
                     if request.FILES['file']:
-                        check_file_post = professor.file_post.filter(id = post.id)
-                        if not check_file_post.exists():
-                            professor.file_post.add(post)
-                            post.save()
+                        for file in request.FILES.getlist('file'):
+                            try:
+                                Uploaded_File.objects.create(post=post,file=file,writer=writer)
+                            except:
+                                return HttpResponse('올바르지 않습니다.')       
                     return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
                 else:
                     form = CreatePostform()
@@ -237,18 +243,25 @@ class PostView(View):
             student = Student.objects.get(id = student_id)
             email = student.email
             posts = get_object_or_404(Post,pk=post)
-            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post})
+            files = posts.uploaded_file_set.all()
+            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'files':files})
         except:  #교수의경우
             try:
                 professor_id = request.session['logined_professor_id']
                 professor = Professor.objects.get(id = professor_id)
                 email = professor.email
                 posts = get_object_or_404(Post,pk=post)
-                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post})
+                files = posts.uploaded_file_set.all()
+                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'files':files})
             except: #관리자의경우
                 posts = get_object_or_404(Post,pk=post)
-                return render(request,'web/post.html',{'post':posts,'pk':post})
+                files = posts.uploaded_file_set.all()
+                return render(request,'web/post.html',{'post':posts,'pk':post,'files':files})
         
+            
+
+
+
 #게시글 수정
 class UpdatePostView(View):
     def get(self,request,post,*args,**kwargs):
@@ -256,17 +269,41 @@ class UpdatePostView(View):
         return render(request,'web/updatepost.html',{'form':form,'pk':post})
 
     def post(self,request,post,*args,**kwargs):
-        form = PostUpdateform(request.POST,request.FILES)
-        if form.is_valid():
-            try:                                     
-                post_get = Post.objects.get(id=post)
+        try:
+            post_get = Post.objects.get(id=post)
+            uploaded = post_get.uploaded_file_set.all()
+            list = []
+            for i in uploaded:
+                list.append(i.file)
+            count = 0
+            form = PostUpdateform(request.POST,instance=post_get)
+            if form.is_valid():           
+                form.save()
+                if request.FILES['file']:
+                    if len(request.FILES.getlist('file')) > len(list):
+                        for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):                            
+                            count += 1
+                            if count > len(list):
+                                Uploaded_File.objects.create(post=post_get,file=get_file,writer=post_get.writer)
+                            else:
+                                Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)                                               
+                    elif len(request.FILES.getlist('file')) == len(list):
+                        for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):                           
+                            Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)                            
+                    elif len(request.FILES.getlist('file')) < len(list):
+                        for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):                           
+                            count +=1
+                            if count > len(request.FILES.getlist('file')):
+                                Uploaded_File.objects.filter(post= post_get,file =files).delete()
+                            else:                                   
+                                Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)                          
+                    return HttpResponseRedirect(reverse('web:post',args=(post,)))
+            else:
+                form = PostUpdateform()       
+                return render(request,'web/updatepost.html',{'form':form,'pk':post,'error':"글 없음"})
+        except:
+            return HttpResponse('올바르지않습니다.')
 
-                post_get = PostUpdateform(request.POST,request.FILES, instance=post_get)
-                post_get.save(commit=False)
-                post_get.save()
-                return HttpResponseRedirect(reverse('web:post',args=(post,)))
-            except:
-                return HttpResponse('올바르지 않습니다.')
 
 #게시글 삭제
 class DeletePostView(View):
