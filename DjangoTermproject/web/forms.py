@@ -10,7 +10,7 @@ class CreatePostform(forms.ModelForm):
         exclude = ['board_name','date','writer','writer_email','student','professor','like_number']
         widgets = {
             'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
-            'description' : forms.Textarea(attrs={'size':'100','style':'height:100;'}),
+            'description' : forms.Textarea(attrs={'size':'100','style':'height:100; width:100%' }),
         }
         labels = {"title":"제 목","description":"내 용"}
 
