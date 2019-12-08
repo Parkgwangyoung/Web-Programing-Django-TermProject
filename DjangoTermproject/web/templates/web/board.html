@@ -150,17 +150,18 @@
                       <th>제목</th>
                       <th>작성자</th>
                       <th>작성일</th>
-                      <th>추천수</th>
+                      <th>추천</th>
+                      
                     </tr>
                 </thead>
                 <tbody>
                   {% for i in post %}
                     <tr>        
-                      <td>{{forloop.counter}}</td>
+                      <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
                       <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
                       <td>{{i.writer}}</td>
                       <td>{{i.date}}</td>
-                      <td>{{i.like_number}}</td>
+                      <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
                     </tr>
                   {% endfor %}               
                 </tbody>      
@@ -188,11 +189,11 @@
                           <tbody>
                               {% for i in post %}
                                   <tr>        
-                                      <td>{{forloop.counter}}</td>
+                                      <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
                                       <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
                                       <td>{{i.writer}}</td>
                                       <td>{{i.date}}</td>
-                                      <td>{{i.like_number}}</td>
+                                      <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
                                   </tr>
                               {% endfor %}               
                           </tbody>
@@ -220,11 +221,11 @@
                   <tbody>
                     {% for i in post %}
                       <tr>        
-                        <td>{{forloop.counter}}</td>
+                        <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
                         <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
                         <td>{{i.writer}}</td>
                         <td>{{i.date}}</td>
-                        <td>{{i.like_number}}</td>
+                        <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
                       </tr>
                     {% endfor %}               
                   </tbody>  
@@ -272,11 +273,11 @@
                           <tbody>
                               {% for i in post %}
                                   <tr>        
-                                      <td>{{forloop.counter}}</td>
+                                      <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
                                       <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
                                       <td>{{i.writer}}</td>
                                       <td>{{i.date}}</td>
-                                      <td>{{i.like_number}}</td>
+                                      <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
                                   </tr>
                               {% endfor %}               
                           </tbody>
@@ -297,7 +298,7 @@
       {% if request.session.logined %}
       {% if post %}
       <div align="right">
-        <div  style="width: 80px;">
+        <div style="width: 80px;">
               <a href="/web/{{pk}}/{{ak}}/create">
                   <button class="btn btn-warning btn-block ">
                           <b>글쓰기</b></button></a>

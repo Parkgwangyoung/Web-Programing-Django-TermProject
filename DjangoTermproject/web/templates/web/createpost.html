@@ -120,7 +120,7 @@
 							  <div class=" services-head">
 								  <br><br>
 								    <div style="font-size: 40px;">
-										<b>게시글 작성</b><br><br><br>
+										<br><br><br><b>게시글 작성</b><br>
 									</div>
 								<br><br>
 							  </div>
@@ -138,20 +138,31 @@
         <form action="/web/{{pk}}/{{ak}}/create/" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">
-        <input type="hidden" name ="professor_id" value="{{request.session.logined_professor_id}}"> 
-        <input type="submit" value="글 쓰기">
-        </form>
-        {% endif %}
+            <input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">
+            <input type="hidden" name ="professor_id" value="{{request.session.logined_professor_id}}"> 
     </div>
     <br>
-    <div align="left">
-      <div  style="width: 80px;">
-                  <button class="btn btn-warning btn-block text-uppercase" onclick="history.back();">
-                          <b>목록으로</b></button></a>
-      </div>
-          
-  </div>
+    <div name="button">
+            <!-- 등록 버튼 -->
+            <div style="display: inline;float: right;">
+              <div style="width: 80px;">
+                  <button class="btn btn-warning btn-block text-uppercase">
+                      <b>등록</b></button>
+                </a>         
+              </div>
+            </div>
+            <!-- 취소 버튼 -->
+            <div style="display: inline;float: right; margin-right: 10px;">
+              <div style="width: 80px;">
+                    <button class="btn btn-block text-uppercase" onclick="history.back();" 
+                            style="background-color: dimgray; color: ghostwhite;">
+                      <b>취소</b></button>        
+              </div>
+            </div>
+            
+     </div>
+    </form>
+    {% endif %}
 </div>
 
 

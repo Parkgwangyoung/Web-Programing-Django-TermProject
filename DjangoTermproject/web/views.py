@@ -6,6 +6,7 @@ from web.models import Board,BoardTable,Post
 from django.urls import reverse
 from web.forms import CreatePostform,BtCreateform,Bcreateform,PostCreateform,PostUpdateform
 from django.core.exceptions import PermissionDenied
+from django.utils import timezone
 # Create your views here.
 
 #메인홈페이지
@@ -216,23 +217,27 @@ class PostView(View):
             student = Student.objects.get(id = student_id)
             email = student.email
             posts = get_object_or_404(Post,pk=post)
-            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post})
+            Bt = BoardTable.objects.all()
+            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'boardtable':Bt})
         except:  #교수의경우
             try:
                 professor_id = request.session['logined_professor_id']
                 professor = Professor.objects.get(id = professor_id)
                 email = professor.email
                 posts = get_object_or_404(Post,pk=post)
-                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post})
+                Bt = BoardTable.objects.all()
+                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'boardtable':Bt})
             except: #관리자의경우
                 posts = get_object_or_404(Post,pk=post)
-                return render(request,'web/post.html',{'post':posts,'pk':post})
+                Bt = BoardTable.objects.all()
+                return render(request,'web/post.html',{'post':posts,'pk':post,'boardtable':Bt})
         
 #게시글 수정
 class UpdatePostView(View):
     def get(self,request,post,*args,**kwargs):
-        form = PostUpdateform()       
-        return render(request,'web/updatepost.html',{'form':form,'pk':post})
+        form = PostUpdateform()
+        Bt = BoardTable.objects.all()       
+        return render(request,'web/updatepost.html',{'form':form,'pk':post,'boardtable':Bt})
 
     def post(self,request,post,*args,**kwargs):
         form = PostUpdateform(request.POST)

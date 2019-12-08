@@ -152,7 +152,7 @@
                             <div style="text-align: left; font-size: medium; overflow:scroll; overflow-x: hidden; height: 100px; 
                                         border: 2px solid orange; padding: 5px;">
                                     {% for student in students %}
-                                        <input type="checkbox" name="student" id="student{{forloop.counter}}" value="{{student.id}}"/>
+                                        <input type="radio" name="student" id="student{{forloop.counter}}" value="{{student.id}}"/>
                                         <label for="student{{forloop.counter}}"> {{student}} </label><br>
                                     {% endfor %}
 
@@ -166,7 +166,7 @@
                             <div style="text-align: left; font-size: medium; overflow:scroll; overflow-x: hidden; height: 100px; 
                                         border: 2px solid orange; padding: 5px;">
                                 {% for professor in professors %}
-                                    <input type="checkbox" name="professor" id="professor{{forloop.counter}}" value="{{professor.id}}"/>
+                                    <input type="radio" name="professor" id="professor{{forloop.counter}}" value="{{professor.id}}"/>
                                     <label for="professor{{forloop.counter}}">{{professor}}</label><br>
                                 {% endfor %}
                             </div>

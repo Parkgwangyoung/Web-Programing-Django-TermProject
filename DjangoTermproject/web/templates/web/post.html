@@ -122,7 +122,7 @@
 								  <br><br>
 								    <div style="font-size: 40px;">
                         <br><br><br><b>
-                            여기에 게시판 이름</b>
+                            {{post.board_name}}</b>
 									</div>
 								<br><br>
 							  </div>
@@ -148,29 +148,52 @@
         <table class ="table table-striped">
                 <thead>
                     <h3>{{post.title}}</h2>
-                      여기에 작성자 | 작성일 | 오른쪽 끝 추천수
+                      {{post.writer}} | {{post.date}} |
+                        추천 {{post.like_number}}
                       <hr>
                 </thead>
                     <tbody>
                       <p>{{post.description|linebreaksbr}}</p>
-                      <div align="right">
-                        <a href="{% url 'web:like' post.id %}">
-                          {% if post in student.like_post %}
-                              취소
-                          {% else %}
-                              추천
-                          {% endif %}
-                          {% if email == post.writer_email %}                                             
-                        <br><a href="{% url 'web:updatepost' pk %}">파일 업로드 취소</a><br>
-                        &nbsp;test.ppt  
-                        {% endif %}
+  
+                        <!-- 추천 버튼 -->
+                        <br><br><br>
+                        <div align="center">
+                          <div style="width: 100px; border: solid 2px gold; padding: 10px;">
+                              <a href="{% url 'web:like' post.id %}">
+                                  {% if post in student.like_post %}
+                                      취소
+                                  {% else %}
+                                  <i class="far fa-thumbs-up" style="font-size: 50px"></i>
+                                  <br>추천</a>
+                                  {% endif %}
+                          </div>
+                            
+                        </div>
 
-                      </div>
-                      
-                    </a>
-                      
+                        <hr>
+                        <!-- 파일 업로드 부분-->
+                        <div align="right">
+                            {% if email == post.writer_email %}                                             
+                            <a href="{% url 'web:updatepost' pk %}"></a>
+                            &nbsp;여기 첨부파일 공간
+                          {% endif %}
+                        </div>
+                        <hr style="border: solid 1px orange;">
+                          여기에 댓글 표시<br>
+                          댓글1<br>
+                          댓글2<br>
+                          
+                        <hr style="border: solid 1px orange;">
+                        <div style="background-color:rgba(255, 166, 0, 0.247);">
+                            여기에<br>
+                            댓글<br>
+                            다는 창
+                        </div>
+                          
                     </tbody>
+                    
             </table>
+                
     </div>
     <br>
     <div name="button">
@@ -246,6 +269,8 @@
         </div>
   </footer>
 
+  <a style="display:scroll;position:fixed;bottom:10px;right:10px;font-size:40px;color: orange;" 
+              href="#"><i class="fas fa-caret-square-up"></i></a>
 
 <!--===============================================================================================-->
 <script src='{% static "vendor/jquery/jquery-3.2.1.min.js" %}'></script>

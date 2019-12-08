@@ -27,7 +27,7 @@ class Post(models.Model):
     writer = models.CharField(max_length=10,verbose_name="작성자")
     writer_email = models.EmailField(max_length=30,verbose_name="작성자 아이디")
     date = models.DateField(auto_now=True,verbose_name="작성일")
-    
+
     like_number  = models.PositiveIntegerField(default=0,verbose_name="추천수")
 
     class Meta:
