@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from web.models import BoardTable,Board,Post
+from web.models import BoardTable,Board,Post,Uploaded_File,Reply
 from.import views
 
 class CreatePostform(forms.ModelForm):
@@ -82,5 +82,19 @@ class PostUpdateform(forms.ModelForm):
         self.label_suffix=''
 
 
+class Replyform(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ["post","reply","writer"]
+        exclude = {'post','writer'}
+        widgets = {
+            'reply':forms.TextInput(),
+        }
+        labels = {"reply":"댓글"}
 
-        
+    def __init__(self,*args,**kwargs):
+        super(Replyform,self).__init__(*args,**kwargs)
+        self.label_suffix=''
+
+
+

@@ -40,13 +40,14 @@ class Uploaded_File(models.Model):
     file = models.FileField(upload_to='',verbose_name="파일명",blank=True)
     writer = models.CharField(max_length=10, verbose_name="작성자")
 
-    # def __str__(self):
-    #     return self.writer
+    def __str__(self):
+        return self.writer
 
 class Reply(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, verbose_name = "글 제목")
     reply = models.TextField(verbose_name="댓글 내용")
     writer = models.CharField(max_length=10, verbose_name="작성자")
+    writer_email = models.EmailField(max_length=30,verbose_name="작성자 아이디")
 
     def __str__(self):
         return self.writer
