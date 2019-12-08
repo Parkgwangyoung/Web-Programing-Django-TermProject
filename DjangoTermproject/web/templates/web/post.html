@@ -9,9 +9,10 @@
     <meta content="" name="description">
   
     <!-- Favicons -->
+
     <link href='{% static "img/favicon.png" }' rel="icon">
     <link href='{% static "img/apple-touch-icon.png" }' rel="apple-touch-icon">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" 
             integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
             crossorigin="anonymous">
   
@@ -120,7 +121,8 @@
 							  <div class=" services-head">
 								  <br><br>
 								    <div style="font-size: 40px;">
-										<b>게시판</b><br><br><br>
+                        <br><br><br><b>
+                            여기에 게시판 이름</b>
 									</div>
 								<br><br>
 							  </div>
@@ -142,45 +144,85 @@
   {% endif %}
   <br><br>
   <div class = "container">
-    <div style="border: 2px solid gray; background-color:white">
+    <div style="border: 2px solid gray; background-color:white; padding: 10px;">
         <table class ="table table-striped">
                 <thead>
-                    <h3>제목 : {{post.title}}<br></h2>
+                    <h3>{{post.title}}</h2>
+                      여기에 작성자 | 작성일 | 오른쪽 끝 추천수
+                      <hr>
                 </thead>
                     <tbody>
-                      내용 : {{post.description}}
-                      <a href="{% url 'web:like' post.id %}">
-                        {% if post in student.like_post %}
-                            취소
-                        {% else %}
-                            추천
-                        {% endif %}
-                    </a>
-                      {% if email == post.writer_email %}                     
-                        <a href="{% url 'web:updatepost' pk %}">수정</a>
-                        <br><a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a>                        
+                      <p>{{post.description|linebreaksbr}}</p>
+                      <div align="right">
+                        <a href="{% url 'web:like' post.id %}">
+                          {% if post in student.like_post %}
+                              취소
+                          {% else %}
+                              추천
+                          {% endif %}
+                          {% if email == post.writer_email %}                                             
                         <br><a href="{% url 'web:updatepost' pk %}">파일 업로드 취소</a><br>
                         &nbsp;test.ppt  
                         {% endif %}
-                      {% if request.session.logined_special %}                     
-                      <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">게시글 삭제</a>                         
-                      {% endif %}
+
+                      </div>
+                      
+                    </a>
+                      
                     </tbody>
             </table>
     </div>
     <br>
-    <div align="left">
-      <div  style="width: 80px;">
-                  <button class="btn btn-warning btn-block text-uppercase" onclick="history.back();">
-                          <b>목록으로</b></button></a>
+    <div name="button">
+      <div style="display: inline;float: left;">
+        <div  style="width: 80px;" >
+                    <button class="btn btn-warning btn-block text-uppercase" onclick="history.back();">
+                            <b>목록으로</b></button></a>
+        </div> 
       </div>
-          
-  </div>
+  
+      {% if email == post.writer_email %}
+
+      <!-- 게시글 삭제 -->
+      <div style="display: inline;float: right;">
+        <div style="width: 80px;">
+          <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">
+            <button class="btn btn-block text-uppercase" style="background-color: dimgray; color: ghostwhite;">
+                <b>삭제</b></button>
+          </a>         
+        </div>
+      </div>
+
+
+      <!-- 게시글 수정 -->
+      <div style="display: inline;float: right; margin-right: 10px;">
+        <div style="width: 80px;">
+          <a href="{% url 'web:updatepost' pk %}">
+            <button class="btn btn-block text-uppercase" style="background-color: dimgray; color: ghostwhite;">
+                <b>수정</b></button>
+          </a>         
+        </div>
+      </div>
+      {% endif %}
+
+      {% if request.session.logined_special %}                     
+        <div style="display: inline;float: right">
+          <div style="width: 80px; background-color: dodgerblue; color: gold;">
+            <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">
+              <button class="btn btn-block text-uppercase" style="background-color: dimgray; color: ghostwhite;">
+                  <b>삭제</b></button>
+            </a>         
+          </div>
+        </div>                         
+      {% endif %}
+      
+    </div>
+    
 </div>
 
 
   <!-- Start Footer bottom Area -->
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <br><br><br><br><br><br><br><br><br><br><br>
 <footer id="contact">
         <div class="footer-area-bottom">
             <div class="container">

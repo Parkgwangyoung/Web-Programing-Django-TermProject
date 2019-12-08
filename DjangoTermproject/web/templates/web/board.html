@@ -121,14 +121,14 @@
 						  <div class="row">
 							  <div class="col-md-12 col-sm-12 col-xs-12">
 							    <div class=" services-head">
-								    <br><br>
+								    <br><br><br><br><br>
 								      <div style="font-size: 40px;">
                         {% if not grades %}{%if not supervisors %}{% if not request_name %}<b>{{name}}</b><br><br><br>{% endif %}{% endif %}{% endif %}
                         {% if grades %}<b >{{grades}}학년게시판</b><br><br><br>{% endif %}
                         {% if supervisors %}<b>{{supervisors}}교수님 게시판</b><br><br><br>{% endif %}
                         {% if request_name %}<b>{{request_name}}</b><br><br><br>{% endif %}
 									    </div>
-								    <br><br>
+
 							    </div>
 							  </div>
 						  </div>    
@@ -246,6 +246,10 @@
     {% if not post %}
       <br><br>
       <h2>게시판을 선택해주세요</h2>
+      <div align="center">
+        <img src='{% static "images/loading.gif" %}'>
+      </div>
+      
     {% endif %}
           
 
