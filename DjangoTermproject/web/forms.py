@@ -90,7 +90,7 @@ class Replyform(forms.ModelForm):
         widgets = {
             'reply':forms.TextInput(),
         }
-        labels = {"reply":"댓글"}
+        labels = {"reply":""}
 
     def __init__(self,*args,**kwargs):
         super(Replyform,self).__init__(*args,**kwargs)

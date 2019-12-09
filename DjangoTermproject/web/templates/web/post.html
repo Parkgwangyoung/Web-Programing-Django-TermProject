@@ -179,7 +179,7 @@
                         </div>
                         <hr style="border: solid 1px orange;">
                         {% for reply in reply %}
-                        <p>{{reply.writer}}:&nbsp;&nbsp;&nbsp;{{reply.reply}}
+                        <p>{{reply.writer}} :&nbsp;&nbsp;{{reply.reply}}
                             {% if email == reply.writer_email %} 
                           <a href= "{% url 'web:updatereply' pk reply.id %}">수정</a> <a href="{% url 'web:deletereply' pk reply.id %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a></p>
                           {% endif %}
@@ -200,7 +200,7 @@
                             <form action="{% url 'web:reply' pk %}" method="POST">
                                 {% csrf_token %}<br>
                                 {% for form in replyform %}
-                                {{form.label}}{{form}}
+                                {{request.session.logined}}{{form}}
                                 {% endfor %}
                                 <input type="submit" value="댓글 작성"><br>
                               </form>

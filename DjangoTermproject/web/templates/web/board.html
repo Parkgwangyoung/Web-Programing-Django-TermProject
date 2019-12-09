@@ -169,8 +169,10 @@
                   {% endif %}
           {% endif %}
           {% endif %}
+          <div class="container">
           {% if grades %}
           {% if post %}
+          <br><br>
           <div style="border: 2px solid gray; background-color:white">
               <table class ="table table-striped">
                       <thead>
@@ -194,17 +196,17 @@
                                       <td>{{i.date}}</td>
                                       <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
                                   </tr>
-                              {% endfor %}               
+                              {% endfor %}
                           </tbody>
-                      
-                      
                   </table>
             </div>
             {% endif %}
             {% endif %}
             {% endif %}
+          </div>
           {% if supervisors %}
           {% if post %}
+          <br><br>
           <div style="border: 2px solid gray; background-color:white">
             <table class ="table table-striped">
               <thead>         
@@ -291,7 +293,7 @@
                   
       </div>
       {% endif %}
-
+      
       <hr/>
       <!-- <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>-->
       {% if request.session.logined %}
@@ -299,12 +301,10 @@
       <div align="right">
         <div style="width: 80px;">
               <a href="/web/{{pk}}/{{ak}}/create">
-                  <button class="btn btn-warning btn-block ">
-                          <b>글쓰기</b></button></a>
+                  <button class="btn btn-warning btn-block">
+                     <b>글쓰기</b></button></a>
         </div>               
       </div>
-      {% endif %}
-      {% if post %}
             <div class = "text-center" >
                 <ul class = "pagination justify-content-center " >
                   <li class="page-item "><a class = "page-link " href="#">1</a></li>
@@ -314,11 +314,11 @@
             </div>
       {% endif %}
       {% endif %}
-        </div>        
-    </div>
+    </div>       
+
     
     <!-- Start Footer bottom Area -->
-    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br>
       <footer id="contact">
         <div class="footer-area-bottom">
             <div class="container">
