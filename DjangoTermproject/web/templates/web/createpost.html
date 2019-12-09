@@ -2,8 +2,10 @@
 <form action="/web/{{pk}}/{{ak}}/create/" method="POST", enctype="multipart/form-data" novalidate>
 {% csrf_token %}
 {{form.as_p}}
+파일 선택<input type="file" name="file" multiple><br>
 <input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">
 <input type="hidden" name ="professor_id" value="{{request.session.logined_professor_id}}"> 
 <input type="submit" value="글 쓰기">
 </form>
 {% endif %}
+

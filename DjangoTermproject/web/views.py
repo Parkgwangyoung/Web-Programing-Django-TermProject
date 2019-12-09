@@ -2,10 +2,11 @@ from django.shortcuts import render,get_object_or_404
 from django.views import View
 from django.http import HttpResponse,HttpResponseRedirect
 from login.models import Student,Professor
-from web.models import Board,BoardTable,Post
+from web.models import Board,BoardTable,Post,Uploaded_File,Reply
 from django.urls import reverse
-from web.forms import CreatePostform,BtCreateform,Bcreateform,PostCreateform,PostUpdateform
+from web.forms import CreatePostform,BtCreateform,Bcreateform,PostCreateform,PostUpdateform,Replyform
 from django.core.exceptions import PermissionDenied
+import itertools
 # Create your views here.
 
 #메인홈페이지
@@ -184,19 +185,22 @@ class CreatepostView(View):
                 for i  in boards.post_set.all():
                     board_name = i.board_name
                     break
-                form = CreatePostform(request.POST,request.FILES)
+                form = CreatePostform(request.POST)
                 if form.is_valid():
                     post = form.save(commit=False)
                     post.writer =writer
                     post.writer_email = writer_email
                     post.board_name = board_name
                     post.save()
-                    if request.FILES['file']:
-                        check_file_post = student.file_post.filter(id = post.id)
-                        if not check_file_post.exists():
-                            student.file_post.add(post)
-                            post.save()
-                    return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
+                    if request.FILES.getlist('file'):
+                        for file in request.FILES.getlist('file'):
+                            try:
+                                Uploaded_File.objects.create(post=post,file=file,writer=writer)
+                            except:
+                                return HttpResponse('올바르지 않습니다.')
+                        return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
+                    else:
+                        return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
                 else:
                     form = CreatePostform()
                     return render(request,'web/createpost.html',{'form':form,'ak':board,'pk':boardtable,'error':"글 미입력"})
@@ -216,12 +220,15 @@ class CreatepostView(View):
                     post.writer_email = writer_email
                     post.board_name = board_name
                     post.save()
-                    if request.FILES['file']:
-                        check_file_post = professor.file_post.filter(id = post.id)
-                        if not check_file_post.exists():
-                            professor.file_post.add(post)
-                            post.save()
-                    return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
+                    if request.FILES.getlist('file'):
+                        for file in request.FILES.getlist('file'):
+                            try:
+                                Uploaded_File.objects.create(post=post,file=file,writer=writer)
+                            except:
+                                return HttpResponse('올바르지 않습니다.')
+                        return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
+                    else:
+                        return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
                 else:
                     form = CreatePostform()
                     return render(request,'web/createpost.html',{'form':form,'ak':board,'pk':boardtable,'error':"글 미입력"})
@@ -237,36 +244,133 @@ class PostView(View):
             student = Student.objects.get(id = student_id)
             email = student.email
             posts = get_object_or_404(Post,pk=post)
-            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post})
+            files = posts.uploaded_file_set.all()
+            reply = posts.reply_set.all()
+            form = Replyform()
+            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'files':files,'replyform':form,'reply':reply})
         except:  #교수의경우
             try:
                 professor_id = request.session['logined_professor_id']
                 professor = Professor.objects.get(id = professor_id)
                 email = professor.email
                 posts = get_object_or_404(Post,pk=post)
-                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post})
+                files = posts.uploaded_file_set.all()
+                reply = posts.reply_set.all()
+                form = Replyform()
+                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'files':files,'replyform':form,'reply':reply})
             except: #관리자의경우
                 posts = get_object_or_404(Post,pk=post)
-                return render(request,'web/post.html',{'post':posts,'pk':post})
+                files = posts.uploaded_file_set.all()
+                reply = posts.reply_set.all()
+                form = Replyform()
+                return render(request,'web/post.html',{'post':posts,'pk':post,'files':files,'replyform':form,'reply':reply})
+
+
+class ReplyView(View):
+    def post(self,request,post,*args,**kwargs):
+        try:
+            if request.session.get('logined_student_id'):
+                student = Student.objects.get(id= request.session['logined_student_id'])
+                get_post = get_object_or_404(Post,pk=post)
+                form = Replyform(request.POST)
+                if form.is_valid():
+                    reply = form.save(commit=False)
+                    reply.post = get_post
+                    reply.writer = student.name
+                    reply.writer_email = student.email
+                    reply.save()
+                    return HttpResponseRedirect(reverse('web:post',args=(post,)))
+            elif request.session.get('logined_professor_id'):
+                professor = Professor.objects.get(id = request.session['logined_professor_id'])
+                get_post = get_object_or_404(Post,pk=post)
+                form = Replyform(request.POST)
+                if form.is_valid():
+                    reply = form.save(commit=False)
+                    reply.post = get_post
+                    reply.writer = professor.name
+                    reply.writer_email = professor.email
+                    reply.save()
+                    return HttpResponseRedirect(reverse('web:post',args=(post,)))
+            else:
+                admin = Student.objects.get(id = 1)
+                get_post = get_object_or_404(Post,pk=post)
+                form = Replyform(request.POST)
+                if form.is_valid():
+                    reply = form.save(commit=False)
+                    reply.post = get_post
+                    reply.writer = admin.name
+                    reply.save()
+                    return HttpResponseRedirect(reverse('web:post',args=(post,)))
+        except:
+            return HttpResponse('올바르지않습니다.')
+
+# 글쓴이가 댓글 쓸때, render로 값넘겨줄때 email도 확인하여 글수정,삭제도 나와야함(추후 추가)
+class ReplyUpdateView(View):
+    def get(self,request,post,reply,*args,**kwargs):
+        posts = get_object_or_404(Post,pk=post)
+        form = Replyform()
+        files = posts.uploaded_file_set.all()
+        reply_all = posts.reply_set.all()
+        return render(request,'web/post.html',{'replyupdateform':form,'pk':post,'rk':reply,'post':posts,'reply':reply_all,'files':files,'replyform':form})
+
+    def post(self,request,post,reply,*args,**kwargs):
+        get_reply = get_object_or_404(Reply,pk=reply)
+        form = Replyform(request.POST,instance=get_reply)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('web:post',args=(post,)))
+
+
+class ReplyDeleteView(View):
+    def get(self,request,post,reply,*args,**kwargs):
+        get_reply = get_object_or_404(Reply,pk=reply)
+        get_reply.delete()
+        return HttpResponseRedirect(reverse('web:post',args=(post,)))
+
 
 #게시글 수정
 class UpdatePostView(View):
     def get(self,request,post,*args,**kwargs):
-        form = PostUpdateform()
+        get_post = get_object_or_404(Post,pk=post)
+        form = PostUpdateform(initial={'title':get_post.title,'description':get_post.description})
         return render(request,'web/updatepost.html',{'form':form,'pk':post})
 
     def post(self,request,post,*args,**kwargs):
-        form = PostUpdateform(request.POST,request.FILES)
-        if form.is_valid():
-            try:
-                post_get = Post.objects.get(id=post)
+        try:
+            post_get = Post.objects.get(id=post)
+            uploaded = post_get.uploaded_file_set.all()
+            list = []
+            for i in uploaded:
+                list.append(i.file)
+            count = 0
+            form = PostUpdateform(request.POST,instance=post_get)
+            if form.is_valid():
+                form.save()
+                if request.FILES['file']:
+                    if len(request.FILES.getlist('file')) > len(list):
+                        for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):
+                            count += 1
+                            if count > len(list):
+                                Uploaded_File.objects.create(post=post_get,file=get_file,writer=post_get.writer)
+                            else:
+                                Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)
+                    elif len(request.FILES.getlist('file')) == len(list):
+                        for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):
+                            Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)
+                    elif len(request.FILES.getlist('file')) < len(list):
+                        for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):
+                            count +=1
+                            if count > len(request.FILES.getlist('file')):
+                                Uploaded_File.objects.filter(post= post_get,file =files).delete()
+                            else:
+                                Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)
+                    return HttpResponseRedirect(reverse('web:post',args=(post,)))
+            else:
+                form = PostUpdateform()
+                return render(request,'web/updatepost.html',{'form':form,'pk':post,'error':"글 없음"})
+        except:
+            return HttpResponse('올바르지않습니다.')
 
-                post_get = PostUpdateform(request.POST,request.FILES, instance=post_get)
-                post_get.save(commit=False)
-                post_get.save()
-                return HttpResponseRedirect(reverse('web:post',args=(post,)))
-            except:
-                return HttpResponse('올바르지 않습니다.')
 
 #게시글 삭제
 class DeletePostView(View):
