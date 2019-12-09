@@ -9,12 +9,12 @@ class CreatePostform(forms.ModelForm):
         fileds = ["board_name","title","description","date","writer","writer_email","student","professor","like_number"]
         exclude = ['board_name','date','writer','writer_email','student','professor','like_number',]
         widgets = {
-            'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
-            'description' : forms.Textarea(attrs={'size':'100','style':'height:100;'}),
+            'title':forms.TextInput(attrs={'size':'30','style':'height:35px;','placeholder':'제목을 입력하세요.'}),
+            'description' : forms.Textarea(attrs={'size':'100','style':'height:100;width:100%'}),
 
 
         }
-        labels = {"title":"제 목","description":"내 용"}
+        labels = {"title":"","description":"내 용"}
 
     def __init__(self,*args,**kwargs):
         super(CreatePostform,self).__init__(*args,**kwargs)
