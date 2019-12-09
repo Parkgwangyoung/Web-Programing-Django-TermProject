@@ -1,22 +1,24 @@
 from django import forms
 from django.forms import ModelForm
-from web.models import BoardTable,Board,Post
+from web.models import BoardTable,Board,Post,Uploaded_File,Reply
 from.import views
 
 class CreatePostform(forms.ModelForm):
     class Meta:
         model = Post
         fileds = ["board_name","title","description","date","writer","writer_email","student","professor","like_number"]
-        exclude = ['board_name','date','writer','writer_email','student','professor','like_number']
+        exclude = ['board_name','date','writer','writer_email','student','professor','like_number',]
         widgets = {
-            'title':forms.TextInput(attrs={'size':'30','style':'height:35px;','placeholder':' 제목을 입력해 주세요.'}),
-            'description' : forms.Textarea(attrs={'size':'100','style':'height:100; width:100%' }),
+            'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
+            'description' : forms.Textarea(attrs={'size':'100','style':'height:100;'}),
+
+
         }
-        labels = {"title":"","description":"내 용"}
+        labels = {"title":"제 목","description":"내 용"}
 
     def __init__(self,*args,**kwargs):
         super(CreatePostform,self).__init__(*args,**kwargs)
-        self.label_suffix=''    
+        self.label_suffix=''
 
 class BtCreateform(forms.ModelForm):
     class Meta:
@@ -57,7 +59,7 @@ class PostCreateform(forms.ModelForm):
 
     def __init__(self,*args,**kwargs):
         super(PostCreateform,self).__init__(*args,**kwargs)
-        self.label_suffix=''   
+        self.label_suffix=''
 
 
 
@@ -66,15 +68,30 @@ class PostUpdateform(forms.ModelForm):
         model = Post
         fields = ["board_name","title","description","writer","date","writer_email","student","professor","like_number"]
         exclude = ['date','writer','board_name','writer_email','student','professor','like_number']
-        
         widgets = {
-            'title':forms.TextInput(attrs={'size':'30','style':'height:35px;','placeholder':'제목을 입력해 주세요'}),
-            'description':forms.Textarea(attrs={'size':'100','style':'height:100; width:100%'}),
-            
-           
+            'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
+            'description':forms.Textarea(attrs={'size':'100','style':'height:100;'}),
+
+
+
         }
-        labels = {"title":"","description":"내 용"}
+        labels = {"title":"제 목","description":"글 내용"}
 
     def __init__(self,*args,**kwargs):
         super(PostUpdateform,self).__init__(*args,**kwargs)
+        self.label_suffix=''
+
+
+class Replyform(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ["post","reply","writer"]
+        exclude = {'post','writer'}
+        widgets = {
+            'reply':forms.TextInput(),
+        }
+        labels = {"reply":"댓글"}
+
+    def __init__(self,*args,**kwargs):
+        super(Replyform,self).__init__(*args,**kwargs)
         self.label_suffix=''

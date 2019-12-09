@@ -13,10 +13,13 @@ urlpatterns = [
    path('board/<int:post>/post/',views.PostView.as_view(),name='post'),
    path('board/<int:post>/updatepost/',views.UpdatePostView.as_view(),name='updatepost'),
    path('board/<int:post>/deletepost/',views.DeletePostView.as_view(),name='deletepost'),
+   path('board/<int:post>/reply/',views.ReplyView.as_view(),name='reply'),
+   path('board/<int:post>/<int:reply>/replyupdate/',views.ReplyUpdateView.as_view(),name='updatereply'),
+   path('board/<int:post>/<int:reply>/replydelete/',views.ReplyDeleteView.as_view(),name='deletereply'),
    path('btcreate/',views.BtcreateView.as_view(),name='Btcreate'),
    path('bcreate/',views.BcreateView.as_view(),name='Bcreate'),
    path('bpcreate/',views.BpCreateView.as_view(),name='Bpcreate'),
    path('board/<int:post>/like/',views.likeView.as_view(),name='like'),
-  #  path('test/<int:boardtable>/',views.TestView.as_view(),name='test'),
+
 
 ]
