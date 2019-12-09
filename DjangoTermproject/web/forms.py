@@ -11,6 +11,8 @@ class CreatePostform(forms.ModelForm):
         widgets = {
             'title':forms.TextInput(attrs={'size':'30','style':'height:30;'}),
             'description' : forms.Textarea(attrs={'size':'100','style':'height:100;'}),
+
+
         }
         labels = {"title":"제 목","description":"내 용"}
 

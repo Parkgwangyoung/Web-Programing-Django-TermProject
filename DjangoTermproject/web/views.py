@@ -171,7 +171,8 @@ class BoardView(View):
 class CreatepostView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
         form = CreatePostform()
-        return render(request,'web/createpost.html',{'form':form,'ak':board,'pk':boardtable})
+        Bt = BoardTable.objects.all()
+        return render(request,'web/createpost.html',{'form':form,'ak':board,'pk':boardtable,'boardtable':Bt})
 
 
     def post(self,request,boardtable,board,*args,**kwargs):
@@ -247,7 +248,8 @@ class PostView(View):
             files = posts.uploaded_file_set.all()
             reply = posts.reply_set.all()
             form = Replyform()
-            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'files':files,'replyform':form,'reply':reply})
+            Bt = BoardTable.objects.all()
+            return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'files':files,'replyform':form,'reply':reply,'boardtable':Bt})
         except:  #교수의경우
             try:
                 professor_id = request.session['logined_professor_id']

@@ -121,7 +121,12 @@
                         <ul class="dropdown-menu" role="menu">
                             {% if boardtable %}
                             {% for board  in boardtable %}
-                            <li><a href= "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a></li>
+                              <li><a href= "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a></li>
+                                {% if sub in board %}
+                                  <ul>
+                                    <li><a href="{% url 'web:board' sub.id %}">{{sub.board_name}}</a></li>
+                                  </ul>
+                                {% endif %}
                             {% endfor %}
                           {% endif %}
                         </ul>
