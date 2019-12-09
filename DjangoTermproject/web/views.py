@@ -170,10 +170,12 @@ class BoardView(View):
 
 class CreatepostView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
-        form = CreatePostform()
-        Bt = BoardTable.objects.all()
-        return render(request,'web/createpost.html',{'form':form,'ak':board,'pk':boardtable,'boardtable':Bt})
-
+        try:
+            form = CreatePostform()
+            Bt = BoardTable.objects.all()
+            return render(request,'web/createpost.html',{'form':form,'ak':board,'pk':boardtable,'boardtable':Bt})
+        except:
+            return HttpResponse('올바르지 않습니다.')
 
     def post(self,request,boardtable,board,*args,**kwargs):
         try:
@@ -183,6 +185,7 @@ class CreatepostView(View):
                 writer = student.name
                 writer_email = student.email
                 boards = get_object_or_404(Board,pk=board)
+                
                 for i  in boards.post_set.all():
                     board_name = i.board_name
                     break
@@ -204,7 +207,8 @@ class CreatepostView(View):
                         return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
                 else:
                     form = CreatePostform()
-                    return render(request,'web/createpost.html',{'form':form,'ak':board,'pk':boardtable,'error':"글 미입력"})
+                    Bt = BoardTable.objects.all()
+                    return render(request,'web/createpost.html',{'boardtable':Bt,'form':form,'ak':board,'pk':boardtable,'error':"글 미입력"})
             else:
                 hidden = request.POST['professor_id']
                 professor = Professor.objects.get(id = hidden)
@@ -232,7 +236,8 @@ class CreatepostView(View):
                         return HttpResponseRedirect(reverse('web:board',args=(boardtable,board,)))
                 else:
                     form = CreatePostform()
-                    return render(request,'web/createpost.html',{'form':form,'ak':board,'pk':boardtable,'error':"글 미입력"})
+                    Bt = BoardTable.objects.all()
+                    return render(request,'web/createpost.html',{'boardtable':Bt,'form':form,'ak':board,'pk':boardtable,'error':"글 미입력"})
 
         except:
             return HttpResponse('어드민이십니까?')
@@ -259,14 +264,18 @@ class PostView(View):
                 files = posts.uploaded_file_set.all()
                 reply = posts.reply_set.all()
                 form = Replyform()
-                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'files':files,'replyform':form,'reply':reply})
+                Bt = BoardTable.objects.all()
+                return render(request,'web/post.html',{'post':posts,'email':email,'pk':post,'files':files,'replyform':form,'reply':reply,'boardtable':Bt})
             except: #관리자의경우
-                posts = get_object_or_404(Post,pk=post)
-                files = posts.uploaded_file_set.all()
-                reply = posts.reply_set.all()
-                form = Replyform()
-                return render(request,'web/post.html',{'post':posts,'pk':post,'files':files,'replyform':form,'reply':reply})
-
+                try:
+                    posts = get_object_or_404(Post,pk=post)
+                    files = posts.uploaded_file_set.all()
+                    reply = posts.reply_set.all()
+                    form = Replyform()
+                    Bt = BoardTable.objects.all()
+                    return render(request,'web/post.html',{'post':posts,'pk':post,'files':files,'replyform':form,'reply':reply,'boardtable':Bt})
+                except:
+                    return HttpResponse('올바르지 않습니다.')
 
 class ReplyView(View):
     def post(self,request,post,*args,**kwargs):
@@ -309,12 +318,16 @@ class ReplyView(View):
 # 글쓴이가 댓글 쓸때, render로 값넘겨줄때 email도 확인하여 글수정,삭제도 나와야함(추후 추가)
 class ReplyUpdateView(View):
     def get(self,request,post,reply,*args,**kwargs):
-        posts = get_object_or_404(Post,pk=post)
-        form = Replyform()
-        files = posts.uploaded_file_set.all()
-        reply_all = posts.reply_set.all()
-        return render(request,'web/post.html',{'replyupdateform':form,'pk':post,'rk':reply,'post':posts,'reply':reply_all,'files':files,'replyform':form})
-
+        try:
+            posts = get_object_or_404(Post,pk=post)
+            form = Replyform()
+            files = posts.uploaded_file_set.all()
+            reply_all = posts.reply_set.all()
+            Bt = BoardTable.objects.all()
+            return render(request,'web/post.html',{'replyupdateform':form,'pk':post,'rk':reply,'post':posts,'reply':reply_all,'files':files,'replyform':form,'boardtable':Bt})
+        except:
+            return HttpResponse('올바르지않습니다.')
+            
     def post(self,request,post,reply,*args,**kwargs):
         get_reply = get_object_or_404(Reply,pk=reply)
         form = Replyform(request.POST,instance=get_reply)
@@ -333,9 +346,13 @@ class ReplyDeleteView(View):
 #게시글 수정
 class UpdatePostView(View):
     def get(self,request,post,*args,**kwargs):
-        get_post = get_object_or_404(Post,pk=post)
-        form = PostUpdateform(initial={'title':get_post.title,'description':get_post.description})
-        return render(request,'web/updatepost.html',{'form':form,'pk':post})
+        try:
+            get_post = get_object_or_404(Post,pk=post)
+            Bt = BoardTable.objects.all()
+            form = PostUpdateform(initial={'title':get_post.title,'description':get_post.description})
+            return render(request,'web/updatepost.html',{'form':form,'pk':post,'boardtable':Bt,})
+        except:
+            return HttpResponse('올바르지 않습니다.')
 
     def post(self,request,post,*args,**kwargs):
         try:
@@ -348,7 +365,7 @@ class UpdatePostView(View):
             form = PostUpdateform(request.POST,instance=post_get)
             if form.is_valid():
                 form.save()
-                if request.FILES['file']:
+                if request.FILES.getlist('file'):
                     if len(request.FILES.getlist('file')) > len(list):
                         for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):
                             count += 1
@@ -366,10 +383,14 @@ class UpdatePostView(View):
                                 Uploaded_File.objects.filter(post= post_get,file =files).delete()
                             else:
                                 Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)
-                    return HttpResponseRedirect(reverse('web:post',args=(post,)))
+                return HttpResponseRedirect(reverse('web:post',args=(post,)))
             else:
-                form = PostUpdateform()
-                return render(request,'web/updatepost.html',{'form':form,'pk':post,'error':"글 없음"})
+                try:
+                    form = PostUpdateform()
+                    Bt = BoardTable.objects.all()
+                    return render(request,'web/updatepost.html',{'form':form,'pk':post,'updateposterror':"글 없음",'boardtable':Bt})
+                except:
+                    return HttpResponse('올바르지 않습니다.')
         except:
             return HttpResponse('올바르지않습니다.')
 
@@ -438,8 +459,12 @@ class likeView(View):
         try:
             posts = get_object_or_404(Post,pk=post)
             student = Student.objects.get(id = request.session['logined_student_id'])
+            email = student.email
             check_like_post = student.like_post.filter(id = post)
-
+            files = posts.uploaded_file_set.all()
+            reply = posts.reply_set.all()
+            Bt = BoardTable.objects.all()
+            form = Replyform()
             if check_like_post.exists():
                 student.like_post.remove(posts)
                 posts.like_number -= 1
@@ -448,14 +473,18 @@ class likeView(View):
                 student.like_post.add(posts)
                 posts.like_number += 1
                 posts.save()
-
-            return render(request,'web/post.html',{'post':posts,'pk':post,'success':" "})
+            
+            return render(request,'web/post.html',{'email':email,'post':posts,'pk':post,'success':" ",'files':files,'reply':reply,'boardtable':Bt,'replyform':form,})
         except:
             try:
                 posts = get_object_or_404(Post,pk=post)
                 professor = Professor.objects.get(id = request.session['logined_professor_id'])
+                email = professor.email
                 check_like_post = professor.like_post.filter(id = post)
-
+                files = posts.uploaded_file_set.all()
+                reply = posts.reply_set.all()
+                Bt = BoardTable.objects.all()
+                form = Replyform()
                 if check_like_post.exists():
                     professor.like_post.remove(posts)
                     posts.like_number -=1
@@ -465,7 +494,14 @@ class likeView(View):
                     posts.like_number += 1
                     posts.save()
 
-                return render(request,'web/post.html',{'post':posts,'pk':post,'success':" "})
+                return render(request,'web/post.html',{'email':email,'post':posts,'pk':post,'success':" ",'files':files,'reply':reply,'boardtable':Bt,'replyform':form,})
             except:
-                posts = get_object_or_404(Post,pk=post)
-                return render(request,'web/post.html',{'post':posts,'pk':post,'error':" "})
+                try:
+                    posts = get_object_or_404(Post,pk=post)
+                    files = posts.uploaded_file_set.all()
+                    reply = posts.reply_set.all()
+                    Bt = BoardTable.objects.all()
+                    form = Replyform()
+                    return render(request,'web/post.html',{'post':posts,'pk':post,'error':" ",'files':files,'reply':reply,'boardtable':Bt,'replyform':form,})
+                except:
+                    return HttpResponse('올바르지 않습니다.')

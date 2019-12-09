@@ -116,6 +116,7 @@
 
 				<div style="text-align: left;">
 						<div class="container">
+              {% if updateposterror %} <script>alert('제목과 내용을 입력해주세요!');</script>{% endif %}
 						  <div class="row">
 							<div class="col-md-12 col-sm-12 col-xs-12">
 							  <div class=" services-head">
@@ -136,13 +137,13 @@
   <div class = "container">
     <div style="border: 2px solid gray; background-color:white; padding: 10px;" >
         {% if form %}
-        <form action="{% url 'web:updatepost' pk %}" method="POST">
+        <form action="{% url 'web:updatepost' pk %}" method="POST" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
                 {{form.as_p}}
                 <!-- 파일 업로드 부분-->
                 <div>
                 <b>파일 첨부하기</b><br>
-                  여기 첨부파일 <input type="button" name="fileUp" value="파일 선택">
+                  <input type="file" name="file" multiple>
                 </div>
 
     </div>

@@ -133,9 +133,10 @@
 
   <br><br>
   <div class = "container">
+    {% if error %} <script>alert('제목과 내용을 입력해주세요!');</script>{% endif %}
     <div style="border: 2px solid gray; background-color:white; padding: 10px;" >
         {% if form %}
-        <form action="/web/{{pk}}/{{ak}}/create/" method="POST">
+        <form action="/web/{{pk}}/{{ak}}/create/" method="POST" enctype="multipart/form-data" novalidate>
         {% csrf_token %}
         {{form.as_p}}
             <input type="hidden" name ="student_id" value="{{request.session.logined_student_id}}">
