@@ -34,7 +34,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
+        
 class Uploaded_File(models.Model):
     post = models.ForeignKey(Post,on_delete=models.CASCADE, verbose_name="글 제목")
     file = models.FileField(upload_to='',verbose_name="파일명",blank=True)
