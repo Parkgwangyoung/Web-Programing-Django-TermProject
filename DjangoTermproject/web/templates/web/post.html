@@ -174,7 +174,7 @@
                         <div align="right">
                             {% if email == post.writer_email %}
                             <a href="{% url 'web:updatepost' pk %}"></a>{% endif %}
-                            &nbsp;{% for file in files %}<a href="/{{file.file}}" download>{{file.file}}</a>{% endfor %}
+                            &nbsp;{% for file in files %}<a href="/File/{{file.file}}" download>{{file.file}}</a>{% endfor %}
                           
                         </div>
                         <hr style="border: solid 1px orange;">

@@ -50,6 +50,7 @@ class assignView(View):
                 return HttpResponse('잘못된 방향입니다.')
 
 
+# 게시판 클래스 뷰
 class BoardAccessView(View):
     def get(self,request,boardtable,*args,**kwargs):
         if request.session.get('logined_student_id'): #학생이면
@@ -154,6 +155,7 @@ class BoardAccessView(View):
                 except:
                     return HttpResponse('올바르지않습니다.')
 
+# 게시판 뷰
 class BoardView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
         try:
@@ -167,7 +169,7 @@ class BoardView(View):
         except:
             return HttpResponse('올바르지않습니다.')
 
-
+# 게시글 작성 클래스 뷰
 class CreatepostView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
         try:
@@ -242,7 +244,7 @@ class CreatepostView(View):
         except:
             return HttpResponse('어드민이십니까?')
 
-# 만약 포스트에 목록으로 들어가는창 혹은 뒤로가기 창이있으면 url이 바뀌어야함
+# 게시글 열람 클래스 뷰
 class PostView(View):
     def get(self,request,post,*args,**kwargs):
         try: #학생의경우
@@ -277,6 +279,8 @@ class PostView(View):
                 except:
                     return HttpResponse('올바르지 않습니다.')
 
+
+# 댓글 작성 클래스 뷰
 class ReplyView(View):
     def post(self,request,post,*args,**kwargs):
         try:
@@ -315,7 +319,7 @@ class ReplyView(View):
         except:
             return HttpResponse('올바르지않습니다.')
 
-# 글쓴이가 댓글 쓸때, render로 값넘겨줄때 email도 확인하여 글수정,삭제도 나와야함(추후 추가)
+# 댓글 수정 클래스 뷰
 class ReplyUpdateView(View):
     def get(self,request,post,reply,*args,**kwargs):
         try:
@@ -335,7 +339,7 @@ class ReplyUpdateView(View):
             form.save()
             return HttpResponseRedirect(reverse('web:post',args=(post,)))
 
-
+#댓글 삭제 클래스 뷰
 class ReplyDeleteView(View):
     def get(self,request,post,reply,*args,**kwargs):
         get_reply = get_object_or_404(Reply,pk=reply)
@@ -343,7 +347,7 @@ class ReplyDeleteView(View):
         return HttpResponseRedirect(reverse('web:post',args=(post,)))
 
 
-#게시글 수정
+#게시글 수정 클래스 뷰
 class UpdatePostView(View):
     def get(self,request,post,*args,**kwargs):
         try:
@@ -395,13 +399,14 @@ class UpdatePostView(View):
             return HttpResponse('올바르지않습니다.')
 
 
-#게시글 삭제
+#게시글 삭제 클래스 뷰
 class DeletePostView(View):
     def get(self,request,post,*args,**kwargs):
         posts = get_object_or_404(Post,pk=post)
         posts.delete()
         return HttpResponseRedirect(reverse('web:website'))
 
+# 상위게시판 생성 클래스 뷰
 class BtcreateView(View):
     def get(self,request,*args,**kwargs):
         if request.session.get('logined_special'):
@@ -418,6 +423,7 @@ class BtcreateView(View):
                 form =Bcreateform(initial={'supervisor':request.session['logined'],'grade':request.session['logined']})
                 return render(request,'web/createboardtable.html',{'Bform':form,'Btsuccess':"상위게시판생성완료"})
 
+#하위 게시판 생성 클래스 뷰
 class BcreateView(View):
     def get(self,request,*args,**kwargs):
         if request.session.get('logined_special'):
@@ -434,7 +440,7 @@ class BcreateView(View):
             return render(request,'web/createboardtable.html',{'Bform':form,'Bsuccess':"하위게시판생성완료"})
 
 
-
+# 게시글 생성 클래스 뷰
 class BpCreateView(View):
     def get(self,request,*args,**kwargs):
         if request.session.get('logined_special'):
@@ -453,7 +459,7 @@ class BpCreateView(View):
             return render(request,'web/createboardtable.html',{'Pform':form,'Psuccess':"게시글 작성완료"})
 
 
-
+# 추천 클래스 뷰
 class likeView(View):
     def get(self,request,post,*args,**kwargs):
         try:
