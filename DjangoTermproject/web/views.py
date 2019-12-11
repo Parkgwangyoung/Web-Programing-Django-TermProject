@@ -513,7 +513,7 @@ class likeView(View):
                     return HttpResponse('올바르지 않습니다.')
 
 
-class ListBoardView(View):
+class LikeBoardView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
         try:
             boardtables =get_object_or_404(BoardTable,pk=boardtable)
