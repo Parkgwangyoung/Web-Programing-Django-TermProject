@@ -1,0 +1,10 @@
+{% for text,writer,date in chat  %}
+{{text}}&nbsp;&nbsp;&nbsp;&nbsp;{{writer}}&nbsp;&nbsp;{{date}}<br>
+{% endfor %}
+<br><br>
+<form action="{% url 'chatting:chat' %}" method="POST">
+    {% csrf_token %}
+    {% for form in form %}
+    {{form}}<input type="submit" value="작 성">
+    {% endfor %}
+</form>
