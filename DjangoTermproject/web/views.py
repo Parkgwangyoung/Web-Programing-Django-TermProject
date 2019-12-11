@@ -511,3 +511,21 @@ class likeView(View):
                     return render(request,'web/post.html',{'post':posts,'pk':post,'error':" ",'files':files,'reply':reply,'boardtable':Bt,'replyform':form,})
                 except:
                     return HttpResponse('올바르지 않습니다.')
+
+
+class ListBoardView(View):
+    def get(self,request,boardtable,board,*args,**kwargs):
+        try:
+            boardtables =get_object_or_404(BoardTable,pk=boardtable)
+            boards = boardtables.board_set.all()
+            get_board = get_object_or_404(Board,pk=board)
+            name = get_board.board_name
+            post = get_board.post_set.filter(like_number__gt = 0)
+            Bt = BoardTable.objects.all()
+            if post:                
+                return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt,'name':name,'likeboard':"인기글"})
+            else:
+                return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt,'name':name,'likeboard':"인기글",'likeboarderror':"인기글 존재x"})    
+        except:
+            return HttpResponse('올바르지않습니다.')
+        
