@@ -4,8 +4,6 @@
         <title>지도교수 배정</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->	
-        <link rel="icon" type="image/png" href= "images/icons/favicon.ico"/>
     <!--===============================================================================================-->
         <link rel="stylesheet" type="text/css" href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}'>
     <!--===============================================================================================-->
@@ -86,7 +84,7 @@
                                 <span class="icon-bar"></span>
                                 </button>
                                 <!-- Brand -->
-                                <a class="navbar-brand page-scroll sticky-logo" href="../../../web">
+                                <a class="navbar-brand page-scroll sticky-logo" href="{% url 'web:website' %}">
                                     <h1 style="font-size: 30px !important;">교통대 <span>X</span> 컴퓨터공학과</h1>
                                     <!-- Uncomment below if you prefer to use an image logo -->
                                     <!--<img src='{% static "img/mark.jpg" %}' alt="" title="" style="width: 30px; height: 30px;">-->
@@ -96,7 +94,8 @@
                             <!-- Collect the nav links, forms, and other content for toggling -->
                             <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
                                 <ul class="nav navbar-nav navbar-right">
-                                
+
+
                                 </ul>
                             </div>
                             <!-- navbar-collapse -->
@@ -147,21 +146,47 @@
                             <div style="color: orange;">
                                 <b>학생 선택</b><br><br>
                             </div>
-                            <!-- span style="text-align: left; font-size:20;"><b>학생명　　　　　지도교수명</b></span>-->
+                                <table style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th width="55%" style="font-size: x-large;">&nbsp;&nbsp;&nbsp;이름</th>
+                                            <th style="font-size: x-large;">지도교수명</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
                             <div style="text-align: left; font-size: medium; overflow:scroll; overflow-x: hidden; height: 100px; 
-                                        border: 2px solid orange; padding: 5px;">
+                                        border: 2px solid orange; padding: 2px;">
+                            <table style="width: 100%;">
+                                <thead>
+
+                                </thead>
+                                <tbody>  
                                     {% for student in students %}
-                                        <input type="radio" name="student" id="student{{forloop.counter}}" value="{{student.id}}"/>
-                                        <label for="student{{forloop.counter}}"> {{student}} </label><br>
+                                    <tr>
+                                        <td width="60%" style="border-bottom: 1px solid black;">
+                                            <input type="radio" name="student" id="student{{forloop.counter}}" value="{{student.id}}"/>
+                                            <label for="student{{forloop.counter}}"> {{student}} </label></td>
+                                        <td style="border-bottom: 1px solid black;"><b>{{student.tutor}}</b></td>
+                                    </tr>
                                     {% endfor %}
-
-                            </div>
-
+                                </tbody>
+                            
+                            </table>
+                        </div>
                             
                             
                             <div style="color: orange;">
                                 <br><br><b>교수 선택</b><br><br>
                             </div>
+                            <table style="width: 30%;">
+                                    <thead>
+                                        <tr>
+                                            <th width="55%" style="font-size: x-large; text-align: center;">이름</th>
+                                            
+                                        </tr>
+                                    </thead>
+                            </table>
                             <div style="text-align: left; font-size: medium; overflow:scroll; overflow-x: hidden; height: 100px; 
                                         border: 2px solid orange; padding: 5px;">
                                 {% for professor in professors %}

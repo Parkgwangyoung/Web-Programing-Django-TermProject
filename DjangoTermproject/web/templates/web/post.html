@@ -149,7 +149,7 @@
                     <h3>{{post.title}}</h2>
                       {{post.writer}} | {{post.date}} |
                         추천 {{post.like_number}}
-                      <hr>
+                      <hr style="border: solid 1px rgba(0, 0, 0, 0.253);">
                 </thead>
                     <tbody>
                       <p>{{post.description|linebreaksbr}}</p>
@@ -168,15 +168,17 @@
                           </div>
 
                         </div>
-
-                        <hr>
+                        {% if files %}
+                        <hr style="border: solid 1px rgba(0, 0, 0, 0.253);">
                         <!-- 파일 업로드 부분-->
-                        <div align="right">
+                        <b>첨부 파일</b>
+                        <div >
                             {% if email == post.writer_email %}
                             <a href="{% url 'web:updatepost' pk %}"></a>{% endif %}
-                            &nbsp;{% for file in files %}<a href="/File/{{file.file}}" download>{{file.file}}</a>{% endfor %}
-                          
+                            {% for file in files %}<a href="/File/{{file.file}}" download>{{file.file}}</a>&nbsp;{% endfor %}
                         </div>
+                        
+                        {% endif %}
                         <hr style="border: solid 1px orange;">
                         {% for reply in reply %}
                         <p>{{reply.writer}} :&nbsp;&nbsp;{{reply.reply}}
@@ -213,18 +215,19 @@
     </div>
     <br>
     <div name="button">
-      <div style="display: inline;float: left;">
+      <div class="alignleft">
         <div  style="width: 80px;" >
-                    <button class="btn btn-warning btn-block text-uppercase" onclick="history.back();">
-                            <b>목록으로</b></button></a>
+
+          <button class="btn btn-warning btn-block text-uppercase" onclick="history.back()">
+            <b>목록으로</b></button>
         </div>
       </div>
 
       {% if email == post.writer_email %}
 
       <!-- 게시글 삭제 -->
-      <div style="display: inline;float: right;">
-        <div style="width: 80px;">
+      <div class="alignright">
+        <div style="width: 80px; border-radius: 100px;">
           <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">
             <button class="btn btn-block text-uppercase" style="background-color: dimgray; color: ghostwhite;">
                 <b>삭제</b></button>
@@ -234,7 +237,7 @@
 
 
       <!-- 게시글 수정 -->
-      <div style="display: inline;float: right; margin-right: 10px;">
+      <div class="alignright">
         <div style="width: 80px;">
           <a href="{% url 'web:updatepost' pk %}">
             <button class="btn btn-block text-uppercase" style="background-color: dimgray; color: ghostwhite;">
@@ -245,8 +248,8 @@
       {% endif %}
 
       {% if request.session.logined_special %}
-        <div style="display: inline;float: right">
-          <div style="width: 80px; background-color: dodgerblue; color: gold;">
+        <div class="alignright">
+          <div style="width: 80px; background-color: dodgerblue; color: gold; border-radius: 100px;">
             <a href="{% url 'web:deletepost' pk %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">
               <button class="btn btn-block text-uppercase" style="background-color: dimgray; color: ghostwhite;">
                   <b>삭제</b></button>
