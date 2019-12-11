@@ -1,0 +1,4 @@
+{% for mail in mail_list %}
+<a href="{% url 'mail:mail'  mail.id %}">{{mail.title}}</a>{{mail.writer}}{{mail.date}}<br><br>
+{% endfor %}
+<br><a href="{% url 'mail:createmail' %}">메일 쓰러가기</a>

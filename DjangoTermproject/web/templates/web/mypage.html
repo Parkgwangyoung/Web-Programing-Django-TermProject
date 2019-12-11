@@ -1,0 +1,21 @@
+<h2>마이페이지입니다.</h2>
+{% if request.session.logined_student_id %}
+아이디 : {{student.email}}<br>
+성 함 : {{student.name}}<br>
+학 번 : {{student.student_number}}<br>
+학 년 : {{student.grade}}<br>
+지도교수 :{{student.tutor}}<br>
+<h3>추천한 글 목록</h3>
+{% for like in student.like_post.all %}
+{{like}}<br>
+{% endfor %}
+{% endif %}
+{% if request.session.logined_professor_id %}
+아이디 : {{professor.email}}<br>
+성 함 : {{professor.name}}<br>
+학 번 : {{professor.professor_number}}<br>
+<h3>추천한 글 목록</h3>
+{% for like in professor.like_post.all %}
+{{like}}<br>
+{% endfor %}
+{% endif %}

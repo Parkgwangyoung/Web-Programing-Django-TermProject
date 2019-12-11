@@ -86,9 +86,12 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.session.logined %}
                         <li>                          
-                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>                           
+                            <a class="page-scroll" href ="{% url 'web:mypage' %}" >{{request.session.logined}}님 환영합니다 ^^</a>                           
                         </li>
                         {% if not request.session.logined_special %}
+                        <li>
+                          <a class="page-scroll" href ="{% url 'mail:mailindex' %}" > 쪽지함</a>           
+                        </li>
                         <li>                          
                             <a class="page-scroll" href ="{% url 'login:update' %}" > 회원정보 변경</a>                           
                         </li>

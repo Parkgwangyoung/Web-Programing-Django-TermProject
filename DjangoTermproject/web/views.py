@@ -529,3 +529,12 @@ class LikeBoardView(View):
         except:
             return HttpResponse('올바르지않습니다.')
         
+
+class MyPageView(View):
+    def get(self,request,*args,**kwargs):
+        if request.session.get('logined_student_id'):
+            student = Student.objects.get(id = request.session['logined_student_id'])
+            return render(request,'web/mypage.html',{'student':student})
+        elif request.session.get('logined_professor_id'):
+            professor = Professor.objects.get(id = request.session['logined_professor_id'])
+            return render(request,'web/mypage.html',{'professor':professor})
