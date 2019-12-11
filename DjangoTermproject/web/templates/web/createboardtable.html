@@ -7,7 +7,7 @@
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<meta content="" name="keywords">
 				  <meta content="" name="description">
-			<!--===============================================================================================-->
+			<!--===============================================================================================-->	
 				<link rel="icon" type="image/png" href='{% static "images/icons/favicon.ico" %}'/>
 			<!--===============================================================================================-->
 				<link rel="stylesheet" type="text/css" href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}'>
@@ -17,31 +17,32 @@
 				<link rel="stylesheet" type="text/css" href='{% static "fonts/iconic/css/material-design-iconic-font.min.css" %}'>
 			<!--===============================================================================================-->
 				<link rel="stylesheet" type="text/css" href='{% static "vendor/animate/animate.css" %}'>
-			<!--===============================================================================================-->
+			<!--===============================================================================================-->	
 				<link rel="stylesheet" type="text/css" href='{% static "vendor/css-hamburgers/hamburgers.min.css" %}'>
 			<!--===============================================================================================-->
 				<link rel="stylesheet" type="text/css" href='{% static "vendor/animsition/css/animsition.min.css" %}'>
 			<!--===============================================================================================-->
 				<link rel="stylesheet" type="text/css" href='{% static "vendor/select2/select2.min.css" %}'>
-			<!--===============================================================================================-->
+			<!--===============================================================================================-->	
 				<link rel="stylesheet" type="text/css" href='{% static "vendor/daterangepicker/daterangepicker.css" %}'>
 			<!--===============================================================================================-->
 				<link rel="stylesheet" type="text/css" href='{% static "css/util.css" %}'>
 				<link rel="stylesheet" type="text/css" href='{% static "css/main.css" %}'>
 			<!--===============================================================================================-->
 			<!-- Favicons -->
-			<link href='{% static "images/loading.gif" %}' rel="icon">
+			<link href='{% static "img/favicon.png" }' rel="icon">
+			<link href='{% static "img/apple-touch-icon.png" }' rel="apple-touch-icon">
 			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
 					integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 					crossorigin="anonymous">
-
+			
 			<!-- Google Fonts -->
 			<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
 					  rel="stylesheet">
-
+			
 			<!-- Bootstrap CSS File -->
 			<link href='{% static "lib/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
-
+			
 			<!-- Libraries CSS Files -->
 			<link href='{% static "lib/nivo-slider/css/nivo-slider.css" %}' rel="stylesheet">
 			<link href='{% static "lib/owlcarousel/owl.carousel.css" %}' rel="stylesheet">
@@ -49,26 +50,26 @@
 			<link href='{% static "lib/font-awesome/css/font-awesome.min.css" %}' rel="stylesheet">
 			<link href='{% static "lib/animate/animate.min.css" %}' rel="stylesheet">
 			<link href='{% static "lib/venobox/venobox.css" %}' rel="stylesheet">
-
+			
 			<!-- Nivo Slider Theme -->
 			<link href='{% static "css/nivo-slider-theme.css" %}' rel="stylesheet">
-
+			
 			<!-- Main Stylesheet File -->
 			<link href='{% static "css/style.css" %}' rel="stylesheet">
-
+			
 			<!-- Responsive Stylesheet File -->
 			<link href='{% static "css/responsive.css" %}' rel="stylesheet">
-
+			
 			<!-- ColorTab -->
 			<meta name="theme-color" content="#FF9E1B">
-
+			
 			<!-- =======================================================
 			  Theme Name: eBusiness
 			  Theme URL: https://bootstrapmade.com/ebusiness-bootstrap-corporate-template/
 			  Author: BootstrapMade.com
 			  License: https://bootstrapmade.com/license/
 			======================================================= -->
-
+			
 			</head>
 			{% if Btsuccess %}
 			<script>
@@ -88,13 +89,13 @@
 			<body data-spy="scroll" data-target="#navbar-example" style="background-color: rgb(241, 241, 241);">
 				<header>
 					<!-- header-area start -->
-					<div id="sticker" class="header-area" style="height: 65px">
+					<div id="sticker" class="header-area" style="height: 65px">		
 						<div class="container">
 							<div class="row">
-
+			
 									<!-- Navigation -->
 									<nav class="navbar navbar-default">
-
+									  
 									  <!-- Brand and toggle get grouped for better mobile display -->
 									  <div class="navbar-header">
 										<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-example-navbar-collapse-1"
@@ -110,12 +111,12 @@
 											<!-- Uncomment below if you prefer to use an image logo -->
 											<!--<img src='{% static "img/mark.jpg" %}' alt="" title="" style="width: 30px; height: 30px;">-->
 										</a>
-
+										
 									  </div>
 									  <!-- Collect the nav links, forms, and other content for toggling -->
 									  <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
 										<ul class="nav navbar-nav navbar-right">
-
+										  
 										</ul>
 									  </div>
 									  <!-- navbar-collapse -->
@@ -141,20 +142,20 @@
 								<br><br>
 							  </div>
 							</div>
-						  </div>
+						  </div>    
 					  </div>
 				</div>
 				{% if Btform %}
                 <div class="limiter">
                         <div align="center">
-                            <div class="wrap-login100">
+                            <div class="wrap-login100">			
                                 <span class="login100-form-title p-b-48 ">
                                     <div style="color: orange;">
                                         <b>상위 게시판 생성</b><br><br>
                                     </div>
-
+                                    
                                     <div align="left" style="font-size: 20px;">
-                                            <form action="{% url 'web:Btcreate' %}" method="POST">
+                                            <form action="{% url 'web:Btcreate' %}" method="POST">  
                                                     {% csrf_token %}
                                                     <div style="border: 2px solid gold; padding : 10px">
                                                         {{Btform.as_p}}
@@ -166,27 +167,27 @@
                                                         <button class="btn btn-lg btn-dark btn-block text-uppercase" >
                                                             <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a>
                                                 </form>
-
+                                            
                                     </div>
                                     <p></p>
                                     <a href = "/web/selboard/"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
                                         <i class="fab fontawesome-free mr-2"></i><b>돌아가기</b></button></a>
-                                </span>
+                                </span>					
                             </div>
-                        </div>
+                        </div>		
 					</div>
 					{% endif %}
 					{% if Bform %}
 					<div class="limiter">
                         <div align="center">
-                            <div class="wrap-login100">
+                            <div class="wrap-login100">			
                                 <span class="login100-form-title p-b-48 ">
                                     <div style="color: orange;">
                                         <b>하위 게시판 생성</b><br><br>
                                     </div>
-
+                                    
                                     <div align="left" style="font-size: 20px;">
-                                            <form action="{% url 'web:Bcreate' %}" method="POST">
+                                            <form action="{% url 'web:Bcreate' %}" method="POST">  
                                                     {% csrf_token %}
                                                     <div style="border: 2px solid gold; padding : 10px">
 															{{Bform.as_p}}
@@ -198,48 +199,48 @@
                                                             <button class="btn btn-lg btn-dark btn-block text-uppercase" >
                                                                 <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a></p>
                                                     </form>
-
+                                                
                                         </div>
                                         <p>
                                         <a href = "{% url 'web:Bpcreate' %}"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
                                             <i class="fab fontawesome-free mr-2"></i><b>하위게시판 글작성 하러가기</b></button></a></p>
                                         <a href = "/web/selboard/"><button class="btn btn-lg btn-light btn-block text-uppercase">
                                         <i class="fab fontawesome-free mr-2"></i><b>돌아가기</b></button></a>
-                                </span>
+                                </span>					
                             </div>
-                        </div>
+                        </div>		
                     </div>
-					{% endif %}
+					{% endif %}                 
                     {% if Pform %}
 					<div class="limiter">
                         <div align="center">
-                            <div class="wrap-login100">
+                            <div class="wrap-login100">			
                                 <span class="login100-form-title p-b-48 ">
                                     <div style="color: orange;">
                                         <b>게시글 생성</b><br><br>
                                     </div>
-
+                                    
                                     <div align="left" style="font-size: 20px;">
-                                            <form action="{% url 'web:Bpcreate' %}" method="POST">
+                                            <form action="{% url 'web:Bpcreate' %}" method="POST">  
                                                     {% csrf_token %}
                                                     <p>
                                                     <div style="border: 2px solid gold; padding : 10px">
-                                                        {{Pform.as_p}}
+                                                        {{Pform.as_p}} 
                                                     </div></p>
                                                     <p><input type="hidden" value="상위 게시판 생성"><a href="/web/">
                                                         <button class="btn btn-lg btn-dark btn-block text-uppercase" >
                                                             <i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></a></p>
                                                 </form>
-
+                                            
                                     </div>
 									<p></p>
                                     <a href = "/web/selboard/"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
                                         <i class="fab fontawesome-free mr-2"></i><b>돌아가기</b></button></a>
-                                </span>
+                                </span>					
                             </div>
-                        </div>
+                        </div>		
                     </div>
-					{% endif %}
+					{% endif %}	
                     <div id="dropDownSelect1"></div>
 
 
