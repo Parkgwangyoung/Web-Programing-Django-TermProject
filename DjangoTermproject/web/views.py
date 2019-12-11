@@ -529,3 +529,7 @@ class LikeBoardView(View):
         except:
             return HttpResponse('올바르지않습니다.')
         
+
+class MypageView(View):
+    def get(self,request,*args,**kwargs):
+            return render(request,'web/mypage.html')
