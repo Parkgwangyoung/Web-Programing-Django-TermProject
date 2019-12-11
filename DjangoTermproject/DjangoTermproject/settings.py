@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'web.apps.WebConfig',
     'login.apps.LoginConfig',
     'mail.apps.MailConfig',
+    'chatting.apps.ChattingConfig',
 ]
 
 MIDDLEWARE = [
