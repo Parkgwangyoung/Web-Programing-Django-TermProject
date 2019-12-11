@@ -9,8 +9,7 @@
     <meta content="" name="description">
   
     <!-- Favicons -->
-    <link href='{% static "img/favicon.png" }' rel="icon">
-    <link href='{% static "img/apple-touch-icon.png" }' rel="apple-touch-icon">
+    <link href='{% static "images/loading.gif" %}' rel="icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
             integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
             crossorigin="anonymous">
@@ -121,14 +120,14 @@
 						  <div class="row">
 							  <div class="col-md-12 col-sm-12 col-xs-12">
 							    <div class=" services-head">
-								    <br><br>
+								    <br><br><br><br><br>
 								      <div style="font-size: 40px;">
                         {% if not grades %}{%if not supervisors %}{% if not request_name %}<b>{{name}}</b><br><br><br>{% endif %}{% endif %}{% endif %}
-                        {% if grades %}<b >{{grades}}학년게시판</b><br><br><br>{% endif %}
+                        {% if grades %}<b >{{grades}}학년 게시판</b><br><br><br>{% endif %}
                         {% if supervisors %}<b>{{supervisors}}교수님 게시판</b><br><br><br>{% endif %}
                         {% if request_name %}<b>{{request_name}}</b><br><br><br>{% endif %}
 									    </div>
-								    <br><br>
+
 							    </div>
 							  </div>
 						  </div>    
@@ -136,44 +135,44 @@
 				</div>
     </head>
 <body>
-        
-        
+
         <div class = "container">
-            {% if request_name %}
+          {% if request_name %}
+          <br><br>
+          {% if post %}
             <div style="border: 2px solid gray; background-color:white">
-                <table class ="table table-striped">
-                        <thead>
-                            
-                            {% if post %}
-                
-                            <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일</th>
-                                <th>추천수</th>
-                            </tr>
-                        </thead>
-                            <tbody>
-                                {% for i in post %}
-                                    <tr>        
-                                        <td>{{forloop.counter}}</td>
-                                        <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
-                                        <td>{{i.writer}}</td>
-                                        <td>{{i.date}}</td>
-                                        <td>{{i.like_number}}</td>
-                                    </tr>
-                                {% endfor %}               
-                            </tbody>
-                        
-                        
-                    </table>
-        </div>
-    
-    <hr/>
-    {% endif %}
-    {% endif %}
+              <table class ="table table-striped">
+                <thead> 
+                  {% if post %}
+                    <tr>
+                      <th>번호</th>
+                      <th>제목</th>
+                      <th>작성자</th>
+                      <th>작성일</th>
+                      <th>추천</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for i in post %}
+                    <tr>        
+                      <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
+                      <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
+                      <td>{{i.writer}}</td>
+                      <td>{{i.date}}</td>
+                      <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
+                    </tr>
+                  {% endfor %}               
+                </tbody>      
+              </table>
+            </div>
+                  {% endif %}
+          {% endif %}
+          {% endif %}
+          <div class="container">
           {% if grades %}
+          {% if post %}
+          <br><br>
           <div style="border: 2px solid gray; background-color:white">
               <table class ="table table-striped">
                       <thead>
@@ -191,23 +190,23 @@
                           <tbody>
                               {% for i in post %}
                                   <tr>        
-                                      <td>{{forloop.counter}}</td>
+                                      <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
                                       <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
                                       <td>{{i.writer}}</td>
                                       <td>{{i.date}}</td>
-                                      <td>{{i.like_number}}</td>
+                                      <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
                                   </tr>
-                              {% endfor %}               
+                              {% endfor %}
                           </tbody>
-                      
-                      
                   </table>
-      </div>
-  
-  <hr/>
-  {% endif %}
-  {% endif %}
-  {% if supervisors %}
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+          </div>
+          {% if supervisors %}
+          {% if post %}
+          <br><br>
           <div style="border: 2px solid gray; background-color:white">
             <table class ="table table-striped">
               <thead>         
@@ -223,32 +222,44 @@
                   <tbody>
                     {% for i in post %}
                       <tr>        
-                        <td>{{forloop.counter}}</td>
+                        <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
                         <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
                         <td>{{i.writer}}</td>
                         <td>{{i.date}}</td>
-                        <td>{{i.like_number}}</td>
+                        <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
                       </tr>
                     {% endfor %}               
                   </tbody>  
             </table>
           </div>
-  
-  <hr/>
-  {% endif %}
-  {% endif %}
+          {% endif %}
+          {% endif %}
+          {% endif %}
+
   <div class="container">
     {% if not grades  %}{% if not supervisors %} {% if not request_name %}
     {% if board %}
+    {% if not likeboard %}
     <select name="board" onchange="if(this.value) location.href=(this.value);">
         <option value="">게시판 선택</option>
         {% for i in board %}
             <option value="/web/board/{{pk}}/{{i.id}}/">{{i.board_name}}</option>    
         {% endfor %}
     </select>
+    {% endif %}
+    {% if not post %}
+      <br><br>
+      {% if likeboarderror %} <h2>인기글이 존재하지 않습니다.</h2>{% endif %}
+      {% if not likeboarderror %}<h2>게시판을 선택해주세요</h2>{% endif %}
+      <div align="center">
+        <img src='{% static "images/loading.gif" %}'>
+      </div>
+      
+    {% endif %}
           
 
       <br><br>
+      {% if post %}
       <div style="border: 2px solid gray; background-color:white">
               <table class ="table table-striped">
                       <thead>
@@ -266,11 +277,11 @@
                           <tbody>
                               {% for i in post %}
                                   <tr>        
-                                      <td>{{forloop.counter}}</td>
+                                      <td>&nbsp;&nbsp;&nbsp;{{forloop.counter}}</td>
                                       <td><a href = "{% url 'web:post' i.id %}">{{i.title}}</a></td>               
                                       <td>{{i.writer}}</td>
                                       <td>{{i.date}}</td>
-                                      <td>{{i.like_number}}</td>
+                                      <td>&nbsp;&nbsp;&nbsp;{{i.like_number}}</td>
                                   </tr>
                               {% endfor %}               
                           </tbody>
@@ -284,38 +295,49 @@
                   {% endif %}
                   
       </div>
-
+      {% endif %}
+      
       <hr/>
       <!-- <a class ="btn btn-default pull-right" href="/web/{{pk}}/{{ak}}/create">글쓰기</a>-->
       {% if request.session.logined %}
-      <div align="right">
-        <div  style="width: 80px;">
-              <a href="/web/{{pk}}/{{ak}}/create">
-                  <button class="btn btn-warning btn-block ">
-                          <b>글쓰기</b></button></a>
+      {% if post %}
+      <div align="left">
+          <div style="width: 80px;">
+                <a href="{% url 'web:boardaccess' pk  %}">
+                    <button class="btn btn-warning btn-block">
+                       <b>글 목록</b></button></a>
+          </div>               
+        </div>
+      <div align="center">
+        <div style="width: 80px;">
+              <a href="{% url 'web:likeboard' pk ak %}">
+                  <button class="btn btn-warning btn-block">
+                     <b>인기글</b></button></a>
         </div>               
       </div>
-      {% endif %}
+      <div align="right">
+        <div style="width: 80px;">
+              <a href="/web/{{pk}}/{{ak}}/create">
+                  <button class="btn btn-warning btn-block">
+                     <b>글쓰기</b></button></a>               
+        </div>               
+      </div>
+
             <div class = "text-center" >
-
                 <ul class = "pagination justify-content-center " >
-
-                <li class="page-item "><a class = "page-link " href="#">1</a></li>
-                    <li class="page-item"><a class = "page-link" href="#">2</a></li>
-                <li class="page-item"><a class = "page-link" href="#">3</a></li>
-
-
+                  <li class="page-item "><a class = "page-link " href="#">1</a></li>
+                  <li class="page-item"><a class = "page-link" href="#">2</a></li>
+                  <li class="page-item"><a class = "page-link" href="#">3</a></li>
                 </ul>
-
             </div>
-        </div>        
-          
+      {% endif %}
+      {% endif %}
+    </div>       
 
-    </div>
     
     <!-- Start Footer bottom Area -->
-    <br><br><br><br><br><br><br><br><br><br>
-<footer id="contact">
+    <br><br><br><br><br><br>
+      <footer id="contact">
         <div class="footer-area-bottom">
             <div class="container">
                 <div class="row">

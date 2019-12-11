@@ -9,8 +9,7 @@
     <meta content="" name="description">
   
     <!-- Favicons -->
-    <link href='{% static "img/favicon.png" }' rel="icon">
-    <link href='{% static "img/apple-touch-icon.png" }' rel="apple-touch-icon">
+    <link href='{% static "images/loading.gif" %}' rel="icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
             integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
             crossorigin="anonymous">
@@ -121,7 +120,12 @@
                         <ul class="dropdown-menu" role="menu">
                             {% if boardtable %}
                             {% for board  in boardtable %}
-                            <li><a href= "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a></li>
+                              <li><a href= "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a></li>
+                                {% if sub in board %}
+                                  <ul>
+                                    <li><a href="{% url 'web:board' sub.id %}">{{sub.board_name}}</a></li>
+                                  </ul>
+                                {% endif %}
                             {% endfor %}
                           {% endif %}
                         </ul>
@@ -152,7 +156,7 @@
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
             <div class="item active">
-              <img src='{% static "img/slider/slider1.jpg" %}' style="width: 100%;">
+              <img src='{% static "img/slider/20190629_210212_006.jpg" %}' style="width: 100%;height:30%;">
               <div class="carousel-caption">
                   <h3 style="color: white; font-weight: bold;">슬라이드</h3>
                   <p style="color: white; font-weight: bold;">왜 안되는 걸까?</p>
@@ -168,7 +172,7 @@
             </div>
         
             <div class="item">
-              <img src='{% static "img/slider/slider3.jpg" %}' style="width: 100%; height: 700;">
+              <img src='{% static "img/slider/image01.png" %}' style="width: 100%; height: 700;">
               <div class="carousel-caption">
                   <h3 style="color: white; font-weight: bold;">교통대 X 컴퓨터공학과</h3>
                   <p style="color: white; font-weight: bold;">컴퓨터공학과 홈페이지에 어서오세요</p>
