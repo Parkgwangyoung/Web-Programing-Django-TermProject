@@ -5,7 +5,7 @@
 	<title>회원정보 변경</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href= "images/icons/favicon.ico"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "vendor/bootstrap/css/bootstrap.min.css" %}'>
@@ -15,21 +15,20 @@
 	<link rel="stylesheet" type="text/css" href='{% static "fonts/Linearicons-Free-v1.0.0/icon-font.min.css" %}'>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "vendor/animate/animate.css" %}'>
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "vendor/css-hamburgers/hamburgers.min.css" %}'>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "vendor/animsition/css/animsition.min.css" %}'>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "vendor/select2/select2.min.css" %}'>
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "vendor/daterangepicker/daterangepicker.css" %}'>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "css/util.css" %}'>
 	<link rel="stylesheet" type="text/css" href='{% static "css/main.css" %}'>
 <!--===============================================================================================-->
 <!-- Favicons -->
-<link href='{% static "img/favicon.png" }' rel="icon">
-<link href='{% static "img/apple-touch-icon.png" }' rel="apple-touch-icon">
+<link href='{% static "images/loading.gif" %}' rel="icon">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 		crossorigin="anonymous">
@@ -72,13 +71,13 @@
 <body data-spy="scroll" data-target="#navbar-example" style="background-color: rgb(241, 241, 241);">
 	<header>
 		<!-- header-area start -->
-		<div id="sticker" class="header-area" style="height: 65px">		
+		<div id="sticker" class="header-area" style="height: 65px">
 			<div class="container">
 				<div class="row">
 
 						<!-- Navigation -->
 						<nav class="navbar navbar-default">
-						  
+
 						  <!-- Brand and toggle get grouped for better mobile display -->
 						  <div class="navbar-header">
 							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-example-navbar-collapse-1"
@@ -94,12 +93,12 @@
 								<!-- Uncomment below if you prefer to use an image logo -->
 								<!--<img src='{% static "img/mark.jpg" %}' alt="" title="" style="width: 30px; height: 30px;">-->
 							</a>
-							
+
 						  </div>
 						  <!-- Collect the nav links, forms, and other content for toggling -->
 						  <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
 							<ul class="nav navbar-nav navbar-right">
-							  
+
 							</ul>
 						  </div>
 						  <!-- navbar-collapse -->
@@ -122,7 +121,7 @@
 						<div style="font-size: 40px;">
 							<b>회원 정보 변경</b><br><br>
 						</div>
-					
+
 					<!--<img src='{% static "img/투명원.png" %}'>-->
 					<br><br>
 				  </div>
@@ -141,7 +140,7 @@
 		<div align="center">
 			<div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
                 {% if request.session.logined_student_id %}
-                
+
 				<form class="login100-form validate-form" action="{% url 'login:update'  %}" method="POST">
 					{% csrf_token %}
 					<span class="login100-form-title p-b-33">
@@ -149,18 +148,18 @@
 							 <b>변경 정보 입력</b><br>
 						</div>
 					</span>
-					<span class="focus-input100-1"></span>				
+					<span class="focus-input100-1"></span>
 						{% for field in form %}
 							<div class="wrap-input100 validate-input" align="left" style="font-size: 15px;">
 								<b>{{field.label}}</b><br>{{ field }}
 							</div>
-							{% endfor %}								
+							{% endfor %}
 						<span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                         <input type="hidden" name="id" value="{{request.session.logined_student_id}}">
 						<p><button class="btn btn-lg btn-warning btn-block text-uppercase" >
 							<i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></p>
-												
+
 				</form>
 				<a href = "/web/"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
 						<i class="fab fontawesome-free mr-2"></i><b>취 소</b></button></a>
@@ -173,18 +172,18 @@
 							<b>변경 정보 입력</b><br>
 						</div>
 					</span>
-						<span class="focus-input100-1"></span>				
+						<span class="focus-input100-1"></span>
 							{% for field in form %}
 								<div class="wrap-input100 validate-input" align="left" style="font-size: 15px;">
 										<b>{{field.label}}</b><br>{{ field }}
 								</div>
-								{% endfor %}								
+								{% endfor %}
 							<span class="focus-input100-1"></span>
                             <span class="focus-input100-2"></span>
                             <input type="hidden" name="id" value="{{request.session.logined_professor_id}}">
 							<p><button class="btn btn-lg btn-warning btn-block text-uppercase" >
 								<i class="fab fontawesome-free mr-2" ></i><b>확 인</b></button></p>
-												
+
 				</form>
 				<a href = "/web/"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
 						<i class="fab fontawesome-free mr-2"></i><b>취 소</b></button></a>
@@ -216,7 +215,7 @@
 			</div>
 		</footer>
 
-	
+
 <!--===============================================================================================-->
 	<script src='{% static "vendor/jquery/jquery-3.2.1.min.js" %}'></script>
 <!--===============================================================================================-->

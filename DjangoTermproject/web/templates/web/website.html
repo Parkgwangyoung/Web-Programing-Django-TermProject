@@ -7,21 +7,20 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-  
+
     <!-- Favicons -->
-    <link href='{% static "img/favicon.png" }' rel="icon">
-    <link href='{% static "img/apple-touch-icon.png" }' rel="apple-touch-icon">
+    <link href='{% static "images/loading.gif" %}' rel="icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
             integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
             crossorigin="anonymous">
-  
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900"
       rel="stylesheet">
-  
+
     <!-- Bootstrap CSS File -->
     <link href='{% static "lib/bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
-  
+
     <!-- Libraries CSS Files -->
     <link href='{% static "lib/nivo-slider/css/nivo-slider.css" %}' rel="stylesheet">
     <link href='{% static "lib/owlcarousel/owl.carousel.css" %}' rel="stylesheet">
@@ -29,16 +28,16 @@
     <link href='{% static "lib/font-awesome/css/font-awesome.min.css" %}' rel="stylesheet">
     <link href='{% static "lib/animate/animate.min.css" %}' rel="stylesheet">
     <link href='{% static "lib/venobox/venobox.css" %}' rel="stylesheet">
-  
+
     <!-- Nivo Slider Theme -->
     <link href='{% static "css/nivo-slider-theme.css" %}' rel="stylesheet">
-  
+
     <!-- Main Stylesheet File -->
     <link href='{% static "css/style.css" %}' rel="stylesheet">
-  
+
     <!-- Responsive Stylesheet File -->
     <link href='{% static "css/responsive.css" %}' rel="stylesheet">
-  
+
     <!-- ColorTab -->
     <meta name="theme-color" content="#FF9E1B">
 
@@ -56,7 +55,7 @@
     </script>
     {% endif %}
     <!-- <div id="preloader"></div> -->
-    
+
     <header>
         <!-- header-area start -->
         <div id="sticker" class="header-area" style="height: 65px">
@@ -65,7 +64,7 @@
               <div class="col-md-12 col-sm-12">
                 <!-- Navigation -->
                 <nav class="navbar navbar-default">
-                  
+
                   <!-- Brand and toggle get grouped for better mobile display -->
                   <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-example-navbar-collapse-1"
@@ -86,16 +85,16 @@
                   <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.session.logined %}
-                        <li>                          
-                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>                           
+                        <li>
+                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>
                         </li>
                         {% if not request.session.logined_special %}
-                        <li>                          
-                            <a class="page-scroll" href ="{% url 'login:update' %}" > 회원정보 변경</a>                           
+                        <li>
+                            <a class="page-scroll" href ="{% url 'login:update' %}" > 회원정보 변경</a>
                         </li>
                         {% endif %}
-                        <li>                          
-                            <a class="page-scroll" href ="{% url 'login:logout' %}" > 로그아웃</a>                           
+                        <li>
+                            <a class="page-scroll" href ="{% url 'login:logout' %}" > 로그아웃</a>
                         </li>
                         {% endif %}
                         {% if not request.session.logined %}
@@ -106,12 +105,12 @@
                         <a class="page-scroll" href="{% url 'login:access' %}">회원가입</a>
                       </li>
                       {% endif %}
-                      
+
                       {% if request.session.logined_special %}
                       <li>
                         <a class="page-scroll" href="{% url 'web:Selcreate' %}">게시판 생성</a>
                       </li>
-                      
+
                       <li>
                         <a class="page-scroll" href="{% url 'web:assign' %}">지도교수 배정</a>
                       </li>
@@ -121,7 +120,12 @@
                         <ul class="dropdown-menu" role="menu">
                             {% if boardtable %}
                             {% for board  in boardtable %}
-                            <li><a href= "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a></li>
+                              <li><a href= "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a></li>
+                                {% if sub in board %}
+                                  <ul>
+                                    <li><a href="{% url 'web:board' sub.id %}">{{sub.board_name}}</a></li>
+                                  </ul>
+                                {% endif %}
                             {% endfor %}
                           {% endif %}
                         </ul>
@@ -148,17 +152,17 @@
             <li data-target="#myCarousel" data-slide-to="1"></li>
             <li data-target="#myCarousel" data-slide-to="2"></li>
           </ol>
-        
+
           <!-- Wrapper for slides -->
           <div class="carousel-inner" role="listbox">
             <div class="item active">
-              <img src='{% static "img/slider/slider1.jpg" %}' style="width: 100%;">
+              <img src='{% static "img/slider/20190629_210212_006.jpg" %}' style="width: 100%;height:30%;">
               <div class="carousel-caption">
                   <h3 style="color: white; font-weight: bold;">슬라이드</h3>
                   <p style="color: white; font-weight: bold;">왜 안되는 걸까?</p>
               </div>
             </div>
-        
+
             <div class="item">
               <img src='{% static "img/slider/slider2.jpg" %}' style="width: 100%; height: 700;">
               <div class="carousel-caption">
@@ -166,16 +170,16 @@
                   <p style="color: white; font-weight: bold;">부트스트랩으로 홈페이지 만들기</p>
               </div>
             </div>
-        
+
             <div class="item">
-              <img src='{% static "img/slider/slider3.jpg" %}' style="width: 100%; height: 700;">
+              <img src='{% static "img/slider/image01.png" %}' style="width: 100%; height: 700;">
               <div class="carousel-caption">
                   <h3 style="color: white; font-weight: bold;">교통대 X 컴퓨터공학과</h3>
                   <p style="color: white; font-weight: bold;">컴퓨터공학과 홈페이지에 어서오세요</p>
               </div>
             </div>
           </div>
-        
+
           <!-- Left and right controls -->
           <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -219,7 +223,7 @@
                     <h2 class="sec-head" style="font-size: 25px;"><b>교육 목표</b></2>
                     <p>
                       <b><h5 style="color: darkred;">"창의(V)·혁신(I)·실천(P)형 인재 육성"</h5></b>
-                      
+
                       우리 대학은 <b>지(知), 정(精), 의(意)</b>를 갖추고 창의융합적 사고를 바탕으로,<br>
                       글로벌 시대의 변화와 혁신을 선도하여 실행실천하는 미래형 인재 육성에 주력하고 있습니다.
                     </p>
@@ -264,7 +268,7 @@
                             </a>
                             <h4>C</h4>
                             <p>
-                              다른 언어로 해야지 
+                              다른 언어로 해야지
                             </p>
                           </div>
                         </div>
@@ -393,7 +397,7 @@
               </div>
             </footer>
 
-            <a style="display:scroll;position:fixed;bottom:10px;right:10px;font-size:40px;color: orange;" 
+            <a style="display:scroll;position:fixed;bottom:10px;right:10px;font-size:40px;color: orange;"
               href="#"><i class="fas fa-caret-square-up"></i></a>
 
     <!-- loader -->
