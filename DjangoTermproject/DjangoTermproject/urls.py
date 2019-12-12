@@ -22,7 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',include('login.urls'),name='login'),
     path('web/',include('web.urls'),name='web'),
-    path('mail/',include('mail.urls'),name='mail'),
     path('chatting/',include('chatting.urls'),name='chatting'),
 ]
 

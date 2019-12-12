@@ -2,9 +2,19 @@
 {{text}}&nbsp;&nbsp;&nbsp;&nbsp;{{writer}}&nbsp;&nbsp;{{date}}<br>
 {% endfor %}
 <br><br>
-<form action="{% url 'chatting:chat' %}" method="POST">
+{% if student_id %}
+<form action="{% url 'chatting:chat' 1 student_id %}" method="POST">
     {% csrf_token %}
     {% for form in form %}
     {{form}}<input type="submit" value="작 성">
     {% endfor %}
 </form>
+{% endif %}
+{% if professor_id %}
+<form action="{% url 'chatting:chat' 2 professor_id %}" method="POST">
+    {% csrf_token %}
+    {% for form in form %}
+    {{form}}<input type="submit" value="작 성">
+    {% endfor %}
+</form>
+{% endif %}

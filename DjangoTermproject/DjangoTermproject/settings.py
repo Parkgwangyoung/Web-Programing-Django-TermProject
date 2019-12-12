@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'web.apps.WebConfig',
     'login.apps.LoginConfig',
-    'mail.apps.MailConfig',
     'chatting.apps.ChattingConfig',
 ]
 
