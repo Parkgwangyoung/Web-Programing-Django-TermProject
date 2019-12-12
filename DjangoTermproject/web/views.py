@@ -187,7 +187,7 @@ class CreatepostView(View):
                 writer = student.name
                 writer_email = student.email
                 boards = get_object_or_404(Board,pk=board)
-                
+
                 for i  in boards.post_set.all():
                     board_name = i.board_name
                     break
@@ -331,7 +331,7 @@ class ReplyUpdateView(View):
             return render(request,'web/post.html',{'replyupdateform':form,'pk':post,'rk':reply,'post':posts,'reply':reply_all,'files':files,'replyform':form,'boardtable':Bt})
         except:
             return HttpResponse('올바르지않습니다.')
-            
+
     def post(self,request,post,reply,*args,**kwargs):
         get_reply = get_object_or_404(Reply,pk=reply)
         form = Replyform(request.POST,instance=get_reply)
@@ -479,7 +479,7 @@ class likeView(View):
                 student.like_post.add(posts)
                 posts.like_number += 1
                 posts.save()
-            
+
             return render(request,'web/post.html',{'email':email,'post':posts,'pk':post,'success':" ",'files':files,'reply':reply,'boardtable':Bt,'replyform':form,})
         except:
             try:
@@ -522,14 +522,19 @@ class LikeBoardView(View):
             name = get_board.board_name
             post = get_board.post_set.filter(like_number__gt = 0)
             Bt = BoardTable.objects.all()
-            if post:                
+            if post:
                 return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt,'name':name,'likeboard':"인기글"})
             else:
-                return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt,'name':name,'likeboard':"인기글",'likeboarderror':"인기글 존재x"})    
+                return render(request,'web/board.html',{'post':post,'board':boards,'pk':boardtable,'ak':board,'boardtable':Bt,'name':name,'likeboard':"인기글",'likeboarderror':"인기글 존재x"})
         except:
             return HttpResponse('올바르지않습니다.')
-        
 
-class MypageView(View):
-    def get(self,request,*args,**kwargs):
-            return render(request,'web/mypage.html')
+
+# class MyPageView(View):
+#     def get(self,request,*args,**kwargs):
+#         if request.session.get('logined_student_id'):
+#             student = Student.objects.get(id = request.session['logined_student_id'])
+#             return render(request,'web/mypage.html',{'student':student})
+#         elif request.session.get('logined_professor_id'):
+#             professor = Professor.objects.get(id = request.session['logined_professor_id'])
+#             return render(request,'web/mypage.html',{'professor':professor})

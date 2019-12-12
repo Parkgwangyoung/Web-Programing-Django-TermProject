@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'web.apps.WebConfig',
     'login.apps.LoginConfig',
+    'chatting.apps.ChattingConfig',
 ]
 
 MIDDLEWARE = [

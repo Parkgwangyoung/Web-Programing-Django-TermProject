@@ -1,0 +1,17 @@
+<h2>채팅할 사람을 선택해주세요.</h2>
+{% if student_list %}
+<h3>학생</h3>
+<p>
+    {% for student in student_list %}
+    <a href = "{% url 'chatting:chat' 1 student.id %}">{{student.name}}</a><br>
+    {% endfor %}
+</p>
+{% endif %}
+{% if professor_list %}
+<h3>교수</h3>
+<p>
+    {% for professor in professor_list %}
+    <a href = "{% url 'chatting:chat' 2 professor.id %}">{{professor.name}}</a><br>
+    {% endfor %}
+</p>
+{% endif %}
