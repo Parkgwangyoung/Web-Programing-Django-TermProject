@@ -142,7 +142,12 @@
 						</div>
 					</span>
 					<span class="focus-input100-1"></span>				
-                    여기에 정보								
+					{% if student %}	
+					이름 {{student.name}}	
+					{% endif %}
+					{% if professor %}
+					이름 {{professor.name}}
+					{% endif %}					
 						<span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
 

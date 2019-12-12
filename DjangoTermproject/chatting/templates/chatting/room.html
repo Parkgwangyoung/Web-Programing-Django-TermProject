@@ -8,7 +8,7 @@
     {% for form in form %}
     {{form}}<input type="submit" value="작 성">
     {% endfor %}
-</form>
+</form><a href= "{% url 'web:website' %}">돌아가기</a>
 {% endif %}
 {% if professor_id %}
 <form action="{% url 'chatting:chat' 2 professor_id %}" method="POST">
@@ -16,5 +16,5 @@
     {% for form in form %}
     {{form}}<input type="submit" value="작 성">
     {% endfor %}
-</form>
+</form><a href= "{% url 'web:website' %}">돌아가기</a>
 {% endif %}
