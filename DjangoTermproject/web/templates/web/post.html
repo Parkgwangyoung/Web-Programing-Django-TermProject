@@ -82,9 +82,15 @@
                   <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.session.logined %}
-                        <li>
-                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>
-                        </li>
+                        <li>                          
+                          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: rgba(0, 0, 0, 0.349);">
+                            {{request.session.logined}}님 환영합니다 ^^<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a href="{% url 'web:mypage' %}">마이 페이지</a></li>
+                              <li><a href="{% url 'web:likepost' %}">내가 추천한 글</a></li>
+                            </ul>
+                          </li>                          
+                      </li>
                         <li>
                             <a class="page-scroll" href ="{% url 'login:logout' %}" > 로그아웃</a>
                         </li>
@@ -179,14 +185,18 @@
                         </div>
                         
                         {% endif %}
-                        <hr style="border: solid 1px orange;">
+                        {% if reply %}
+                        <hr style="border: solid 1px orange; margin-bottom: 5px;">
                         {% for reply in reply %}
-                        <p>{{reply.writer}} :&nbsp;&nbsp;{{reply.reply}}
+                        {{reply.writer}} :&nbsp;&nbsp;{{reply.reply}}
                             {% if email == reply.writer_email %} 
-                          <a href= "{% url 'web:updatereply' pk reply.id %}">수정</a> <a href="{% url 'web:deletereply' pk reply.id %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a></p>
+                          <a href= "{% url 'web:updatereply' pk reply.id %}" title="수정"><i class="fas fa-edit"></i></a>&nbsp;
+                          <a href="{% url 'web:deletereply' pk reply.id %}" title="삭제" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')"><i class="fas fa-trash-alt"></i></a>
                           {% endif %}
-                          {% if request.session.logined_special %}<a href="{% url 'web:deletereply' pk reply.id %}" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')">삭제</a></p>
+                          {% if request.session.logined_special %}
+                          <a href="{% url 'web:deletereply' pk reply.id %}" title="삭제" onclick=" return confirm('정말로 게시글을 삭제하시겠습니까?')"><i class="fas fa-trash-alt"></i></a>
                           {% endif %}
+                          <hr style="margin: 3px; ">
                         {% endfor %}
                         {% if replyupdateform %}
                         <form action="{% url 'web:updatereply' pk  rk %}" method="POST">
@@ -197,27 +207,30 @@
                           <input type="submit" value="수정하기">
                         </form>
                         {% endif %}
-                        <hr style="border: solid 1px orange;">
-                        <div style="background-color:rgba(255, 166, 0, 0.247);">
-                            <form action="{% url 'web:reply' pk %}" method="POST">
-                                {% csrf_token %}<br>
-                                {% for form in replyform %}
-                                {{request.session.logined}}{{form}}
-                                {% endfor %}
-                                <input type="submit" value="댓글 작성"><br>
-                              </form>
-                        </div>
-
+                        <hr style="border: solid 1px orange; margin-top: 0; margin-bottom: 0;">
+                        {% endif %}
                     </tbody>
-
             </table>
-
     </div>
+    <div style="border-bottom: solid 2px gray; border-right: solid 2px gray;
+                border-left: solid 2px gray; background-color:cornsilk;
+                padding: 10px;">
+      <form action="{% url 'web:reply' pk %}" method="POST">
+          {% csrf_token %}
+          {% for form in replyform %}
+          <b style="font-size: 15px;">{{request.session.logined}}</b>&nbsp;{{form}}
+          {% endfor %}
+          <!-- <input type="submit" value="댓글 작성"> -->
+          <div class="alignright">
+              <button class="btn btn-warning btn-block text-uppercase" style="width: 80px; height: 30px;">
+                <b>댓글 작성</b></button>   
+              </div>
+        </form>
+  </div>
     <br>
-    <div name="button">
+    
       <div class="alignleft">
         <div  style="width: 80px;" >
-
           <button class="btn btn-warning btn-block text-uppercase" onclick="history.back()">
             <b>목록으로</b></button>
         </div>

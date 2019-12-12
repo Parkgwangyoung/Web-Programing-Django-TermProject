@@ -88,7 +88,7 @@ class Replyform(forms.ModelForm):
         fields = ["post","reply","writer"]
         exclude = {'post','writer'}
         widgets = {
-            'reply':forms.TextInput(),
+            'reply':forms.TextInput(attrs={'style':'height:30px; width:87%'}),
         }
         labels = {"reply":""}
 

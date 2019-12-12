@@ -82,8 +82,14 @@
                     <ul class="nav navbar-nav navbar-right">
                         {% if request.session.logined %}
                         <li>                          
-                            <a class="page-scroll" >{{request.session.logined}}님 환영합니다 ^^</a>                           
-                        </li>
+                          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: rgba(0, 0, 0, 0.349);">
+                            {{request.session.logined}}님 환영합니다 ^^<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                              <li><a href="{% url 'web:mypage' %}">마이 페이지</a></li>
+                              <li><a href="{% url 'web:likepost' %}">내가 추천한 글</a></li>
+                            </ul>
+                          </li>                          
+                      </li>
                         <li>                          
                             <a class="page-scroll" href ="{% url 'login:logout' %}" > 로그아웃</a>                           
                         </li>
@@ -175,7 +181,7 @@
                       <td><li class="dropdown" style="list-style:none;"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
                           {{i.writer}}</a>
                           <ul class="dropdown-menu" role="menu">
-                            <li><a href="">쪽지 보내기</a></li>
+                            <li><a href="">채팅하기</a></li>
                           </ul>
                         </li></td>
                       <td>{{i.date}}</td>

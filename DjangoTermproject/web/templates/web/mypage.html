@@ -141,26 +141,30 @@
 							 <b>내 정보</b><br>
 						</div>
 					</span>
-					<span class="focus-input100-1"></span>				
-					{% if student %}	
-					이름 {{student.name}}	
-					{% endif %}
-										
-						<span class="focus-input100-1"></span>
-                        <span class="focus-input100-2"></span>
-
-												
+					<div style="border: solid 2px gold; padding: 5px;">
+						<div align="left">			
+						{% if student %}	
+							<b style="font-size: large;">이 름</b> 
+								<span style="font-size: large;">{{student.name}}</span><br><br>
+							<b style="font-size: large;">아이디</b>
+								<span style="font-size: large;">{{student.email}}</span><br><br>
+							<b style="font-size: large;">학 년</b>
+								<span style="font-size: large;">{{student.grade}}</span><br><br>
+							<b style="font-size: large;">학 번</b>
+								<span style="font-size: large;">{{student.student_number}}</span><br><br>
+							<b style="font-size: large;">지도교수</b>
+								<span style="font-size: large;">{{student.tutor}} 교수님</span>
+						{% endif %}
+						</div>
+					</div>						
 				</form>
+				<br>
 				<p><a href = "{% url 'login:update' %}"><button class="btn btn-lg btn-warning btn-block text-uppercase" >
                     <i class="fab fontawesome-free mr-2" ></i><b>내 정보 변경하러가기</b></button></a></p>
-				<p><a href = "/web/"><button class="btn btn-lg btn-dark btn-block text-uppercase">
-                        <i class="fab fontawesome-free mr-2"></i><b>내가 쓴 글 보러가기</b></button></a></p>
                 <a href = "{% url 'web:likepost' %}"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
                         <i class="fab fontawesome-free mr-2"></i><b>내가 추천한 글 보러가기</b></button></a>
                 {% endif %}
-                
-
-                
+  
 				{% if request.session.logined_professor_id %}
 				<form class="login100-form validate-form" action="{% url 'login:update'  %}" method="POST">
 					{% csrf_token %}
@@ -171,13 +175,15 @@
 					</span>
 						<span class="focus-input100-1"></span>				
 						{% if professor %}
-						이름 {{professor.name}}
+							<b style="font-size: large;">이 름</b>
+								<span style="font-size: large;">{{professor.name}}</span><br><br>
+							<b style="font-size: large;">아이디</b>
+								<span style="font-size: large;">{{professor.email}}</span><br><br>
+							<b style="font-size: large;">직원번호</b>
+								<span style="font-size: large;">{{professor.professor_number}}</span>
 						{% endif %}					
 							<span class="focus-input100-1"></span>
-                            <span class="focus-input100-2"></span>
-                            
-							
-												
+                            <span class="focus-input100-2"></span>								
                 </form>
                 <p><a href = "{% url 'login:update' %}"><button class="btn btn-lg btn-warning btn-block text-uppercase" >
                     <i class="fab fontawesome-free mr-2" ></i><b>내 정보 변경하러가기</b></button></a></p>
@@ -188,7 +194,8 @@
 				{% endif %}
 			</div>
 		</div>
-    </div>
+	</div>
+	
     <br>
 
 
