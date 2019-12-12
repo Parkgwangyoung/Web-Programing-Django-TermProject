@@ -155,7 +155,7 @@
                     <i class="fab fontawesome-free mr-2" ></i><b>내 정보 변경하러가기</b></button></a></p>
 				<p><a href = "/web/"><button class="btn btn-lg btn-dark btn-block text-uppercase">
                         <i class="fab fontawesome-free mr-2"></i><b>내가 쓴 글 보러가기</b></button></a></p>
-                <a href = "/login/access"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
+                <a href = "{% url 'web:likepost' %}"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
                         <i class="fab fontawesome-free mr-2"></i><b>내가 추천한 글 보러가기</b></button></a>
                 {% endif %}
                 
@@ -183,7 +183,7 @@
                     <i class="fab fontawesome-free mr-2" ></i><b>내 정보 변경하러가기</b></button></a></p>
 				<p><a href = "/web/"><button class="btn btn-lg btn-dark btn-block text-uppercase">
                         <i class="fab fontawesome-free mr-2"></i><b>내가 쓴 글 보러가기</b></button></a></p>
-                <a href = "/login/access"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
+                <a href = "{% url 'web:likepost' %}"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
                         <i class="fab fontawesome-free mr-2"></i><b>내가 추천한 글 보러가기</b></button></a>
 				{% endif %}
 			</div>

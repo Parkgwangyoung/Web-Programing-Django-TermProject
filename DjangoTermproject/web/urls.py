@@ -4,7 +4,7 @@ from.import views
 
 app_name ='web'
 urlpatterns = [
-  path('',views.indexView.as_view(),name='website'),
+   path('',views.indexView.as_view(),name='website'),
    path('assign/',views.assignView.as_view(),name='assign'),
    path('selboard/',TemplateView.as_view(template_name='web/selCreateBoard.html'), name='Selcreate'),
    path('board/<int:boardtable>/',views.BoardAccessView.as_view(),name='boardaccess'),
@@ -21,6 +21,6 @@ urlpatterns = [
    path('bpcreate/',views.BpCreateView.as_view(),name='Bpcreate'),
    path('board/<int:post>/like/',views.likeView.as_view(),name='like'),
    path('likeboard/<int:boardtable>/<int:board>/',views.LikeBoardView.as_view(),name='likeboard'),
-   path('mypage/', views.MypageView.as_view(), name='mypage')
-
+   path('mypage/', views.MypageView.as_view(), name='mypage'),
+   path('likepost/',views.LikePostView.as_view(),name='likepost'),
 ]

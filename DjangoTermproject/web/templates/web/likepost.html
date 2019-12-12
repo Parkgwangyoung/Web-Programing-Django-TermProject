@@ -1,0 +1,10 @@
+{% if student %}
+{% for likepost in student.like_post.all %}
+{{likepost}}
+{%endfor%}
+{% endif %}
+{% if professor %}
+{% for likepost in professor.like_post.all %}
+{{likepost}}
+{%endfor%}
+{% endif %}

@@ -541,3 +541,15 @@ class MypageView(View):
                 return render(request,'web/mypage.html',{'professor':professor})
         except:
             return HttpResponse('올바르지 않습니다.')
+
+class LikePostView(View):
+    def get(self,request,*args,**kwargs):
+        try:
+            if request.session.get('logined_student_id'):
+                student = Student.objects.get(id = request.session['logined_student_id'])
+                return render(request,'web/likepost.html',{'student':student})
+            elif request.session.get('logined_professor_id'):
+                professor = Professor.objects.get(id = request.session['logined_professor_id'])
+                return render(request,'web/likepost.html',{'professor':professor})
+        except:
+            return HttpResponse('올바르지 않습니다.')
