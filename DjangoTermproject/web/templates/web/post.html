@@ -50,6 +50,22 @@
     ======================================================= -->
   </head>
   <body data-spy="scroll" data-target="#navbar-example" style="background-color: rgb(241, 241, 241);" >
+    <style>
+      a {
+        color: rgb(135, 135, 199);
+        transition: all 0.3s ease 0s;
+        text-decoration: none;
+      }
+    
+      a:hover {
+        color: #F39926;
+        text-decoration: none;
+      }
+    
+      a:active, a:hover {
+        outline: 0 none;
+      }
+    </style>
 
     <!-- <div id="preloader"></div> -->
 
@@ -179,6 +195,7 @@
                         <!-- 파일 업로드 부분-->
                         <b>첨부 파일</b>
                         <div >
+                              </style>
                             {% if email == post.writer_email %}
                             <a href="{% url 'web:updatepost' pk %}"></a>{% endif %}
                             {% for file in files %}<a href="/File/{{file.file}}" download>{{file.file}}</a>&nbsp;{% endfor %}
