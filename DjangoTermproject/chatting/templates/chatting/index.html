@@ -135,6 +135,12 @@
           outline: 0 none;
         }
       </style>
+      <!--
+      {% for student in student_list %}
+      <script language="javascript">
+            function showPopup() { window.open("{% url 'chatting:chat' 1 student.id %}", "a", "width=1000, height=600, left=100, top=50"); }
+        </script>
+        {% endfor %}-->
 
 
 				<div style="text-align: left;">
@@ -161,7 +167,8 @@
                                         width:100px; height:150px; background-color: white; padding: 5px;">
                                 
                                 {% for student in student_list %}
-                                    <a href="{% url 'chatting:chat' 1 student.id %}"><b style="font-size: large;">{{student.name}}</b></a><br>
+                                    <a href="" onclick="window.open('{% url 'chatting:chat' 1 student.id %}', '_blank', 'width=700, height=300, left=100, top=50');">
+                                        <b style="font-size: large;">{{student.name}}</b></a><br>
                                 {% endfor %}
                             </div>         
                                         <br><br>
@@ -179,7 +186,8 @@
                                         width:100px; height:150px; background-color: white; padding: 5px;">
                                 
                                 {% for professor in professor_list %}
-                                    <a href="{% url 'chatting:chat' 2 professor.id %}"><b style="font-size: large;">{{professor.name}}</b></a><br>
+                                <a href="" onclick="window.open('{% url 'chatting:chat' 2 professor.id %}', '_blank', 'width=700, height=300, left=100, top=50');">
+                                        <b style="font-size: large;">{{professor.name}}</b></a><br>
                                     {% endfor %}
                             </div>         
                                         <br>

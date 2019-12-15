@@ -58,6 +58,9 @@
 <!-- ColorTab -->
 <meta name="theme-color" content="#FF9E1B">
 
+<script language="javascript">
+	function showPopup() { window.open("{% url 'web:likepost' %}", "a", "width=1000, height=600, left=100, top=50"); }
+</script>
 <!-- =======================================================
   Theme Name: eBusiness
   Theme URL: https://bootstrapmade.com/ebusiness-bootstrap-corporate-template/
@@ -160,9 +163,10 @@
 				</form>
 				<br>
 				<p><a href = "{% url 'login:update' %}"><button class="btn btn-lg btn-warning btn-block text-uppercase" >
-                    <i class="fab fontawesome-free mr-2" ></i><b>내 정보 변경하러가기</b></button></a></p>
-                <a href = "{% url 'web:likepost' %}"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
-                        <i class="fab fontawesome-free mr-2"></i><b>내가 추천한 글 보러가기</b></button></a>
+					<i class="fab fontawesome-free mr-2" ></i><b>내 정보 변경하러가기</b></button></a></p>
+				<a class="page-scroll" href ="" onclick="showPopup();">
+					<button class="btn btn-lg btn-secondary btn-block text-uppercase">
+                        <i class="fab fontawesome-free mr-2"></i><b>내가 추천한 글 보기</b></button></a>
                 {% endif %}
   
 				{% if request.session.logined_professor_id %}
@@ -187,10 +191,9 @@
                 </form>
                 <p><a href = "{% url 'login:update' %}"><button class="btn btn-lg btn-warning btn-block text-uppercase" >
                     <i class="fab fontawesome-free mr-2" ></i><b>내 정보 변경하러가기</b></button></a></p>
-				<p><a href = "/web/"><button class="btn btn-lg btn-dark btn-block text-uppercase">
-                        <i class="fab fontawesome-free mr-2"></i><b>내가 쓴 글 보러가기</b></button></a></p>
-                <a href = "{% url 'web:likepost' %}"><button class="btn btn-lg btn-secondary btn-block text-uppercase">
-                        <i class="fab fontawesome-free mr-2"></i><b>내가 추천한 글 보러가기</b></button></a>
+					<a class="page-scroll" href ="" onclick="showPopup();">
+						<button class="btn btn-lg btn-secondary btn-block text-uppercase">
+							<i class="fab fontawesome-free mr-2"></i><b>내가 추천한 글 보기</b></button></a>
 				{% endif %}
 			</div>
 		</div>

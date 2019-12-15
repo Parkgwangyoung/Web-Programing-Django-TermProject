@@ -40,10 +40,10 @@
   
     <!-- ColorTab -->
     <meta name="theme-color" content="#FF9E1B">
-
+    <!-- 팝업 띄우기
     <script language="javascript">
       function showPopup() { window.open("{% url 'chatting:selectchat' %}", "a", "width=1000, height=600, left=100, top=50"); }
-    </script>
+    </script> -->
 
     <!-- =======================================================
       Theme Name: eBusiness
@@ -100,8 +100,7 @@
                         </li>
                         {% if not request.session.logined_special %}
                         <li>                          
-                          <a class="page-scroll" href ="" 
-                          onclick="showPopup();"> 채팅하기</a>                           
+                          <a class="page-scroll" href ="{% url 'chatting:selectchat' %}" > 채팅하기</a>                           
                         </li>
                         <li>                          
                             <a class="page-scroll" href ="{% url 'login:update' %}" > 회원정보 변경</a>                           
