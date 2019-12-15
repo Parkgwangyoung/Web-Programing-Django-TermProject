@@ -44,7 +44,7 @@ class chatView(View):
                     Bt = BoardTable.objects.all()
                     attn = Student.objects.get(id = member)
                     student= Student.objects.get(id = request.session['logined_student_id'])
-                    chatting = Chat.objects.all().filter(Q(writer_email = student.email, attn_email = attn.email) | Q(writer_email = attn.email , attn_email = student.email)).order_by('-date')[:5]  
+                    chatting = Chat.objects.all().filter(Q(writer_email = student.email, attn_email = attn.email) | Q(writer_email = attn.email , attn_email = student.email)).order_by('-date')[:10]  
                     writers = []
                     texts=[]
                     dates=[]
@@ -65,7 +65,7 @@ class chatView(View):
                     Bt = BoardTable.objects.all()
                     attn = Student.objects.get(id = member)
                     professor = Professor.objects.get(id = request.session['logined_professor_id'])
-                    chatting = Chat.objects.all().filter(Q(writer_email = professor.email, attn_email = attn.email) | Q(writer_email = attn.email , attn_email = professor.email)).order_by('-date')[:5]  
+                    chatting = Chat.objects.all().filter(Q(writer_email = professor.email, attn_email = attn.email) | Q(writer_email = attn.email , attn_email = professor.email)).order_by('-date')[:10]  
                     writers = []
                     texts=[]
                     dates=[]
@@ -89,7 +89,7 @@ class chatView(View):
                     Bt = BoardTable.objects.all()
                     attn = Professor.objects.get(id = member)
                     student= Student.objects.get(id = request.session['logined_student_id'])
-                    chatting = Chat.objects.all().filter(Q(writer_email = student.email, attn_email = attn.email) | Q(writer_email = attn.email , attn_email = student.email)).order_by('-date')[:5]  
+                    chatting = Chat.objects.all().filter(Q(writer_email = student.email, attn_email = attn.email) | Q(writer_email = attn.email , attn_email = student.email)).order_by('-date')[:10]  
                     writers = []
                     texts=[]
                     dates=[]
@@ -110,7 +110,7 @@ class chatView(View):
                     Bt = BoardTable.objects.all()
                     attn = Professor.objects.get(id = member)
                     professor = Professor.objects.get(id = request.session['logined_professor_id'])
-                    chatting = Chat.objects.all().filter(Q(writer_email = professor.email, attn_email = attn.email) | Q(writer_email = attn.email , attn_email = professor.email)).order_by('-date')[:5]  
+                    chatting = Chat.objects.all().filter(Q(writer_email = professor.email, attn_email = attn.email) | Q(writer_email = attn.email , attn_email = professor.email)).order_by('-date')[:10]  
                     writers = []
                     texts=[]
                     dates=[]

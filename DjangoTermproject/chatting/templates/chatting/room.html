@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>게시판</title>
+    <title>채팅 창</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta content="" name="keywords">
@@ -63,50 +63,16 @@
                   
                   <!-- Brand and toggle get grouped for better mobile display -->
                   <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-example-navbar-collapse-1"
-                      aria-expanded="false">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                    </button>
+
                     <!-- Brand -->
-                    <a class="navbar-brand page-scroll sticky-logo" href="{% url 'web:website' %}">
-                      <h1 style="font-size: 30px !important;">교통대 <span>X</span> 컴퓨터공학과</h1>
+                    <a class="navbar-brand page-scroll sticky-logo" href="">
+                      <h1 style="font-size: 30px !important;">채팅 하기</h1>
                       <!-- Uncomment below if you prefer to use an image logo -->
                       <!--<img src='{% static "img/mark.jpg" %}' alt="" title="" style="width: 30px; height: 30px;">-->
                     </a>
                   </div>
                   <!-- Collect the nav links, forms, and other content for toggling -->
-                  <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if request.session.logined %}
-                        <li>                          
-                          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: rgba(0, 0, 0, 0.349);">
-                            {{request.session.logined}}님 환영합니다 ^^<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                              <li><a href="{% url 'web:mypage' %}">마이 페이지</a></li>
-                              <li><a href="{% url 'web:likepost' %}">내가 추천한 글</a></li>
-                            </ul>
-                          </li>                          
-                      </li>
-                        <li>                          
-                            <a class="page-scroll" href ="{% url 'login:logout' %}" > 로그아웃</a>                           
-                        </li>
-                        {% endif %}
-                        
-                      <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: rgba(0, 0, 0, 0.349);">
-                        게시판 목록<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            {% if boardtable %}
-                            {% for board  in boardtable %}
-                                <li><a href= "{% url 'web:boardaccess' board.id %}">{{board.board_type}}</a></li>
-                            {% endfor %}
-                          {% endif %}
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
+                  
                   <!-- navbar-collapse -->
                 </nav>
                 <!-- END: Navigation -->
@@ -118,38 +84,38 @@
       </header>
       <br><br><br>
       <!-- header end -->
-
-
-{% for text,writer,date in chat  %}
-{{text}}&nbsp;&nbsp;&nbsp;&nbsp;{{writer}}&nbsp;&nbsp;{{date}}<br>
-{% endfor %}
-<br><br>
-{% if student_id %}
-<form action="{% url 'chatting:chat' 1 student_id %}" method="POST">
-    {% csrf_token %}
-    {% for form in form %}
-    {{form}}<input type="submit" value="작 성">
-    {% endfor %}
-</form><div class="alignleft">
-        <div  style="width: 80px;" >
-          <button class="btn btn-warning btn-block text-uppercase" onclick="history.back()">
-            <b>돌아가기</b></button>
+      <div style="padding: 5px;">
+      <div style="border: solid 2px black; background-color: ghostwhite; height: 230px;">
+        {% for text,writer,date in chat  %}
+        {{writer}}&nbsp;&nbsp;:&nbsp;&nbsp;<span style="display: inline-block;width: 450px;">{{text}}</span>{{date}}<br>
+        {% endfor %}
         </div>
-      </div>
-{% endif %}
-{% if professor_id %}
-<form action="{% url 'chatting:chat' 2 professor_id %}" method="POST">
-    {% csrf_token %}
-    {% for form in form %}
-    {{form}}<input type="submit" value="작 성">
-    {% endfor %}
-</form><div class="alignleft">
-        <div  style="width: 80px;" >
-          <button class="btn btn-warning btn-block text-uppercase" onclick="history.back()">
-            <b>돌아가기</b></button>
+        <br>
+        {% if student_id %}
+        <form action="{% url 'chatting:chat' 1 student_id %}" method="POST">
+            {% csrf_token %}
+            {% for form in form %}
+            {{form}}<div class="alignright">
+                    <div style="width: 80px;">
+                              <button class="btn btn-warning btn-block">
+                                 <b>전송</b></button>
+                    </div>               
+                </div>
+            {% endfor %}
+        </form>
+        {% endif %}
         </div>
-      </div>
-{% endif %}
+        <br>
+        {% if professor_id %}
+        <form action="{% url 'chatting:chat' 2 professor_id %}" method="POST">
+            {% csrf_token %}
+            {% for form in form %}
+            {{form}}<input type="submit" value="작 성">
+            {% endfor %}
+        </form>
+        {% endif %}
+
+        </div>
 
 
 

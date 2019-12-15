@@ -10,6 +10,6 @@ class chatform(forms.ModelForm):
         fields = ["text","writer","writer_email","date"]
         exclude = {'writer','writer_email','date'}
         widgets = {
-            'text':forms.TextInput(attrs={'size':'30','style':'height:35px;','placeholder':'글 입력'})
+            'text':forms.TextInput(attrs={'size':'30','style':'height:35px; width:86%','placeholder':'글 입력'})
         }
         

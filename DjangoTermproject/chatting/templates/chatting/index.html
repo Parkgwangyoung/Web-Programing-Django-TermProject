@@ -167,7 +167,7 @@
                                         width:100px; height:150px; background-color: white; padding: 5px;">
                                 
                                 {% for student in student_list %}
-                                    <a href="" onclick="window.open('{% url 'chatting:chat' 1 student.id %}', '_blank', 'width=700, height=300, left=100, top=50');">
+                                    <a href="" onclick="window.open('{% url 'chatting:chat' 1 student.id %}', '_blank', 'width=700, height=400, left=100, top=50');">
                                         <b style="font-size: large;">{{student.name}}</b></a><br>
                                 {% endfor %}
                             </div>         
@@ -186,7 +186,7 @@
                                         width:100px; height:150px; background-color: white; padding: 5px;">
                                 
                                 {% for professor in professor_list %}
-                                <a href="" onclick="window.open('{% url 'chatting:chat' 2 professor.id %}', '_blank', 'width=700, height=300, left=100, top=50');">
+                                <a href="" onclick="window.open('{% url 'chatting:chat' 2 professor.id %}', '_blank', 'width=700, height=400, left=100, top=50');">
                                         <b style="font-size: large;">{{professor.name}}</b></a><br>
                                     {% endfor %}
                             </div>         
