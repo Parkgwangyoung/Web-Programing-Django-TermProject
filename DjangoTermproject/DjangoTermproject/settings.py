@@ -126,3 +126,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 MEDIA_URL ='/File/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'File')
+
+
+SESSION_COOKIE_AGE = 60
+SESSION_SAVE_EVERY_REQUEST = True
