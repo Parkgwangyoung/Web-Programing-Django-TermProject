@@ -188,15 +188,12 @@ class CreatepostView(View):
                 writer_email = student.email
                 boards = get_object_or_404(Board,pk=board)
 
-                for i  in boards.post_set.all():
-                    board_name = i.board_name
-                    break
                 form = CreatePostform(request.POST)
                 if form.is_valid():
                     post = form.save(commit=False)
                     post.writer =writer
                     post.writer_email = writer_email
-                    post.board_name = board_name
+                    post.board_name = boards
                     post.save()
                     if request.FILES.getlist('file'):
                         for file in request.FILES.getlist('file'):
@@ -217,15 +214,12 @@ class CreatepostView(View):
                 writer = professor.name
                 writer_email = professor.email
                 boards = get_object_or_404(Board,pk=board)
-                for i  in boards.post_set.all():
-                    board_name = i.board_name
-                    break
                 form = CreatePostform(request.POST,request.FILES)
                 if form.is_valid():
                     post = form.save(commit=False)
                     post.writer =writer
                     post.writer_email = writer_email
-                    post.board_name = board_name
+                    post.board_name = boards
                     post.save()
                     if request.FILES.getlist('file'):
                         for file in request.FILES.getlist('file'):
@@ -369,18 +363,18 @@ class UpdatePostView(View):
             form = PostUpdateform(request.POST,instance=post_get)
             if form.is_valid():
                 form.save()
-                if request.FILES.getlist('file'):
-                    if len(request.FILES.getlist('file')) > len(list):
+                if request.FILES.getlist('file'): #게시글 수정시 기존파일수와 새로들어온 파일수비교
+                    if len(request.FILES.getlist('file')) > len(list): # 새로들어온 파일수가 기존파일수보다 많을 때,
                         for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):
                             count += 1
-                            if count > len(list):
+                            if count > len(list):  
                                 Uploaded_File.objects.create(post=post_get,file=get_file,writer=post_get.writer)
                             else:
                                 Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)
-                    elif len(request.FILES.getlist('file')) == len(list):
+                    elif len(request.FILES.getlist('file')) == len(list):  # 새로들어온 파일수가 기존파일수와 같을 때,
                         for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):
                             Uploaded_File.objects.filter(post= post_get,file = files).update(file = get_file)
-                    elif len(request.FILES.getlist('file')) < len(list):
+                    elif len(request.FILES.getlist('file')) < len(list):  # 새로들어온 파일수가 기존파일수보다 적을 때,
                         for get_file,files in itertools.zip_longest(request.FILES.getlist('file'),list):
                             count +=1
                             if count > len(request.FILES.getlist('file')):
@@ -406,7 +400,7 @@ class DeletePostView(View):
         posts.delete()
         return HttpResponseRedirect(reverse('web:website'))
 
-# 상위게시판 생성 클래스 뷰
+# 상위게시판 생성 클래스 뷰 (ex 학년별 게시판)
 class BtcreateView(View):
     def get(self,request,*args,**kwargs):
         if request.session.get('logined_special'):
@@ -423,7 +417,7 @@ class BtcreateView(View):
                 form =Bcreateform(initial={'supervisor':request.session['logined'],'grade':request.session['logined']})
                 return render(request,'web/createboardtable.html',{'Bform':form,'Btsuccess':"상위게시판생성완료"})
 
-#하위 게시판 생성 클래스 뷰
+#하위 게시판 생성 클래스 뷰 (ex 1학년 게시판, 2학년 게시판...)
 class BcreateView(View):
     def get(self,request,*args,**kwargs):
         if request.session.get('logined_special'):
@@ -440,7 +434,7 @@ class BcreateView(View):
             return render(request,'web/createboardtable.html',{'Bform':form,'Bsuccess':"하위게시판생성완료"})
 
 
-# 게시글 생성 클래스 뷰
+# 게시글 생성 클래스 뷰 
 class BpCreateView(View):
     def get(self,request,*args,**kwargs):
         if request.session.get('logined_special'):
@@ -512,7 +506,7 @@ class likeView(View):
                 except:
                     return HttpResponse('올바르지 않습니다.')
 
-
+#인기글 클래스 뷰 여기서는 추천수가0초과시(1부터) 인기글로 출력되도록하였습니다.
 class LikeBoardView(View):
     def get(self,request,boardtable,board,*args,**kwargs):
         try:
@@ -529,7 +523,7 @@ class LikeBoardView(View):
         except:
             return HttpResponse('올바르지않습니다.')
 
-
+#마이페이지 클래스 뷰
 class MypageView(View):
     def get(self,request,*args,**kwargs):
         try:
@@ -542,6 +536,7 @@ class MypageView(View):
         except:
             return HttpResponse('올바르지 않습니다.')
 
+# 내가추천한 글 보는 클래스 뷰
 class LikePostView(View):
     def get(self,request,*args,**kwargs):
         try:
