@@ -533,6 +533,8 @@ class MypageView(View):
             elif request.session.get('logined_professor_id'):
                 professor = Professor.objects.get(id = request.session['logined_professor_id'])
                 return render(request,'web/mypage.html',{'professor':professor})
+            else:
+                return HttpResponse('관리자는 볼 수 없습니다.')
         except:
             return HttpResponse('올바르지 않습니다.')
 
@@ -546,5 +548,7 @@ class LikePostView(View):
             elif request.session.get('logined_professor_id'):
                 professor = Professor.objects.get(id = request.session['logined_professor_id'])
                 return render(request,'web/likepost.html',{'professor':professor})
+            else:
+                return HttpResponse('관리자는 볼 수 없습니다.')
         except:
             return HttpResponse('올바르지 않습니다.')
